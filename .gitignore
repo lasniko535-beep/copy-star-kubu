@@ -1,0 +1,13 @@
+# Dependency dan binary besar
+cloudflared.exe
+*.exe
+
+# System & OS temporary files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs & temp
+*.log
+temp/
+tmp/

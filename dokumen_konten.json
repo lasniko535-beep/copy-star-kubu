@@ -1,0 +1,244 @@
+{
+  "title": "PANDUAN & KEUNGGULAN FITUR UTAMA",
+  "subtitle": "Sistem Informasi Manajemen Kasir & Ritel Pintar 'COPY STAR KUBU' Berbasis Web",
+  "callout_title": "RINGKASAN SISTEM (ELEVATOR PITCH)",
+  "callout_text": "COPY STAR KUBU adalah Sistem Informasi Manajemen Ritel & Percetakan Cerdas berbasis Web yang memadukan kecepatan kasir multi-sesi, kalkulator tarif fotokopi bertingkat, studio pas foto kilat 4R, antrean pesanan mandiri via WhatsApp, buku kasbon warga desa, hingga dashboard analitik laba bersih berbantuan StarBot AI — seluruhnya berjalan 100% offline-first tanpa beban biaya server bulanan.",
+  "sections": [
+    {
+      "heading1": "1. Latar Belakang & Masalah Lapangan yang Dipecahkan",
+      "paragraphs": [
+        "Unit usaha fotokopi dan toko Alat Tulis Kantor (ATK) memiliki karakteristik operasional yang dinamis dan beririsan. Aplikasi POS minimarket konvensional di pasaran umumnya tidak mampu menangani perhitungan jasa cetak. COPY STAR KUBU dibangun untuk menyelesaikan permasalahan spesifik di lapangan:"
+      ],
+      "bullets": [
+        {
+          "prefix": "Perhitungan Tarif Jasa Bertingkat:",
+          "text": "Kasir konvensional mengandalkan kalkulator meja untuk menghitung lembaran fotokopi, yang rawan menimbulkan salah hitung dan memakan waktu lama."
+        },
+        {
+          "prefix": "Kemacetan Antrean Beririsan:",
+          "text": "Pelanggan cetak berkas puluhan lembar menahan antrean kasir, sehingga pembeli produk ATK cepat (seperti pulpen atau amplop) harus menunggu lama."
+        },
+        {
+          "prefix": "Produksi Pas Foto Manual:",
+          "text": "Proses ganti warna latar belakang (merah/biru) dan penataan ukuran cetak 2x3, 3x4, 4x6 di lembar 4R biasanya memerlukan software terpisah seperti Photoshop."
+        },
+        {
+          "prefix": "Pencatatan Kasbon Ritel Desa:",
+          "text": "Kultur belanja tempo warga sekitar atau kantor desa pada buku nota kertas rawan tercecer, rusak, atau lupa ditagih."
+        },
+        {
+          "prefix": "Ketidakpastian Laba Bersih & Keamanan Kas:",
+          "text": "Pemilik kesulitan memisahkan antara omzet kotor dan laba riil, serta rentan terjadi selisih kas fisik laci kasir saat pergantian shift karyawan."
+        }
+      ]
+    },
+    {
+      "heading1": "2. Rincian Fitur Unggulan dan Keunggulannya",
+      "subsections": [
+        {
+          "heading2": "Fitur 1: Kalkulator Cetak & Fotokopi Cerdas (Tiered Pricing Engine)",
+          "paragraph": "Fitur ini menyediakan kalkulasi instan untuk seluruh variasi jasa cetak dan fotokopi dengan menekan tombol shortcut F3.",
+          "bullets": [
+            {
+              "prefix": "Mekanisme Otomasi:",
+              "text": "Kasir memasukkan jumlah lembar dan memilih jenis kertas (HVS 70g, 80g, Buffalo, Glossy Foto), orientasi (simplex/duplex), dan opsi jilid (lakban, spiral, mika)."
+            },
+            {
+              "prefix": "Diskon Bertingkat Real-Time:",
+              "text": "Sistem otomatis menurunkan harga satuan sesuai kuantitas (misal: 1-10 lbr Rp 500, 11-50 lbr Rp 350, >100 lbr Rp 250) secara transparan."
+            },
+            {
+              "prefix": "Keunggulan Utama:",
+              "text": "Mengeliminasi 100% potensi kerugian akibat salah hitung kasir dan mempercepat proses penerbitan nota cetak hingga 5x lebih cepat."
+            }
+          ]
+        },
+        {
+          "heading2": "Fitur 2: Kasir Multi-Sesi Simultan (Multi-Tab POS System)",
+          "paragraph": "Kasir dapat membuka hingga 5 sesi belanja paralel tanpa kehilangan item yang sudah dimasukkan ke keranjang dengan menekan shortcut F4.",
+          "bullets": [
+            {
+              "prefix": "Penyelesaian Antrean Menumpuk:",
+              "text": "Jika Pelanggan A sedang menunggu berkas cetaknya selesai, kasir cukup membuka 'Sesi Baru' untuk melayani Pelanggan B yang membeli ATK cepat."
+            },
+            {
+              "prefix": "Kemudahan Navigasi:",
+              "text": "Cukup 1-klik untuk kembali ke sesi Pelanggan A saat berkasnya selesai, lalu menyelesaikan proses pembayaran."
+            },
+            {
+              "prefix": "Keunggulan Utama:",
+              "text": "Antrean kasir bergerak lancar, kepuasan pelanggan ritel ATK meningkat, dan tidak ada pesanan yang tertukar."
+            }
+          ]
+        },
+        {
+          "heading2": "Fitur 3: Studio Pas Foto Kilat & Layout Cetak 4R Otomatis",
+          "paragraph": "Modul studio terintegrasi langsung di dalam web untuk melayani kebutuhan foto administrasi resmi (KTP, SIM, SKCK, Ijazah).",
+          "bullets": [
+            {
+              "prefix": "Fungsi Editor Terpadu:",
+              "text": "Kasir dapat mengunggah foto pelanggan, melakukan pemotongan presisi, dan mengganti warna background resmi (Merah KTP ganjil atau Biru KTP genap)."
+            },
+            {
+              "prefix": "Susunan Lembar 4R Otomatis:",
+              "text": "Sistem otomatis menata komposisi pas foto ukuran 2x3 (2 buah), 3x4 (4 buah), dan 4x6 (2 buah) ke dalam satu lembar cetak foto 4R siap cetak."
+            },
+            {
+              "prefix": "Keunggulan Utama:",
+              "text": "Memangkas waktu kerja dari 15 menit menggunakan software terpisah menjadi hanya 2 menit langsung dari aplikasi kasir."
+            }
+          ]
+        },
+        {
+          "heading2": "Fitur 4: Portal Antrean Berkas Mandiri & Penghitung Halaman PDF",
+          "paragraph": "Portal khusus pelanggan yang dapat diakses mandiri melalui browser handphone atau komputer warga.",
+          "bullets": [
+            {
+              "prefix": "Deteksi Otomatis Halaman (Auto-Counter):",
+              "text": "Ketika pelanggan mengunggah berkas PDF, sistem membaca jumlah halaman dokumen secara langsung di browser dan menyajikan estimasi biaya cetak."
+            },
+            {
+              "prefix": "Pemesanan via WhatsApp Tanpa Biaya (Zero-Cost Gateway):",
+              "text": "Pesanan diteruskan ke nomor WhatsApp resmi toko dengan format pesanan rapi tanpa perlu langganan API berbayar."
+            },
+            {
+              "prefix": "Keunggulan Utama:",
+              "text": "Pelanggan dapat mengirim dokumen dari rumah dan toko dapat mencetaknya lebih dahulu sehingga pelanggan tinggal mengambil barang saat sudah siap."
+            }
+          ]
+        },
+        {
+          "heading2": "Fitur 5: Modul Buku Kasbon & Pengingat Tagihan Santun WhatsApp",
+          "paragraph": "Modul digital khusus untuk mengelola piutang warga sekitar dan instansi desa yang berbelanja secara tempo.",
+          "bullets": [
+            {
+              "prefix": "Pencatatan Lengkap:",
+              "text": "Mencatat identitas peminjam, nomor kontak, daftar barang yang diambil, nominal utang, tanggal jatuh tempo, dan riwayat pembayaran cicilan."
+            },
+            {
+              "prefix": "Pengingat Santun 1-Klik:",
+              "text": "Tersedia tombol kirim WhatsApp yang telah memuat draft pesan penagihan sopan dan ramah secara otomatis."
+            },
+            {
+              "prefix": "Keunggulan Utama:",
+              "text": "Mencegah terjadinya kredit macet sekaligus tetap menjaga hubungan sosial yang harmonis dengan warga desa."
+            }
+          ]
+        },
+        {
+          "heading2": "Fitur 6: Manajemen Stok, Kartu Mutasi (Stock Ledger) & Peringatan Dini",
+          "paragraph": "Pengendalian inventaris modern untuk mencegah kerugian fisik barang dagangan dan kekurangan persediaan bahan baku.",
+          "bullets": [
+            {
+              "prefix": "Kartu Stok Otomatis:",
+              "text": "Setiap barang terjual langsung memotong kuantitas dan tercatat pada buku mutasi bertipe KELUAR lengkap dengan ID nota transaksi."
+            },
+            {
+              "prefix": "Peringatan Stok Menipis (Low Stock Alert):",
+              "text": "Sistem memberi sinyal peringatan jika stok kertas atau tinta printer berada di bawah batas aman."
+            },
+            {
+              "prefix": "Deteksi Dead Stock:",
+              "text": "Mengidentifikasi produk ATK yang mengendap lama tanpa perputaran agar pemilik dapat segera membuat program diskon cuci gudang."
+            }
+          ]
+        },
+        {
+          "heading2": "Fitur 7: Rekonsiliasi Kas Laci & Audit Pergantian Shift Kasir",
+          "paragraph": "Menjamin kejujuran dan akuntabilitas keuangan setiap karyawan kasir saat bertugas.",
+          "bullets": [
+            {
+              "prefix": "Mekanisme Tutup Shift:",
+              "text": "Saat pergantian jam kerja, kasir menghitung uang fisik laci dan menginputkannya ke sistem."
+            },
+            {
+              "prefix": "Kalkulasi Selisih (Cash Variance):",
+              "text": "Sistem membandingkan total fisik dengan kalkulasi pembayaran tunai tercatat. Jika ada selisih lebih atau kurang, sistem langsung mencatatnya ke dalam laporan shift."
+            },
+            {
+              "prefix": "Keunggulan Utama:",
+              "text": "Menghindari perdebatan selisih kas fisik dan menjamin integritas pelaporan uang tunai."
+            }
+          ]
+        },
+        {
+          "heading2": "Fitur 8: Dashboard Analitik Bisnis & StarBot AI Assistant",
+          "paragraph": "Pusat informasi strategis pemilik usaha (Owner) berbasis Business Intelligence.",
+          "bullets": [
+            {
+              "prefix": "Visualisasi Metrik Finansial:",
+              "text": "Grafik tren omzet harian, estimasi modal pokok (HPP), serta margin laba bersih riil."
+            },
+            {
+              "prefix": "Heatmap Jam Ramai (Peak Hours):",
+              "text": "Matriks analitik jam-jam toko paling sibuk untuk membantu penataan jadwal kerja staf kasir."
+            },
+            {
+              "prefix": "StarBot AI:",
+              "text": "Chatbot asisten cerdas yang menganalisis database penjualan untuk menjawab pertanyaan strategis pemilik mengenai tren produk terlaris dan evaluasi performa toko."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading1": "3. Keunggulan Arsitektur & Teknologi Sistem",
+      "bullets": [
+        {
+          "prefix": "100% Offline-First:",
+          "text": "Dibangun menggunakan HTML5, Vanilla CSS Modern Glassmorphism, dan JavaScript ES6+ State Machine dengan LocalStorage persisten. Tetap berfungsi penuh tanpa koneksi internet."
+        },
+        {
+          "prefix": "Nol Biaya Operasional (Zero-Cost Infrastructure):",
+          "text": "Tidak memerlukan sewa hosting bulanan mahal atau database server rumit. Cukup dibuka di Google Chrome atau Microsoft Edge."
+        },
+        {
+          "prefix": "Keamanan Data Supervisor:",
+          "text": "Akses laporan laba, manajemen staf, dan pengaturan toko dikunci menggunakan otorisasi PIN Supervisor."
+        },
+        {
+          "prefix": "Integritas Riwayat Pegawai:",
+          "text": "Staf yang resign tidak dihapus permanen melainkan dinonaktifkan, sehingga integritas nota dan audit transaksi masa lalu tetap utuh."
+        }
+      ]
+    },
+    {
+      "heading1": "4. Tabel Komparasi: POS Konvensional vs. COPY STAR KUBU",
+      "paragraphs": [
+        "Berikut adalah rangkuman perbandingan keunggulan sistem COPY STAR KUBU dengan aplikasi POS retail biasa:"
+      ],
+      "bullets": [
+        {
+          "prefix": "Kalkulasi Fotokopi & Jilid:",
+          "text": "POS Biasa: Manual di kalkulator meja | COPY STAR KUBU: Otomatis berjenjang (Tiered Pricing Engine) dengan pilihan kertas & finishing lengkap."
+        },
+        {
+          "prefix": "Penanganan Antrean Beririsan:",
+          "text": "POS Biasa: Terhenti sampai transaksi selesai | COPY STAR KUBU: Multi-Sesi Simultan (F4) hingga 5 pelanggan sekaligus."
+        },
+        {
+          "prefix": "Pas Foto KTP & Susunan 4R:",
+          "text": "POS Biasa: Tidak didukung (butuh Photoshop terpisah) | COPY STAR KUBU: Terintegrasi langsung dengan ganti latar belakang & tata letak 4R."
+        },
+        {
+          "prefix": "Penanganan Piutang Warga Desa:",
+          "text": "POS Biasa: Tidak ada / kaku | COPY STAR KUBU: Modul Buku Kasbon Desa + 1-klik pengingat santun via WhatsApp."
+        },
+        {
+          "prefix": "Ketergantungan Internet & Biaya:",
+          "text": "POS Biasa: Butuh langganan cloud bulanan & sinyal internet | COPY STAR KUBU: 100% Offline-First dan Bebas Biaya Langganan."
+        },
+        {
+          "prefix": "Dukungan Keputusan Strategis:",
+          "text": "POS Biasa: Hanya tabel angka omzet kasar | COPY STAR KUBU: Heatmap jam sibuk, grafik laba bersih, dan konsultasi StarBot AI."
+        }
+      ]
+    },
+    {
+      "heading1": "5. Kesimpulan Presentasi / Ujian Sidang",
+      "paragraphs": [
+        "Sistem Informasi Manajemen COPY STAR KUBU berhasil membuktikan bahwa teknologi modern web dapat dimanfaatkan secara optimal untuk memecahkan problem nyata UMKM ritel dan jasa fotokopi pedesaan. Dengan mengintegrasikan aspek operasional kasir, pengendalian persediaan barang, pelayanan cetak online, serta analitik keuangan bagi pimpinan usaha, sistem ini meningkatkan produktivitas, mencegah kebocoran kas, dan memberikan pelayanan yang unggul bagi masyarakat."
+      ]
+    }
+  ]
+}

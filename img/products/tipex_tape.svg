@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="tipexBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="bodyGrip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#075985"/>
+    </linearGradient>
+    <linearGradient id="whiteTape" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <filter id="tipexShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#tipexBg)"/>
+  
+  <!-- Subtle lighting accents -->
+  <circle cx="200" cy="180" r="160" fill="#0284c7" opacity="0.08"/>
+  <circle cx="450" cy="200" r="140" fill="#38bdf8" opacity="0.05"/>
+
+  <!-- Paper with text below -->
+  <g transform="translate(60, 190) rotate(-3)">
+    <rect width="520" height="130" rx="6" fill="#ffffff" opacity="0.9" filter="url(#tipexShadow)"/>
+    <line x1="40" y1="35" x2="480" y2="35" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+    <!-- The White Correction tape strip -->
+    <rect x="40" y="55" width="280" height="22" rx="3" fill="url(#whiteTape)" filter="url(#tipexShadow)"/>
+    <!-- Corrected text over tape -->
+    <text x="50" y="71" fill="#0284c7" font-family="system-ui, sans-serif" font-size="14" font-weight="700">Laporan Keuangan Selesai &amp; Rapi</text>
+    <line x1="330" y1="68" x2="480" y2="68" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+    <line x1="40" y1="100" x2="420" y2="100" stroke="#cbd5e1" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Correction Tape Device -->
+  <g transform="translate(250, 40) rotate(-14)" filter="url(#tipexShadow)">
+    <!-- Main ergonomic casing -->
+    <path d="M 60 140 C 20 110, 20 60, 70 30 C 130 0, 220 20, 250 80 C 270 120, 260 180, 210 200 C 160 220, 100 200, 70 165 Z"
+          fill="url(#bodyGrad)" stroke="#7dd3fc" stroke-width="3"/>
+
+    <!-- Clear internal window showing tape spool -->
+    <ellipse cx="140" cy="115" rx="55" ry="50" fill="#075985" opacity="0.75" stroke="#bae6fd" stroke-width="2"/>
+    
+    <!-- Big tape spool gear -->
+    <circle cx="125" cy="110" r="34" fill="#ffffff" opacity="0.95"/>
+    <circle cx="125" cy="110" r="18" fill="#e2e8f0"/>
+    <circle cx="125" cy="110" r="8" fill="#0369a1"/>
+
+    <!-- Small take-up spool gear -->
+    <circle cx="175" cy="120" r="22" fill="#ffffff" opacity="0.95"/>
+    <circle cx="175" cy="120" r="10" fill="#0284c7"/>
+
+    <!-- Joyko brand label -->
+    <rect x="75" y="45" width="90" height="24" rx="12" fill="#ffffff"/>
+    <text x="120" y="62" fill="#0284c7" font-family="system-ui, sans-serif" font-size="13" font-weight="800" text-anchor="middle">JOYKO</text>
+
+    <!-- Ergonomic finger grip ridges -->
+    <path d="M 205 70 C 215 80, 220 95, 220 110" stroke="#bae6fd" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <path d="M 215 75 C 225 85, 230 100, 230 115" stroke="#bae6fd" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+    <!-- Applicator Tip (Nozzle) -->
+    <polygon points="40,150 15,185 28,195 65,160" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+    <rect x="12" y="183" width="16" height="12" rx="2" fill="#0284c7"/>
+    <!-- Tape feeding onto paper -->
+    <path d="M 20 190 L -15 220" stroke="#ffffff" stroke-width="8" stroke-linecap="square"/>
+  </g>
+
+  <!-- Tag Pill -->
+  <g transform="translate(30, 30)">
+    <rect width="180" height="36" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <text x="90" y="23" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">CORRECTION TAPE 12M</text>
+  </g>
+</svg>
