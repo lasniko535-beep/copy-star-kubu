@@ -21,12 +21,15 @@ try {
     $listener.Start()
 }
 
-# Dapatkan IP Wi-Fi / LAN lokal agar bisa dibuka dari HP / Tablet lain
-$localIp = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { 
-    $_.InterfaceAlias -notlike "*Loopback*" -and 
-    $_.InterfaceAlias -notlike "*vEthernet*" -and 
-    $_.IPAddress -notlike "169.254*" 
-} | Select-Object -First 1).IPAddress
+# Dapatkan IP Wi-Fi / LAN lokal untuk info tampilan
+$localIp = ""
+try {
+    $localIp = (Get-NetIPAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue | Where-Object { 
+        $_.InterfaceAlias -notlike "*Loopback*" -and 
+        $_.InterfaceAlias -notlike "*vEthernet*" -and 
+        $_.IPAddress -notlike "169.254*" 
+    } | Select-Object -First 1).IPAddress
+} catch {}
 
 Write-Host "==========================================================" -ForegroundColor Cyan
 Write-Host "       COPY STAR KUBU - WEB SERVER AKTIF                 " -ForegroundColor Green

@@ -122,11 +122,31 @@ document.addEventListener("DOMContentLoaded", () => {
    AUTHENTICATION & USER LOGIN LOGIC
    ========================================================================== */
 function checkAuthSession() {
-  // Cek parameter URL: jika dibuka via ?mode=customer atau ?mode=order langsung masuk portal pelanggan
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("mode") === "customer" || urlParams.get("mode") === "order") {
+  const mode = (urlParams.get("mode") || urlParams.get("role") || urlParams.get("view") || "").toLowerCase();
+
+  // 1. Link Khusus Pelanggan / Konsumen (Order Cetak & ATK Mandiri tanpa password)
+  if (mode === "customer" || mode === "order" || mode === "pelanggan") {
     enterCustomerOrderPortal(true);
     return;
+  }
+
+  // 2. Link Khusus Kasir (Layar Transaksi POS Toko)
+  if (mode === "kasir" || mode === "pos") {
+    if (!localStorage.getItem("COPY_STAR_CURRENT_USER") && !sessionStorage.getItem("COPY_STAR_CURRENT_USER")) {
+      quickLoginAs("niko");
+      actuallySwitchMainView("pos");
+      return;
+    }
+  }
+
+  // 3. Link Khusus Owner / Pemilik Toko (Laporan Omzet & Keuangan)
+  if (mode === "owner") {
+    if (!localStorage.getItem("COPY_STAR_CURRENT_USER") && !sessionStorage.getItem("COPY_STAR_CURRENT_USER")) {
+      quickLoginAs("OWNER");
+      actuallySwitchMainView("owner");
+      return;
+    }
   }
 
   const savedUser = localStorage.getItem("COPY_STAR_CURRENT_USER") || sessionStorage.getItem("COPY_STAR_CURRENT_USER");
@@ -145,9 +165,9 @@ function checkAuthSession() {
         }
         applyUserSessionUI();
         hideLoginOverlay();
-        if (currentUser.role === "OWNER") {
+        if (mode === "owner" || currentUser.role === "OWNER") {
           actuallySwitchMainView("owner");
-        } else if (currentUser.role === "CUSTOMER") {
+        } else if (mode === "customer" || currentUser.role === "CUSTOMER") {
           actuallySwitchMainView("customer");
         } else {
           actuallySwitchMainView("pos");

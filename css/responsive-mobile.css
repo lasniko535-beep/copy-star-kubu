@@ -1,0 +1,1008 @@
+/* ==========================================================================
+   COPY STAR KUBU - RESPONSIVE MOBILE & TABLET STYLESHEET
+   Desain responsif pintar untuk HP (Android/iPhone) & Tablet (iPad/Android Tab)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. GLOBAL MOBILE & TOUCH ERGONOMICS
+   -------------------------------------------------------------------------- */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  touch-action: manipulation;
+  overflow-x: hidden;
+}
+
+/* Tombol dan input yang ramah sentuhan (Touch-friendly minimum 40px) */
+button, input, select, textarea, .btn-qs-item, .category-pill, .pay-method-btn {
+  touch-action: manipulation;
+}
+
+/* Sembunyikan elemen mobile secara default di desktop */
+.mobile-only {
+  display: none !important;
+}
+
+.pos-mobile-nav {
+  display: none;
+}
+
+.pos-mobile-floating-cart {
+  display: none;
+}
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+.mobile-drawer-overlay {
+  display: none;
+}
+
+.mobile-cart-back-bar {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   2. TABLET LAYOUT ADJUSTMENTS (max-width: 1024px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  /* Header Tablet */
+  .app-header {
+    padding: 0 0.85rem;
+    gap: 8px;
+  }
+
+  .brand-info h1 {
+    font-size: 0.82rem;
+  }
+
+  .brand-info p {
+    display: none;
+  }
+
+  .nav-tab-btn {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  .nav-tab-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* POS Tablet Split Layout */
+  .pos-layout {
+    grid-template-columns: 1fr 360px;
+  }
+
+  .catalog-top-bar {
+    padding: 0.85rem 1rem 0.75rem;
+    gap: 0.65rem;
+  }
+
+  .catalog-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .product-card {
+    padding: 0.65rem;
+  }
+
+  .product-img-box {
+    height: 75px;
+  }
+
+  /* Dedicated Dashboards on Tablet */
+  .dashboard-grid-2col {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .dashboard-header-bar {
+    padding: 0.85rem 1.25rem;
+  }
+
+  .dh-title {
+    font-size: 1.1rem;
+  }
+
+  .dh-subtitle {
+    font-size: 0.75rem;
+  }
+
+  /* Studio Pas Foto & Banner */
+  .pasfoto-studio-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Modals on Tablet */
+  .modal-card {
+    max-width: 620px;
+    width: 92%;
+  }
+
+  .print-calc-modal-card {
+    max-width: 92% !important;
+  }
+
+  .print-calc-modal-body {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 1.25rem !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. MOBILE & SMALL TABLET (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .mobile-only {
+    display: flex !important;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Header Mobile Ringkas & Elegan */
+  .app-header {
+    height: 56px;
+    padding: 0 0.75rem;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 120;
+  }
+
+  .brand-section {
+    gap: 8px;
+  }
+
+  .brand-logo-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+  }
+
+  .brand-info h1 {
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  /* Sembunyikan navigasi tengah di header pada layar HP (digantikan Bottom Nav) */
+  .header-center-nav {
+    display: none !important;
+  }
+
+  /* Header Actions Ringkas */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .shift-badge {
+    display: none !important; /* Dipindah ke Drawer menu */
+  }
+
+  .user-profile-badge {
+    display: none !important; /* Dipindah ke Drawer menu */
+  }
+
+  .btn-logout {
+    display: none !important; /* Dipindah ke Drawer menu */
+  }
+
+  .btn-wa-queue span:not(.feature-badge),
+  .btn-kasbon span:not(.feature-badge),
+  .btn-instagram span {
+    display: none; /* Hanya tampilkan ikon dan badge */
+  }
+
+  .btn-header-feature {
+    padding: 0.35rem 0.55rem;
+    height: 34px;
+  }
+
+  .header-tools-cluster {
+    display: none; /* Dipindah ke Drawer menu */
+  }
+
+  /* Tombol Menu Drawer Mobile */
+  .btn-mobile-menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md, 10px);
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-mobile-menu-toggle:active {
+    transform: scale(0.92);
+    background: rgba(247, 201, 72, 0.15);
+    border-color: var(--primary);
+  }
+
+  /* App Container dengan jarak untuk Bottom Nav */
+  .app-container {
+    height: calc(100vh - 56px - 62px);
+    height: calc(100dvh - 56px - 62px); /* Mendukung Dynamic Viewport Height di HP */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ========================================================================
+     POS LAYOUT PINTAR DI HP (Segmented: Katalog VS Keranjang)
+     ======================================================================== */
+  .pos-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Segmented Tab Navigator POS Mobile */
+  .pos-mobile-nav {
+    display: flex !important;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 6px 8px;
+    gap: 6px;
+    flex-shrink: 0;
+    z-index: 90;
+  }
+
+  .pos-mobile-tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: var(--radius-md, 10px);
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface-elevated);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .pos-mobile-tab-btn.active {
+    background: linear-gradient(135deg, rgba(247, 201, 72, 0.18) 0%, rgba(217, 119, 6, 0.12) 100%);
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .pos-mobile-tab-btn .tab-badge-count {
+    background: var(--primary);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.1rem 0.4rem;
+    border-radius: 999px;
+  }
+
+  /* Panel Katalog POS */
+  .pos-catalog-panel {
+    border-right: none;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Panel Keranjang POS */
+  .pos-cart-panel {
+    border-left: none;
+    height: 100%;
+    display: none; /* Ditampilkan saat tab keranjang aktif */
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* State Tampilan POS di Mobile via class container */
+  .pos-layout.show-cart .pos-catalog-panel {
+    display: none;
+  }
+
+  .pos-layout.show-cart .pos-cart-panel {
+    display: flex;
+  }
+
+  /* Tombol Kembali ke Katalog dari Keranjang */
+  .mobile-cart-back-bar {
+    display: flex !important;
+    padding: 0.5rem 0.85rem;
+    background: rgba(247, 201, 72, 0.08);
+    border-bottom: 1px solid rgba(247, 201, 72, 0.2);
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .btn-mobile-cart-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+  }
+
+  /* Top Bar & Search di Mobile */
+  .catalog-top-bar {
+    padding: 0.65rem 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .search-box.main-search-box input {
+    font-size: 0.85rem;
+    padding: 0.65rem 0.85rem 0.65rem 2.4rem;
+  }
+
+  .search-box svg {
+    left: 0.75rem;
+    width: 15px;
+    height: 15px;
+  }
+
+  .shortcut-tag {
+    display: none; /* Sembunyikan label shortcut F2/F4 di HP */
+  }
+
+  /* Akses Cepat Dasbor Layanan (Horizontal Scroll di HP) */
+  .pos-quick-services-bar {
+    padding: 2px 0 4px;
+    gap: 6px;
+  }
+
+  .pos-quick-services-bar .qs-label {
+    display: none;
+  }
+
+  .btn-qs-item {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.72rem;
+  }
+
+  /* Kategori Produk Horizontal Scroll */
+  .category-pills {
+    gap: 0.35rem;
+    padding-bottom: 2px;
+  }
+
+  .category-pill {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.74rem;
+    white-space: nowrap;
+  }
+
+  /* Grid Produk di HP: 2 Kolom Rapi & Nyaman Ditekan */
+  .catalog-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem;
+    padding: 0.65rem 0.75rem 80px 0.75rem; /* Padding bawah ekstra untuk Floating Cart Bar */
+  }
+
+  .product-card {
+    padding: 0.65rem;
+    border-radius: var(--radius-md, 10px);
+  }
+
+  .product-img-box {
+    height: 70px;
+    margin-bottom: 0.45rem;
+  }
+
+  .product-name {
+    font-size: 0.82rem;
+    min-height: 2.2em;
+    line-height: 1.25;
+  }
+
+  .product-price {
+    font-size: 0.9rem;
+    font-weight: 800;
+  }
+
+  .btn-add-product {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
+  }
+
+  /* ========================================================================
+     FLOATING CART BAR (Pill Melayang ala GoFood / Shopee saat di HP)
+     ======================================================================== */
+  .pos-mobile-floating-cart {
+    position: fixed;
+    bottom: 70px;
+    left: 12px;
+    right: 12px;
+    z-index: 105;
+    background: linear-gradient(135deg, #161C2C 0%, #1A2238 100%);
+    border: 1px solid rgba(247, 201, 72, 0.45);
+    border-radius: 999px;
+    padding: 0.55rem 0.85rem 0.55rem 1.15rem;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(247, 201, 72, 0.25);
+    cursor: pointer;
+    animation: bounceUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateZ(0);
+  }
+
+  @keyframes bounceUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .pos-mobile-floating-cart.hidden {
+    display: none !important;
+  }
+
+  .mfc-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mfc-badge {
+    background: var(--primary);
+    color: #000;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+  }
+
+  .mfc-total {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-main);
+  }
+
+  .mfc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--primary);
+    color: #000;
+    font-weight: 800;
+    font-size: 0.78rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    border: none;
+    pointer-events: none;
+  }
+
+  /* Cart List di HP */
+  .cart-tabs-header {
+    padding: 0.35rem 0.45rem 0;
+    gap: 0.25rem;
+  }
+
+  .session-tab {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.72rem;
+    max-width: 110px;
+  }
+
+  .cart-customer-bar {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .cart-items-scroll {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .cart-item-row {
+    padding: 0.65rem;
+    gap: 0.45rem;
+  }
+
+  .qty-counter {
+    gap: 0.35rem;
+  }
+
+  .btn-qty {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .qty-display {
+    min-width: 24px;
+    font-size: 0.88rem;
+  }
+
+  /* Cart Footer & Pembayaran di HP */
+  .cart-footer {
+    padding: 0.75rem 0.85rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.55rem;
+  }
+
+  .calc-row {
+    font-size: 0.82rem;
+  }
+
+  .total-row {
+    font-size: 1.05rem;
+    padding-top: 0.35rem;
+  }
+
+  .quick-cash-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .btn-cash-quick {
+    padding: 0.45rem 0.2rem;
+    font-size: 0.7rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .payment-methods-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .pay-method-btn {
+    padding: 0.45rem 0.2rem;
+    font-size: 0.68rem;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .pay-method-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .checkout-btn {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    border-radius: var(--radius-md, 10px);
+  }
+
+  /* ========================================================================
+     4. BOTTOM NAVIGATION BAR (Tab Bar HP Native-like)
+     ======================================================================== */
+  .mobile-bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 62px;
+    background: rgba(8, 12, 22, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    z-index: 110;
+    padding: 4px 6px calc(4px + env(safe-area-inset-bottom, 0px));
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .mob-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    background: transparent;
+    border: none;
+    color: var(--text-dim, #64748B);
+    padding: 4px 2px;
+    cursor: pointer;
+    font-size: 0.66rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .mob-nav-item svg {
+    width: 19px;
+    height: 19px;
+    transition: all 0.2s ease;
+  }
+
+  .mob-nav-item.active {
+    color: var(--primary);
+  }
+
+  .mob-nav-item.active svg {
+    transform: translateY(-2px);
+    stroke: var(--primary);
+    filter: drop-shadow(0 0 6px rgba(247, 201, 72, 0.4));
+  }
+
+  .mob-nav-badge {
+    position: absolute;
+    top: 2px;
+    right: 18%;
+    background: #EF4444;
+    color: #FFF;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 999px;
+    line-height: 1.1;
+  }
+
+  /* ========================================================================
+     5. MOBILE MENU DRAWER (Offcanvas / Bottom Sheet untuk Fitur Lengkap)
+     ======================================================================== */
+  .mobile-drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 250;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-drawer-overlay.active {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-drawer-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 85vh;
+    background: #0E1322;
+    border-top: 1px solid rgba(247, 201, 72, 0.3);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  .mobile-drawer-overlay.active .mobile-drawer-sheet {
+    transform: translateY(0);
+  }
+
+  .drawer-handle-bar {
+    width: 44px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    margin: 10px auto 4px;
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .drawer-user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .drawer-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary) 0%, #D97706 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+
+  .drawer-user-info strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--text-main);
+  }
+
+  .drawer-user-info small {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+  }
+
+  .drawer-body-scroll {
+    padding: 1rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .drawer-group-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.45rem;
+  }
+
+  .drawer-grid-menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .drawer-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.75rem 0.85rem;
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+  }
+
+  .drawer-menu-btn:active {
+    background: rgba(247, 201, 72, 0.12);
+    border-color: var(--primary);
+    transform: scale(0.98);
+  }
+
+  .drawer-menu-btn .menu-icon {
+    font-size: 1.2rem;
+  }
+
+  .drawer-menu-btn .menu-text strong {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .drawer-menu-btn .menu-text small {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+  }
+
+  /* ========================================================================
+     6. DEDICATED WORKSPACES ON MOBILE (Print, Price, Studio, Banner, Owner)
+     ======================================================================== */
+  .dedicated-dashboard-wrapper {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-header-bar {
+    padding: 0.75rem 0.85rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dh-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+
+  .dh-title {
+    font-size: 0.95rem;
+  }
+
+  .dh-subtitle {
+    font-size: 0.7rem;
+  }
+
+  .btn-return-pos {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.74rem;
+  }
+
+  .dash-card {
+    padding: 0.85rem;
+    border-radius: 12px;
+  }
+
+  /* Price Management Table Mobile */
+  .price-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .price-manage-table {
+    min-width: 580px;
+  }
+
+  /* Pas Foto Studio Mobile */
+  .pasfoto-editor-pane canvas {
+    max-width: 100%;
+    height: auto !important;
+  }
+
+  /* Owner Analytics Cards Grid Mobile */
+  .owner-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .metric-card {
+    padding: 0.75rem !important;
+  }
+
+  .metric-value {
+    font-size: 1.15rem !important;
+  }
+
+  /* ========================================================================
+     7. MODAL DIALOGS RESPONSIVENESS ON MOBILE
+     ======================================================================== */
+  .modal-overlay {
+    padding: 0.5rem;
+    align-items: flex-end; /* Membuka dari bawah seperti bottom-sheet di HP */
+  }
+
+  .modal-card {
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: 88vh !important;
+    max-height: 88dvh !important;
+    border-radius: 18px 18px 0 0 !important;
+    margin: 0 !important;
+  }
+
+  .modal-header {
+    padding: 0.85rem 1.15rem;
+  }
+
+  .modal-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .modal-body {
+    padding: 1rem 1.15rem;
+    gap: 0.85rem;
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1.15rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    flex-wrap: wrap;
+  }
+
+  .modal-footer button {
+    flex: 1;
+    min-width: 110px;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.82rem;
+  }
+
+  /* Print Calc Modal di HP */
+  .print-calc-modal-body {
+    grid-template-columns: 1fr !important;
+    padding: 0.85rem !important;
+    gap: 0.85rem !important;
+  }
+
+  .print-calc-summary-card {
+    padding: 0.85rem;
+  }
+
+  /* Form Inputs di HP: min 16px font agar tidak auto-zoom di iOS */
+  .form-control, .cust-input, .login-input {
+    font-size: 16px !important;
+  }
+
+  /* Login Overlay di HP */
+  .login-card {
+    max-width: 92% !important;
+    padding: 1.35rem 1.25rem !important;
+  }
+
+  .login-brand-name {
+    font-size: 1.35rem !important;
+  }
+
+  .login-quick-btns {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. LIGHT THEME OVERRIDES FOR MOBILE ELEMENTS
+   -------------------------------------------------------------------------- */
+body.light-theme .mobile-bottom-nav {
+  background: rgba(255, 255, 255, 0.95);
+  border-top-color: #E2E8F0;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .mob-nav-item {
+  color: #64748B;
+}
+
+body.light-theme .mob-nav-item.active {
+  color: #D97706;
+}
+
+body.light-theme .pos-mobile-nav {
+  background: #FFFFFF;
+  border-bottom-color: #E2E8F0;
+}
+
+body.light-theme .pos-mobile-tab-btn {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+  color: #475569;
+}
+
+body.light-theme .pos-mobile-tab-btn.active {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #92400E;
+}
+
+body.light-theme .pos-mobile-floating-cart {
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  border-color: rgba(245, 158, 11, 0.6);
+}
+
+body.light-theme .mobile-drawer-sheet {
+  background: #FFFFFF;
+  border-top-color: #E2E8F0;
+}
+
+body.light-theme .drawer-menu-btn {
+  background: #F8FAFC;
+  border-color: #E2E8F0;
+  color: #1E293B;
+}
+
+body.light-theme .drawer-header {
+  border-bottom-color: #E2E8F0;
+}

@@ -3,13 +3,20 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#060912">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="COPY STAR KUBU">
   <title>COPY STAR KUBU - Sistem POS Kasir & Manajemen Toko Pintar</title>
   <meta name="description"
     content="Sistem kasir pintar & manajemen inventory ATK, Fotokopi Digital dan Cetak Foto untuk COPY STAR KUBU. Multi-sesi, harga bertingkat, dan analitik cerdas.">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/style-vibes.css">
   <link rel="stylesheet" href="css/ultra-theme.css">
+  <link rel="stylesheet" href="css/responsive-mobile.css">
   <link rel="icon" type="image/png" href="logo.png">
 </head>
 
@@ -326,6 +333,14 @@
           <line x1="21" y1="12" x2="9" y2="12"></line>
         </svg>
       </button>
+      <!-- Mobile Menu Button (Khusus Layar HP) -->
+      <button class="btn-mobile-menu-toggle mobile-only" id="btnMobileMenuToggle" onclick="toggleMobileDrawer()" title="Buka Menu & Fitur Toko">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </header>
 
@@ -336,6 +351,29 @@
     <!-- VIEW 1: LAYAR KASIR (POS) -->
     <!-- ============================================================== -->
     <section class="view-section active" id="posView">
+      <!-- Navigasi Tab Segmented Kasir di Layar HP (Katalog vs Keranjang) -->
+      <div class="pos-mobile-nav" id="posMobileNav">
+        <button type="button" class="pos-mobile-tab-btn active" id="btnPosMobileCatalog" onclick="switchPosMobileTab('catalog')">
+          <span>🛍️ Katalog Produk</span>
+        </button>
+        <button type="button" class="pos-mobile-tab-btn" id="btnPosMobileCart" onclick="switchPosMobileTab('cart')">
+          <span>🛒 Keranjang</span>
+          <span class="tab-badge-count" id="mobileCartTabBadge">0</span>
+        </button>
+      </div>
+
+      <!-- Floating Cart Bar ala GoFood/Shopee saat kasir memilih produk di HP -->
+      <div class="pos-mobile-floating-cart hidden" id="posMobileFloatingCart" onclick="switchPosMobileTab('cart')">
+        <div class="mfc-info">
+          <span class="mfc-badge" id="mfcBadge">0 Item</span>
+          <span class="mfc-total" id="mfcTotal">Rp 0</span>
+        </div>
+        <button class="mfc-btn" type="button">
+          <span>Lihat Keranjang & Bayar</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
       <div class="pos-layout">
 
         <!-- KIRI: KATALOG BARANG & LAYANAN -->
@@ -390,6 +428,13 @@
 
         <!-- KANAN: KERANJANG & CHECKOUT MULTI-SESI -->
         <div class="pos-cart-panel">
+          <!-- Tombol Kembali ke Katalog dari Keranjang di Layar HP -->
+          <div class="mobile-cart-back-bar" id="mobileCartBackBar">
+            <button type="button" class="btn-mobile-cart-back" onclick="switchPosMobileTab('catalog')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              <span>← Kembali ke Katalog (Tambah Barang)</span>
+            </button>
+          </div>
 
           <!-- Browser-style Multi-Session Tabs -->
           <div class="cart-tabs-header" id="cartTabsContainer">
@@ -3804,6 +3849,161 @@
       </div>
     </div>
 
+    <!-- ============================================================== -->
+    <!-- MOBILE BOTTOM NAVIGATION DOCK (Tab Bar Layar HP) -->
+    <!-- ============================================================== -->
+    <nav class="mobile-bottom-nav" id="mobileBottomNav">
+      <button type="button" class="mob-nav-item active" data-view="pos" onclick="mobileNavigateTo('pos')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+          <line x1="8" y1="21" x2="16" y2="21"></line>
+          <line x1="12" y1="17" x2="12" y2="21"></line>
+        </svg>
+        <span>Kasir</span>
+        <span class="mob-nav-badge" id="bottomNavCartBadge" style="display:none;">0</span>
+      </button>
+
+      <button type="button" class="mob-nav-item" data-view="print" onclick="mobileNavigateTo('print')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        <span>Print</span>
+      </button>
+
+      <button type="button" class="mob-nav-item" data-view="price" onclick="mobileNavigateTo('price')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+        <span>Katalog</span>
+      </button>
+
+      <button type="button" class="mob-nav-item" data-view="customer" onclick="mobileNavigateTo('customer')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Pelanggan</span>
+      </button>
+
+      <button type="button" class="mob-nav-item" onclick="openMobileDrawer()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="1.5"></circle>
+          <circle cx="19" cy="12" r="1.5"></circle>
+          <circle cx="5" cy="12" r="1.5"></circle>
+        </svg>
+        <span>Lainnya</span>
+      </button>
+    </nav>
+
+    <!-- ============================================================== -->
+    <!-- MOBILE DRAWER MENU SHEET (Menu Layanan & Pengaturan Lengkap) -->
+    <!-- ============================================================== -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="if(event.target===this) closeMobileDrawer();">
+      <div class="mobile-drawer-sheet">
+        <div class="drawer-handle-bar"></div>
+
+        <div class="drawer-header">
+          <div class="drawer-user-card" onclick="openShiftModal(); closeMobileDrawer();">
+            <div class="drawer-avatar" id="drawerUserAvatar">N</div>
+            <div class="drawer-user-info">
+              <strong id="drawerUserName">Kasir Niko</strong>
+              <small id="drawerUserRole">Shift Aktif (Klik kelola shift)</small>
+            </div>
+          </div>
+          <button type="button" class="btn-modal-close" onclick="closeMobileDrawer()">&times;</button>
+        </div>
+
+        <div class="drawer-body-scroll">
+          <!-- Grup Layanan Toko -->
+          <div>
+            <div class="drawer-group-title">Layanan & Studio Kreatif</div>
+            <div class="drawer-grid-menu">
+              <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('pasfoto')">
+                <span class="menu-icon">📸</span>
+                <div class="menu-text">
+                  <strong>Studio Pas Foto</strong>
+                  <small>Paket Kilat 2x3, 3x4, 4x6</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('banner')">
+                <span class="menu-icon">📐</span>
+                <div class="menu-text">
+                  <strong>Spanduk & Banner</strong>
+                  <small>Undangan & Finishing</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="openWaQueueModal(); closeMobileDrawer();">
+                <span class="menu-icon">💬</span>
+                <div class="menu-text">
+                  <strong>Antrean Berkas WA</strong>
+                  <small>Pesanan WhatsApp & IG</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="openKasbonBookModal(); closeMobileDrawer();">
+                <span class="menu-icon">📖</span>
+                <div class="menu-text">
+                  <strong>Buku Kasbon</strong>
+                  <small>Utang Piutang Warga</small>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Grup Manajemen & Toko -->
+          <div>
+            <div class="drawer-group-title">Manajemen Toko & Kasir</div>
+            <div class="drawer-grid-menu">
+              <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('owner')">
+                <span class="menu-icon">📊</span>
+                <div class="menu-text">
+                  <strong>Owner Dashboard</strong>
+                  <small>Omzet & Analitik Toko</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('price')">
+                <span class="menu-icon">🏷️</span>
+                <div class="menu-text">
+                  <strong>Ubah Harga & ATK</strong>
+                  <small>Katalog Produk Lengkap</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="openBackupRestoreModal(); closeMobileDrawer();">
+                <span class="menu-icon">💾</span>
+                <div class="menu-text">
+                  <strong>Backup Database</strong>
+                  <small>Cadangkan Data Toko</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="toggleTheme()">
+                <span class="menu-icon">🌓</span>
+                <div class="menu-text">
+                  <strong>Ubah Tema</strong>
+                  <small>Gelap / Terang</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="toggleAudio()">
+                <span class="menu-icon">🔊</span>
+                <div class="menu-text">
+                  <strong>Efek Suara</strong>
+                  <small>Suara Kasir & Klik</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="closeMobileDrawer(); handleLogout();" style="border-color: rgba(239, 68, 68, 0.3);">
+                <span class="menu-icon">🚪</span>
+                <div class="menu-text">
+                  <strong style="color: #EF4444;">Ganti Akun / Logout</strong>
+                  <small>Keluar ke Layar Login</small>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CANVAS CONFETTI OVERLAY -->
     <canvas id="confettiCanvas" style="display:none;"></canvas>
 
@@ -3814,6 +4014,7 @@
     <!-- SCRIPTS -->
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/mobile.js"></script>
 
     <script>
       /* ===== QRIS: foto QRIS tampil dulu, struk keluar setelah "Pembayaran Diterima" ===== */

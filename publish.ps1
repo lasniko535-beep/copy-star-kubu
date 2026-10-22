@@ -6,7 +6,7 @@ $path = $PSScriptRoot
 $serverJob = Start-Job -ScriptBlock {
     param($dir)
     Set-Location $dir
-    & powershell -NoProfile -ExecutionPolicy Bypass -File "$dir\server.ps1"
+    & powershell -NoProfile -ExecutionPolicy Bypass -File "$dir\server.ps1" -noBrowser
 } -ArgumentList $path
 
 Start-Sleep -Seconds 2
@@ -26,7 +26,7 @@ Write-Host " Menghubungkan ke jaringan publik Cloudflare..." -ForegroundColor Gr
 
 $pinfo = New-Object System.Diagnostics.ProcessStartInfo
 $pinfo.FileName = $cloudflaredPath
-$pinfo.Arguments = "tunnel --protocol http2 --url http://localhost:8080"
+$pinfo.Arguments = "tunnel --url http://127.0.0.1:8080"
 $pinfo.RedirectStandardError = $true
 $pinfo.UseShellExecute = $false
 $p = New-Object System.Diagnostics.Process
