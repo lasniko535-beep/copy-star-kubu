@@ -235,199 +235,352 @@ button, input, select, textarea, .btn-qs-item, .category-pill, .pay-method-btn {
     border-color: var(--primary);
   }
 
-  /* App Container dengan jarak untuk Bottom Nav */
+  /* App Container dengan tinggi pas di layar HP */
   .app-container {
-    height: calc(100vh - 56px - 62px);
-    height: calc(100dvh - 56px - 62px); /* Mendukung Dynamic Viewport Height di HP */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    height: calc(100vh - 56px - 62px) !important;
+    height: calc(100dvh - 56px - 62px) !important; /* Dynamic Viewport Height di HP */
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    position: relative !important;
+    width: 100% !important;
+  }
+
+  .view-section {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+  }
+
+  .view-section.active {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
   }
 
   /* ========================================================================
      POS LAYOUT PINTAR DI HP (Segmented: Katalog VS Keranjang)
      ======================================================================== */
-  .pos-layout {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
+  #posView {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    position: relative !important;
+    flex: 1 1 auto !important;
   }
 
-  /* Segmented Tab Navigator POS Mobile */
+  .pos-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Segmented Tab Navigator POS Mobile (Katalog vs Keranjang) */
   .pos-mobile-nav {
     display: flex !important;
-    background: var(--bg-surface);
-    border-bottom: 1px solid var(--border-color);
-    padding: 6px 8px;
-    gap: 6px;
-    flex-shrink: 0;
-    z-index: 90;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: var(--bg-surface) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 6px 8px !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    z-index: 20 !important;
   }
 
   .pos-mobile-tab-btn {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 0.55rem 0.75rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: var(--radius-md, 10px);
-    border: 1px solid var(--border-color);
-    background: var(--bg-surface-elevated);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.2s ease;
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 0.55rem 0.75rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--radius-md, 10px) !important;
+    border: 1px solid var(--border-color) !important;
+    background: var(--bg-surface-elevated) !important;
+    color: var(--text-secondary) !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
   }
 
   .pos-mobile-tab-btn.active {
-    background: linear-gradient(135deg, rgba(247, 201, 72, 0.18) 0%, rgba(217, 119, 6, 0.12) 100%);
-    border-color: var(--primary);
-    color: var(--primary);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, rgba(247, 201, 72, 0.18) 0%, rgba(217, 119, 6, 0.12) 100%) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   }
 
   .pos-mobile-tab-btn .tab-badge-count {
-    background: var(--primary);
-    color: #000;
-    font-size: 0.65rem;
-    font-weight: 800;
-    padding: 0.1rem 0.4rem;
-    border-radius: 999px;
+    background: var(--primary) !important;
+    color: #000 !important;
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+    padding: 0.1rem 0.4rem !important;
+    border-radius: 999px !important;
   }
 
-  /* Panel Katalog POS */
+  /* Panel Katalog POS saat aktif di HP */
   .pos-catalog-panel {
-    border-right: none;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    border-right: none !important;
+    width: 100% !important;
+    flex: 1 1 0px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
   }
 
-  /* Panel Keranjang POS */
+  /* Panel Keranjang POS di HP */
   .pos-cart-panel {
-    border-left: none;
-    height: 100%;
-    display: none; /* Ditampilkan saat tab keranjang aktif */
-    flex-direction: column;
-    overflow: hidden;
+    border-left: none !important;
+    width: 100% !important;
+    flex: 1 1 0px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: none !important; /* Tersembunyi saat tab katalog aktif */
+    flex-direction: column !important;
+    overflow: hidden !important;
   }
 
-  /* State Tampilan POS di Mobile via class container */
+  /* Toggle Tampilan POS: Katalog VS Keranjang */
   .pos-layout.show-cart .pos-catalog-panel {
-    display: none;
+    display: none !important;
   }
 
   .pos-layout.show-cart .pos-cart-panel {
-    display: flex;
+    display: flex !important;
   }
 
   /* Tombol Kembali ke Katalog dari Keranjang */
   .mobile-cart-back-bar {
     display: flex !important;
-    padding: 0.5rem 0.85rem;
-    background: rgba(247, 201, 72, 0.08);
-    border-bottom: 1px solid rgba(247, 201, 72, 0.2);
-    align-items: center;
-    flex-shrink: 0;
+    padding: 0.5rem 0.85rem !important;
+    background: rgba(247, 201, 72, 0.08) !important;
+    border-bottom: 1px solid rgba(247, 201, 72, 0.2) !important;
+    align-items: center !important;
+    flex-shrink: 0 !important;
   }
 
   .btn-mobile-cart-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: transparent;
-    border: none;
-    color: var(--primary);
-    font-weight: 700;
-    font-size: 0.82rem;
-    cursor: pointer;
-    padding: 0.2rem 0.4rem;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: transparent !important;
+    border: none !important;
+    color: var(--primary) !important;
+    font-weight: 700 !important;
+    font-size: 0.82rem !important;
+    cursor: pointer !important;
+    padding: 0.2rem 0.4rem !important;
   }
 
-  /* Top Bar & Search di Mobile */
+  /* Top Bar & Search di HP */
   .catalog-top-bar {
-    padding: 0.65rem 0.75rem;
-    gap: 0.5rem;
+    padding: 6px 8px !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: var(--bg-surface) !important;
+    border-bottom: 1px solid var(--border-color) !important;
   }
 
   .search-box.main-search-box input {
-    font-size: 0.85rem;
-    padding: 0.65rem 0.85rem 0.65rem 2.4rem;
+    font-size: 0.85rem !important;
+    padding: 0.55rem 0.75rem 0.55rem 2.2rem !important;
   }
 
   .search-box svg {
-    left: 0.75rem;
-    width: 15px;
-    height: 15px;
+    left: 0.7rem !important;
+    width: 14px !important;
+    height: 14px !important;
   }
 
   .shortcut-tag {
-    display: none; /* Sembunyikan label shortcut F2/F4 di HP */
+    display: none !important;
   }
 
   /* Akses Cepat Dasbor Layanan (Horizontal Scroll di HP) */
   .pos-quick-services-bar {
-    padding: 2px 0 4px;
-    gap: 6px;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    padding: 2px 0 3px !important;
+    gap: 5px !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
   }
+  .pos-quick-services-bar::-webkit-scrollbar { display: none; }
 
   .pos-quick-services-bar .qs-label {
-    display: none;
+    display: none !important;
   }
 
   .btn-qs-item {
-    padding: 0.3rem 0.65rem;
-    font-size: 0.72rem;
+    padding: 0.28rem 0.6rem !important;
+    font-size: 0.7rem !important;
+    flex-shrink: 0 !important;
   }
 
   /* Kategori Produk Horizontal Scroll */
   .category-pills {
-    gap: 0.35rem;
-    padding-bottom: 2px;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    overflow-x: auto !important;
+    padding-bottom: 2px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .category-pills::-webkit-scrollbar { display: none; }
+
+  .pill-btn, .category-pill {
+    padding: 0.3rem 0.65rem !important;
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    border-radius: 999px !important;
   }
 
-  .category-pill {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.74rem;
-    white-space: nowrap;
+  /* Container Scroll Katalog & Daftar Produk di HP */
+  .catalog-content-scroll {
+    display: block !important;
+    width: 100% !important;
+    flex: 1 1 0px !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 8px 8px 120px 8px !important; /* Ruang ekstra untuk bilah floating cart & bottom dock */
+    box-sizing: border-box !important;
   }
 
   /* Grid Produk di HP: 2 Kolom Rapi & Nyaman Ditekan */
   .catalog-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.65rem;
-    padding: 0.65rem 0.75rem 80px 0.75rem; /* Padding bawah ekstra untuk Floating Cart Bar */
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
+  /* Kartu Produk Khusus Layar HP */
   .product-card {
-    padding: 0.65rem;
-    border-radius: var(--radius-md, 10px);
+    display: flex !important;
+    flex-direction: column !important;
+    animation: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    min-height: 155px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
   }
 
-  .product-img-box {
-    height: 70px;
-    margin-bottom: 0.45rem;
+  .product-card .card-img-area {
+    width: calc(100% + 16px) !important;
+    margin: -8px -8px 6px -8px !important;
+    height: 85px !important;
+    aspect-ratio: auto !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: var(--bg-surface-elevated) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
   }
 
-  .product-name {
-    font-size: 0.82rem;
-    min-height: 2.2em;
-    line-height: 1.25;
+  .product-card .card-product-photo {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
   }
 
-  .product-price {
-    font-size: 0.9rem;
-    font-weight: 800;
+  .product-card .card-icon-preview {
+    width: 36px !important;
+    height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: auto !important;
+    color: var(--primary) !important;
   }
 
-  .btn-add-product {
-    width: 32px;
-    height: 32px;
-    font-size: 1.1rem;
+  .product-card h4 {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: var(--text-main) !important;
+    line-height: 1.25 !important;
+    margin: 0 0 4px 0 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    min-height: 2.5em !important;
+  }
+
+  .product-card .card-price-area {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-top: auto !important;
+    padding-top: 4px !important;
+    gap: 4px !important;
+  }
+
+  .product-card .price-main {
+    font-size: 0.82rem !important;
+    font-weight: 800 !important;
+    color: var(--primary) !important;
+    white-space: nowrap !important;
+  }
+
+  .product-card .unit-label {
+    font-size: 0.65rem !important;
+    color: var(--text-muted) !important;
+    font-weight: normal !important;
+  }
+
+  .product-card .btn-card-add {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 8px !important;
+    background: var(--primary) !important;
+    color: #000 !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
   }
 
   /* ========================================================================
@@ -1005,4 +1158,152 @@ body.light-theme .drawer-menu-btn {
 
 body.light-theme .drawer-header {
   border-bottom-color: #E2E8F0;
+}
+
+/* --------------------------------------------------------------------------
+   9. CUSTOMER PORTAL CATALOG STYLES (PORTAL ORDER PELANGGAN)
+   -------------------------------------------------------------------------- */
+.cust-catalog-filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cust-search-box {
+  width: 100%;
+}
+
+.cust-catalog-categories {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.cust-catalog-categories::-webkit-scrollbar { display: none; }
+
+.cust-cat-pill {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface-elevated);
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.cust-cat-pill.active {
+  background: var(--primary);
+  color: #000;
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
+.cust-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .cust-catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+}
+
+.cust-product-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.cust-product-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.cust-product-img-box {
+  width: 100%;
+  height: 90px;
+  background: var(--bg-surface-elevated);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cust-product-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cust-product-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+  margin: 0 0 4px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.5em;
+}
+
+.cust-product-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 6px;
+  gap: 4px;
+}
+
+.cust-product-price {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.cust-btn-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  background: var(--primary);
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.cust-btn-add:active {
+  transform: scale(0.94);
 }

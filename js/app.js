@@ -3822,6 +3822,7 @@ function enterCustomerOrderPortal(fromUrl = false) {
   };
   hideLoginOverlay();
   actuallySwitchMainView("customer");
+  initCustomerPortal();
   playBeep("success");
   if (!fromUrl) {
     showToast("Selamat datang di Portal Order Mandiri COPY STAR KUBU! 🛍️");
@@ -3832,20 +3833,140 @@ function initCustomerPortal() {
   updateCustLiveQueueBadge();
   calculateCustomerOrderPrice();
   renderCustomerPublicQueue();
+  renderCustomerCatalogCategories();
+  renderCustomerCatalog();
 }
+
+let activeCustomerCatalogCategory = "all";
 
 function switchCustTab(tab) {
   const isForm = tab === "form";
+  const isCatalog = tab === "catalog";
+  const isQueue = tab === "queue";
+
   document.getElementById("btnCustTabForm")?.classList.toggle("active", isForm);
-  document.getElementById("btnCustTabQueue")?.classList.toggle("active", !isForm);
+  document.getElementById("btnCustTabCatalog")?.classList.toggle("active", isCatalog);
+  document.getElementById("btnCustTabQueue")?.classList.toggle("active", isQueue);
 
   const formSec = document.getElementById("custTabFormSection");
+  const catalogSec = document.getElementById("custTabCatalogSection");
   const queueSec = document.getElementById("custTabQueueSection");
+
   if (formSec) formSec.style.display = isForm ? "block" : "none";
-  if (queueSec) {
-    queueSec.style.display = !isForm ? "block" : "none";
-    if (!isForm) renderCustomerPublicQueue();
+  if (catalogSec) {
+    catalogSec.style.display = isCatalog ? "block" : "none";
+    if (isCatalog) {
+      renderCustomerCatalogCategories();
+      renderCustomerCatalog();
+    }
   }
+  if (queueSec) {
+    queueSec.style.display = isQueue ? "block" : "none";
+    if (isQueue) renderCustomerPublicQueue();
+  }
+}
+
+function renderCustomerCatalogCategories() {
+  const container = document.getElementById("custCatalogCatContainer");
+  if (!container || !storeData || !storeData.categories) return;
+
+  const cats = [
+    { id: "all", name: "✨ Semua Barang" },
+    ...storeData.categories
+  ];
+
+  container.innerHTML = cats.map(cat => `
+    <button type="button" class="cust-cat-pill ${cat.id === activeCustomerCatalogCategory ? 'active' : ''}" onclick="selectCustomerCatalogCategory('${cat.id}')">
+      ${cat.name}
+    </button>
+  `).join("");
+}
+
+function selectCustomerCatalogCategory(catId) {
+  activeCustomerCatalogCategory = catId;
+  renderCustomerCatalogCategories();
+  renderCustomerCatalog();
+}
+
+function renderCustomerCatalog() {
+  const grid = document.getElementById("custCatalogGrid");
+  if (!grid || !storeData || !storeData.products) return;
+
+  const searchInput = document.getElementById("custCatalogSearchInput");
+  const query = (searchInput?.value || "").toLowerCase().trim();
+
+  const filtered = storeData.products.filter(item => {
+    const matchCat = activeCustomerCatalogCategory === "all" || item.category === activeCustomerCatalogCategory;
+    const matchQuery = !query ||
+      item.name.toLowerCase().includes(query) ||
+      item.id.toLowerCase().includes(query) ||
+      (item.description && item.description.toLowerCase().includes(query));
+    return matchCat && matchQuery;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 2.5rem; color: var(--text-muted);">
+        <p style="font-size: 1rem; margin-bottom: 0.5rem;">Tidak ada barang yang cocok dengan "${query || ''}"</p>
+        <button type="button" class="btn-secondary-sm" onclick="document.getElementById('custCatalogSearchInput').value=''; activeCustomerCatalogCategory='all'; renderCustomerCatalogCategories(); renderCustomerCatalog();">Reset Pencarian</button>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(item => {
+    const isService = Boolean(item.isService);
+    const stockLabel = isService ? "Layanan Toko" : (item.stock > 0 ? `Tersedia (${item.stock} ${item.unit})` : "Stok Habis");
+    const stockClass = isService ? "badge-service" : (item.stock > 0 ? "badge-stock" : "badge-stock low");
+    const hasPhoto = Boolean(item.photo);
+
+    return `
+      <div class="cust-product-card">
+        <div class="cust-product-img-box">
+          <span class="badge-tag ${stockClass}" style="position:absolute; top:6px; left:6px; z-index:2; font-size:0.6rem;">${stockLabel}</span>
+          ${hasPhoto ? `
+            <img src="${item.photo}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';">
+            <div class="card-icon-preview" style="display:none; width:36px; height:36px;">${getProductIconSvg(item.image)}</div>
+          ` : `
+            <div class="card-icon-preview" style="width:36px; height:36px;">${getProductIconSvg(item.image)}</div>
+          `}
+        </div>
+
+        <h4 class="cust-product-name" title="${item.name}">${item.name}</h4>
+
+        <div class="cust-product-price-row">
+          <div>
+            <div class="cust-product-price">${formatRupiah(item.price)}</div>
+            <small style="color:var(--text-muted); font-size:0.65rem;">/${item.unit}</small>
+          </div>
+          <button type="button" class="cust-btn-add" onclick="orderProductFromCustomerCatalog('${item.id}')" title="Pesan barang ini via WhatsApp">
+            <span>+ Pesan</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function orderProductFromCustomerCatalog(productId) {
+  const item = storeData.products.find(p => p.id === productId);
+  if (!item) return;
+
+  // Catat juga ke form catatan jika pelanggan ingin gabung pesanan
+  const notesField = document.getElementById("custOrderNotes");
+  if (notesField) {
+    const existing = notesField.value.trim();
+    const addition = `+ Tambahan Pesanan Barang: ${item.name} (${formatRupiah(item.price)} / ${item.unit})`;
+    notesField.value = existing ? `${existing}\n${addition}` : addition;
+  }
+
+  const phone = "6281253453440";
+  const text = `Halo COPY STAR KUBU, saya ingin memesan barang berikut:\n\n🛍️ *${item.name}*\n🏷️ Harga: ${formatRupiah(item.price)} / ${item.unit}\n📦 Jumlah: 1 ${item.unit}\n\nMohon info ketersediaan stok & totalnya. Terima kasih!`;
+  const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+
+  playBeep("success");
+  showToast(`Membuka WhatsApp untuk memesan ${item.name}...`);
+  window.open(waUrl, "_blank");
 }
 
 function selectCustService(serviceKey) {

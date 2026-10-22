@@ -187,10 +187,14 @@
 
     // Inisialisasi awal
     setTimeout(function () {
+      switchPosMobileTab('catalog');
       updateMobileFloatingCart();
+      if (typeof renderCatalogProducts === 'function') {
+        renderCatalogProducts();
+      }
       if (typeof activeView !== 'undefined') {
         syncBottomNavState(activeView);
       }
-    }, 500);
+    }, 300);
   });
 })();
