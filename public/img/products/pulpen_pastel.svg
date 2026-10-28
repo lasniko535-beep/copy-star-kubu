@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="pastelBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#27272a"/>
+    </linearGradient>
+    <filter id="pastelShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#pastelBg)"/>
+  
+  <circle cx="320" cy="180" r="170" fill="#f472b6" opacity="0.05"/>
+
+  <!-- Aesthetic Box Container holding the pens -->
+  <g transform="translate(70, 45)" filter="url(#pastelShadow)">
+    <rect width="500" height="270" rx="16" fill="#fdf4ff" opacity="0.12" stroke="#ffffff" stroke-width="1.5"/>
+    <rect x="15" y="15" width="470" height="240" rx="12" fill="#1e1b4b" opacity="0.6"/>
+
+    <!-- 8 Aesthetic Pastel Pens lined up diagonally / vertically -->
+    <!-- Pen 1: Mint Green -->
+    <g transform="translate(45, 30)">
+      <rect width="24" height="200" rx="8" fill="#a7f3d0"/>
+      <polygon points="12,216 4,200 20,200" fill="#059669"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#6ee7b7"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#34d399"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#047857" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Pen 2: Soft Sky Blue -->
+    <g transform="translate(95, 30)">
+      <rect width="24" height="200" rx="8" fill="#bae6fd"/>
+      <polygon points="12,216 4,200 20,200" fill="#0284c7"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#7dd3fc"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#38bdf8"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#0369a1" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Pen 3: Lavender Lilac -->
+    <g transform="translate(145, 30)">
+      <rect width="24" height="200" rx="8" fill="#e9d5ff"/>
+      <polygon points="12,216 4,200 20,200" fill="#9333ea"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#d8b4fe"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#c084fc"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#7e22ce" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Pen 4: Baby Pink -->
+    <g transform="translate(195, 30)">
+      <rect width="24" height="200" rx="8" fill="#fbcfe8"/>
+      <polygon points="12,216 4,200 20,200" fill="#db2777"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#f9a8d4"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#f472b6"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#be185d" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Pen 5: Peach / Coral -->
+    <g transform="translate(245, 30)">
+      <rect width="24" height="200" rx="8" fill="#fed7aa"/>
+      <polygon points="12,216 4,200 20,200" fill="#ea580c"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#fdba74"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#fb923c"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#c2410c" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Pen 6: Butter Yellow -->
+    <g transform="translate(295, 30)">
+      <rect width="24" height="200" rx="8" fill="#fef08a"/>
+      <polygon points="12,216 4,200 20,200" fill="#ca8a04"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#fde047"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#eab308"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#a16207" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Pen 7: Powder Blue -->
+    <g transform="translate(345, 30)">
+      <rect width="24" height="200" rx="8" fill="#c7d2fe"/>
+      <polygon points="12,216 4,200 20,200" fill="#4f46e5"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#a5b4fc"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#818cf8"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#4338ca" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+
+    <!-- Pen 8: Rose Tea -->
+    <g transform="translate(395, 30)">
+      <rect width="24" height="200" rx="8" fill="#fecdd3"/>
+      <polygon points="12,216 4,200 20,200" fill="#e11d48"/>
+      <rect x="0" y="25" width="24" height="60" rx="4" fill="#fda4af"/>
+      <rect x="18" y="30" width="8" height="45" rx="3" fill="#fb7185"/>
+      <line x1="12" y1="95" x2="12" y2="190" stroke="#be123c" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+    </g>
+  </g>
+
+  <!-- Title Pill -->
+  <g transform="translate(30, 20)">
+    <rect width="210" height="34" rx="17" fill="#831843" stroke="#f472b6" stroke-width="1.5"/>
+    <text x="105" y="22" fill="#fdf2f8" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle">PASTEL GEL PENS 12 PCS</text>
+  </g>
+</svg>

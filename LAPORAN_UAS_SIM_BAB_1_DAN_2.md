@@ -53,7 +53,7 @@ Agar pembahasan terarah dan tidak menyimpang dari tujuan penelitian, ruang lingk
 3. **Fitur Transaksi & Kasir:** Pencatatan penjualan barang dan jasa, kalkulator cetak bertingkat otomatis, multi-sesi tab kasir, diskon member (mahasiswa & kantor), tombol uang pas (*quick cash*), pembayaran tunai/QRIS/kasbon, dan cetak struk termal.
 4. **Fitur Manajemen Stok:** Pencatatan master produk ATK, peringatan batas minimum stok (*low stock alert*), pencatatan barang masuk (*procurement*), deteksi *dead stock*, dan kartu mutasi stok otomatis.
 5. **Fitur Pengelolaan Kasbon Desa:** Pencatatan tempo nama warga, nominal piutang, tanggal jatuh tempo, histori angsuran, serta integrasi tombol pengingat tagihan santun via WhatsApp.
-6. **Fitur Dashboard Analitik:** Grafik tren pendapatan dan estimasi laba bersih, matriks jam transaksi terpadat (*heatmap*), dan interaksi asisten analitik toko ("StarBot AI").
+6. **Fitur Dashboard Analitik Sederhana & Ramah Pengguna:** Rekapitulasi omzet penjualan, keuntungan bersih riil, transparansi metode bayar kas & non-tunai, riwayat nota, serta asisten tanya-jawab bisnis "StarBot AI" yang mudah dimengerti orang awam.
 7. **Teknologi Implementasi:** Dibangun menggunakan teknologi web modern (HTML5, Vanilla CSS3 Modern Glassmorphism, JavaScript ES6+ State Machine, LocalStorage Persistency, serta Skema Relasional SQL).
 
 ---

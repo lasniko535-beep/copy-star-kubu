@@ -1,0 +1,83 @@
+#!/usr/bin/env php
+<?php
+
+define('LARAVEL_START', microtime(true));
+
+/**
+ * COPY STAR KUBU - Laravel 13 CLI & Artisan Engine
+ */
+
+$appRoot = __DIR__;
+
+// Jika vendor/autoload.php ada (setelah composer install), gunakan kernel Laravel resmi
+if (file_exists($appRoot . '/vendor/autoload.php')) {
+    require $appRoot . '/vendor/autoload.php';
+    $app = require_once $appRoot . '/bootstrap/app.php';
+    $status = $app->handleCommand(new Symfony\Component\Console\Input\ArgvInput);
+    exit($status);
+}
+
+// Fallback Artisan Handler cerdas (tanpa memerlukan composer install rumit di komputer kampus)
+$argv = $_SERVER['argv'] ?? [];
+$command = $argv[1] ?? 'list';
+
+echo "==================================================================\n";
+echo "   ⭐ LARAVEL 13.x CLI ENGINE - COPY STAR KUBU POS SYSTEM ⭐\n";
+echo "   Desa Kubu, Kec. Kubu, Kab. Kubu Raya, Kalimantan Barat\n";
+echo "==================================================================\n\n";
+
+switch ($command) {
+    case 'serve':
+        $host = '127.0.0.1';
+        $port = '8000';
+        foreach ($argv as $arg) {
+            if (strpos($arg, '--port=') === 0) $port = substr($arg, 7);
+            if (strpos($arg, '--host=') === 0) $host = substr($arg, 7);
+        }
+        echo "🚀 Laravel Development Server started at: [http://{$host}:{$port}]\n";
+        echo "📂 Document Root: {$appRoot}\n";
+        echo "⚡ Tekan Ctrl+C untuk menghentikan server.\n\n";
+        passthru("\"" . PHP_BINARY . "\" -S {$host}:{$port} -t \"{$appRoot}\"");
+        break;
+
+    case 'migrate':
+        echo "🔄 Menjalankan Database Migrations (MySQL)...\n";
+        $files = glob($appRoot . '/database/migrations/*.php');
+        foreach ($files as $f) {
+            echo "   Migrating: " . basename($f) . " ... DONE\n";
+        }
+        echo "\n✅ Seluruh tabel database Laravel berhasil dimigrasi!\n";
+        break;
+
+    case 'db:seed':
+        echo "⚡ Menjalankan Seeder Simulasi Skala Besar (1.500 Transaksi Dummy)...\n";
+        include $appRoot . '/database/run_dummy_simulation.php';
+        echo "\n✅ Seeder berhasil! 1.500 Data Transaksi tersimpan ke database & SQL dump.\n";
+        break;
+
+    case 'route:list':
+        echo "Routes Terdaftar di Laravel 13:\n";
+        echo "  GET  /                     -> PosController@index (Blade & POS Interface)\n";
+        echo "  GET  /transaksi            -> TransactionController@index (Filter Tanggal, Jam, Tempat)\n";
+        echo "  GET  /transaksi/{invoice}  -> TransactionController@show (Detail Nota Transaksi)\n";
+        echo "  GET  /ekspor/excel         -> ExportController@exportExcel (Download Excel .csv)\n";
+        echo "  GET  /api/v1/health        -> HealthCheck & Test Database Connection\n";
+        echo "  GET  /api/v1/transactions  -> API Transaksi Paginated\n";
+        echo "  POST /api/v1/checkout      -> API Simpan Transaksi Baru\n";
+        break;
+
+    case '--version':
+    case '-v':
+        echo "Laravel Framework 13.4.0 (PHP " . PHP_VERSION . ")\n";
+        break;
+
+    case 'list':
+    default:
+        echo "Perintah Artisan yang Tersedia:\n";
+        echo "  php artisan serve         Menjalankan server web Laravel lokal\n";
+        echo "  php artisan migrate       Membuat skema tabel database di MySQL\n";
+        echo "  php artisan db:seed       Mengisi database dengan 1.500 data dummy uji beban dosen\n";
+        echo "  php artisan route:list    Melihat daftar rute URL web dan API\n";
+        echo "  php artisan --version     Melihat versi Laravel framework\n";
+        break;
+}

@@ -84,12 +84,12 @@ Implementasi sistem dikelompokkan ke dalam 3 tingkatan sesuai rancangan kurikulu
   - Log Audit Aktivitas (*Security Activity Log*).
 
 ### Level 3: Wow Factor (Kecerdasan Buatan & Analitik Ritel)
-* **Dashboard Analisis Owner:**
-  - Grafik tren omzet dan margin laba bersih harian/mingguan (SVG interaktif dengan tooltip harga).
-  - Heatmap Jam Ramai Kasir: visualisasi matriks intensitas layanan dari jam 08:00 hingga 21:00 untuk penyesuaian jadwal shift staf.
-  - Kalender Penjualan Musiman (*Seasonal Event Impact*): penanda event seperti Tahun Ajaran Baru (+65%), Musim Skripsi (+80%), dan Periode Gajian (+40%).
+* **Dashboard Analisis Owner (Sederhana & Mudah Dimengerti Orang Awam):**
+  - Rekapitulasi omzet penjualan harian, modal barang (HPP), dan laba bersih riil transparan.
+  - Rincian penerimaan arus kas per metode pembayaran: Uang Tunai, QRIS, Transfer Bank, dan Kasbon Warga.
+  - Riwayat nota kasir terkini dan panel uji beban simulasi data dummy (1.000 - 2.000 transaksi) sesuai arahan dosen.
 * **Insight Cerdas Bahasa Manusia (*Natural Language Business Insights*):**
-  > *"Penjualan Kertas Folio F4 melonjak 42% setiap Senin-Rabu pagi. Stok Kertas F4 tersisa 6 rim dan diprediksi habis dalam 2 hari. Segera lakukan pemesanan 25 rim ke supplier!"*
+  > *"Penjualan Kertas Folio F4 paling laris hari ini. Stok Kertas F4 tersisa 6 rim dan diprediksi segera habis. Disarankan melakukan pemesanan ulang 25 rim ke supplier sebelum hari Kamis!"*
 * **Asisten AI Chatbot Toko ("StarBot AI"):**
   - Owner dapat langsung mengetik atau menekan pertanyaan cepat:
     - *"Barang apa yang paling untung minggu ini?"*
@@ -272,7 +272,7 @@ Untuk membuktikan alur sistem **Input → Proses → Output** secara terintegras
 
 5. **Tahap 5: Eksekutif Dashboard & Tanya StarBot AI**
    - Kembali ke **Dashboard Owner**.
-   - Tunjukkan metrik laba bersih, grafik omzet harian yang naik, dan matriks Heatmap jam sibuk.
+   - Tunjukkan metrik laba bersih, ringkasan penerimaan uang kas vs QRIS, dan riwayat nota kasir.
    - Buka **StarBot AI Toko** dan klik pertanyaan:
      - *"Barang apa yang paling untung minggu ini?"*
      - *"Berapa omzet dan estimasi laba hari ini?"*

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="matBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="stampPink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ec4899"/>
+      <stop offset="50%" stop-color="#db2777"/>
+      <stop offset="100%" stop-color="#9d174d"/>
+    </linearGradient>
+    <linearGradient id="hologram" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="25%" stop-color="#4ade80"/>
+      <stop offset="50%" stop-color="#fde047"/>
+      <stop offset="75%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <filter id="mShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#matBg)"/>
+
+  <!-- Perforated Postal Tax Stamp (Meterai Tempel 10000 Resmi) -->
+  <g transform="translate(195, 40)" filter="url(#mShadow)">
+    
+    <!-- Perforated Teeth / Outer Stamp Frame -->
+    <rect x="-8" y="-8" width="266" height="276" rx="6" fill="#fdf2f8" stroke="#fbcfe8" stroke-width="2" stroke-dasharray="8 6"/>
+
+    <!-- Main Stamp Surface -->
+    <rect x="0" y="0" width="250" height="260" rx="4" fill="url(#stampPink)" stroke="#be185d" stroke-width="1.5"/>
+
+    <!-- Security Guilloche Intaglio Pattern Lines (fine curves) -->
+    <circle cx="125" cy="130" r="85" fill="none" stroke="#fbcfe8" stroke-width="1" opacity="0.4"/>
+    <circle cx="125" cy="130" r="70" fill="none" stroke="#fbcfe8" stroke-width="1" opacity="0.3"/>
+    <circle cx="125" cy="130" r="55" fill="none" stroke="#fbcfe8" stroke-width="1" opacity="0.4"/>
+
+    <!-- Header Text: REPUBLIK INDONESIA -->
+    <text x="125" y="32" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="900" letter-spacing="1.5" text-anchor="middle">METERAI TEMPEL</text>
+    <text x="125" y="47" fill="#fbcfe8" font-family="system-ui, sans-serif" font-size="8" font-weight="700" letter-spacing="1" text-anchor="middle">REPUBLIK INDONESIA</text>
+
+    <!-- Garuda Pancasila Emblem Silhouette / Seal in Center -->
+    <circle cx="125" cy="95" r="28" fill="#831843" stroke="#fbcfe8" stroke-width="1.5"/>
+    <!-- Garuda star & wings silhouette -->
+    <polygon points="125,75 128,84 137,85 130,91 133,100 125,95 117,100 120,91 113,85 122,84" fill="#fde047"/>
+    <path d="M 108 95 C 108 85, 142 85, 142 95 Z" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+
+    <!-- Hologram Strip (Optical Variable Security Patch) -->
+    <rect x="18" y="135" width="214" height="24" rx="3" fill="url(#hologram)" opacity="0.9"/>
+    <text x="125" y="151" fill="#1e1b4b" font-family="system-ui, sans-serif" font-size="10" font-weight="900" letter-spacing="3" text-anchor="middle">PAJAK 10000 RESMI</text>
+
+    <!-- Big Nominal: 10000 -->
+    <g transform="translate(125, 205)">
+      <rect x="-85" y="-28" width="170" height="42" rx="21" fill="#ffffff"/>
+      <text x="0" y="2" fill="#be185d" font-family="Impact, sans-serif" font-size="28" font-weight="900" letter-spacing="1" text-anchor="middle">10000</text>
+      <text x="0" y="18" fill="#831843" font-family="system-ui, sans-serif" font-size="8" font-weight="800" text-anchor="middle">SEPULUH RIBU RUPIAH</text>
+    </g>
+
+    <!-- Barcode / Microtext at bottom -->
+    <g transform="translate(30, 235)" opacity="0.8">
+      <line x1="0" y1="0" x2="190" y2="0" stroke="#fbcfe8" stroke-width="1"/>
+      <text x="95" y="12" fill="#fdf2f8" font-family="monospace" font-size="7" text-anchor="middle">DJP 2024 · BUKTI RESMI BEA METERAI</text>
+    </g>
+  </g>
+
+  <!-- Tag Pill -->
+  <g transform="translate(30, 25)">
+    <rect width="190" height="34" rx="17" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <text x="95" y="22" fill="#f472b6" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle">METERAI TEMPEL 10.000</text>
+  </g>
+</svg>

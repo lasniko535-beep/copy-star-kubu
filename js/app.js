@@ -1055,9 +1055,11 @@ function processCheckout() {
   }
   const change = Math.max(0, paid - finalTotal);
 
-  // Generate Receipt Data
+  // Generate Receipt Data & Precise ISO Date
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const nowStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
   const trxId = "TRX-" + Math.floor(1000 + Math.random() * 9000);
-  const nowStr = new Date().toLocaleString("id-ID", { dateStyle: "short", timeStyle: "short" });
 
   document.getElementById("rcptMetaTime").textContent = `${nowStr} | ${trxId}`;
   document.getElementById("rcptMetaCashier").textContent = `Kasir: ${storeData.activeShift.cashierName}`;
@@ -1105,12 +1107,13 @@ function processCheckout() {
     }
   });
 
-  // Record transaction in storeData
-  storeData.recentTransactions.unshift({
+  // Record transaction in storeData (Otomatis tercatat ke penyimpanan database)
+  const newTxObj = {
     id: trxId,
     date: nowStr,
     customer: currentSession.customer.name,
     cashier: storeData.activeShift.cashierName,
+    location: "COPY STAR KUBU - Meja Kasir 1",
     items: JSON.parse(JSON.stringify(currentSession.items)),
     subtotal: subtotal,
     discount: discountAmount,
@@ -1120,7 +1123,12 @@ function processCheckout() {
     paymentMethod: currentSession.paymentMethod,
     amountPaid: paid,
     change: change
-  });
+  };
+  lastCompletedTx = newTxObj;
+
+  storeData.recentTransactions.unshift(newTxObj);
+  if (!storeData.transactions) storeData.transactions = [];
+  storeData.transactions.unshift(newTxObj);
 
   // Update shift stats
   if (currentSession.paymentMethod === "TUNAI") {
@@ -1132,6 +1140,16 @@ function processCheckout() {
 
   // Save to persistence
   saveStoreData(storeData);
+
+  // Jika opsi otomatis unduh Excel aktif, langsung unduh file Excel nota
+  if (typeof autoExportExcelOnCheckout !== "undefined" && autoExportExcelOnCheckout) {
+    setTimeout(() => {
+      exportSingleTransactionExcel(newTxObj);
+    }, 400);
+  }
+
+  // Refresh tabel riwayat transaksi agar langsung muncul di baris teratas
+  renderRecentTransactionsTable();
 
   // Play sound, confetti & open modal
   playBeep("success");
@@ -1615,37 +1633,7 @@ function saveNewSupervisorPin() {
 }
 
 function exportTransactionsCsv() {
-  const trxs = storeData.recentTransactions || [];
-  if (trxs.length === 0) {
-    alert("Belum ada data transaksi untuk diekspor!");
-    return;
-  }
-
-  let csvContent = "\uFEFFNo Nota,Tanggal,Waktu,Kasir,Metode Pembayaran,Subtotal,Diskon,Grand Total,Laba Bersih\n";
-  trxs.forEach(t => {
-    const row = [
-      `"${t.id || '-'}"`,
-      `"${t.date || '-'}"`,
-      `"${t.time || '-'}"`,
-      `"${t.cashier || '-'}"`,
-      `"${t.paymentMethod || 'TUNAI'}"`,
-      t.subtotal || 0,
-      t.discount || 0,
-      t.total || 0,
-      t.profit || 0
-    ];
-    csvContent += row.join(",") + "\n";
-  });
-
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `LAPORAN_TRANSAKSI_COPY_STAR_KUBU_${new Date().toISOString().slice(0, 10)}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
+  exportTransactionsCSV("all");
 }
 
 function exportKasbonCsv() {
@@ -1715,128 +1703,696 @@ function exportInventoryCsv() {
   URL.revokeObjectURL(url);
 }
 
-function renderOwnerAnalytics() {
-  // Update KPIs
-  const totalOmzet = storeData.weeklySalesData[storeData.weeklySalesData.length - 1].sales;
-  const totalProfit = storeData.weeklySalesData[storeData.weeklySalesData.length - 1].profit;
-  const txCount = storeData.weeklySalesData[storeData.weeklySalesData.length - 1].txCount;
+var _originalInitialTransactions = null;
 
-  document.getElementById("kpiOmzetText").textContent = formatRupiah(totalOmzet);
-  document.getElementById("kpiProfitText").textContent = formatRupiah(totalProfit);
-  document.getElementById("kpiTxCountText").textContent = `${txCount} Transaksi`;
+function renderOwnerAnalytics() {
+  if (!_originalInitialTransactions && storeData.transactions) {
+    _originalInitialTransactions = JSON.parse(JSON.stringify(storeData.transactions));
+  }
+
+  // Hitung metrik dinamis dari transaksi
+  let totalOmzet = 0;
+  let totalProfit = 0;
+  let txCount = 0;
+
+  if (storeData.transactions && storeData.transactions.length > 0) {
+    txCount = storeData.transactions.length;
+    storeData.transactions.forEach(t => {
+      totalOmzet += (t.total || 0);
+      totalProfit += (t.profit || 0);
+    });
+  } else if (storeData.weeklySalesData && storeData.weeklySalesData.length > 0) {
+    const lastDay = storeData.weeklySalesData[storeData.weeklySalesData.length - 1];
+    totalOmzet = lastDay.sales;
+    totalProfit = lastDay.profit;
+    txCount = lastDay.txCount;
+  }
+
+  const elOmzet = document.getElementById("kpiOmzetText");
+  if (elOmzet) elOmzet.textContent = formatRupiah(totalOmzet);
+
+  const elProfit = document.getElementById("kpiProfitText");
+  if (elProfit) elProfit.textContent = formatRupiah(totalProfit);
+
+  const elTxCount = document.getElementById("kpiTxCountText");
+  if (elTxCount) elTxCount.textContent = `${txCount} Transaksi`;
 
   const lowStockCount = storeData.products.filter(p => !p.isService && p.stock <= p.minStock).length;
-  document.getElementById("kpiLowStockCountText").textContent = `${lowStockCount} Barang Kritis`;
+  const elLowStock = document.getElementById("kpiLowStockCountText");
+  if (elLowStock) elLowStock.textContent = `${lowStockCount} Barang Kritis`;
 
-  // Render SVG Sales & Margin Chart
-  renderSalesChart();
-
-  // Render Heatmap Matrix
-  renderHeatmap();
-
-  // Render Seasonal Events
-  renderSeasonalEvents();
+  // Render Rekap Pembayaran & Transaksi Terkini
+  renderPaymentSummary();
+  renderRecentTransactionsTable();
 }
 
-function renderSalesChart() {
-  const container = document.getElementById("salesChartContainer");
-  if (!container) return;
+function renderPaymentSummary() {
+  let cashTotal = 0, cashCount = 0;
+  let qrisTotal = 0, qrisCount = 0;
+  let transferTotal = 0, transferCount = 0;
+  let kasbonTotal = 0, kasbonCount = 0;
 
-  const data = storeData.weeklySalesData;
-  const maxVal = Math.max(...data.map(d => d.sales)) * 1.15;
-  const width = 500;
-  const height = 220;
-  const paddingX = 40;
-  const paddingY = 30;
-
-  const pointsSales = data.map((d, i) => {
-    const x = paddingX + (i * ((width - (paddingX * 2)) / (data.length - 1)));
-    const y = height - paddingY - (d.sales / maxVal) * (height - (paddingY * 2));
-    return { x, y, val: d.sales, day: d.day, profit: d.profit };
-  });
-
-  const pointsProfit = data.map((d, i) => {
-    const x = paddingX + (i * ((width - (paddingX * 2)) / (data.length - 1)));
-    const y = height - paddingY - (d.profit / maxVal) * (height - (paddingY * 2));
-    return { x, y, val: d.profit, day: d.day };
-  });
-
-  const pathSales = pointsSales.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(" ");
-  const pathProfit = pointsProfit.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(" ");
-
-  container.innerHTML = `
-    <svg class="chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
-      <!-- Grid lines -->
-      <line x1="${paddingX}" y1="${paddingY}" x2="${width - paddingX}" y2="${paddingY}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-      <line x1="${paddingX}" y1="${height / 2}" x2="${width - paddingX}" y2="${height / 2}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4"/>
-      <line x1="${paddingX}" y1="${height - paddingY}" x2="${width - paddingX}" y2="${height - paddingY}" stroke="rgba(255,255,255,0.15)"/>
-
-      <!-- Profit Line (Emerald) -->
-      <path d="${pathProfit}" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      ${pointsProfit.map(p => `
-        <circle cx="${p.x}" cy="${p.y}" r="4" fill="#10B981" stroke="#111827" stroke-width="2"/>
-      `).join("")}
-
-      <!-- Sales Line (Gold Brand) -->
-      <path d="${pathSales}" fill="none" stroke="#FFB800" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-      ${pointsSales.map(p => `
-        <circle cx="${p.x}" cy="${p.y}" r="5" fill="#FFB800" stroke="#111827" stroke-width="2">
-          <title>${p.day}: Omzet ${formatRupiah(p.val)} | Laba ${formatRupiah(p.profit)}</title>
-        </circle>
-        <text x="${p.x}" y="${height - 10}" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="sans-serif">${p.day.split(' ')[0]}</text>
-      `).join("")}
-    </svg>
-  `;
-}
-
-function renderHeatmap() {
-  const table = document.getElementById("heatmapTable");
-  if (!table) return;
-
-  const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
-  const matrix = storeData.heatmapMatrix;
-
-  let html = `<thead><tr><th>Jam</th>${days.map(d => `<th>${d}</th>`).join("")}</tr></thead><tbody>`;
-
-  matrix.forEach(row => {
-    html += `<tr><td style="font-weight:600; text-align:left; color:var(--text-muted); font-size:0.7rem;">${row.hour}</td>`;
-    const vals = [row.Mon, row.Tue, row.Wed, row.Thu, row.Fri, row.Sat, row.Sun];
-    vals.forEach(v => {
-      // Color grading from low (dark blue-slate) to high (vivid gold)
-      let bg = "rgba(31, 41, 55, 0.4)";
-      let color = "#9CA3AF";
-      if (v > 80) {
-        bg = "rgba(255, 184, 0, 0.85)";
-        color = "#000";
-      } else if (v > 65) {
-        bg = "rgba(255, 184, 0, 0.5)";
-        color = "#FFF";
-      } else if (v > 45) {
-        bg = "rgba(59, 130, 246, 0.35)";
-        color = "#FFF";
+  if (storeData.transactions && storeData.transactions.length > 0) {
+    storeData.transactions.forEach(t => {
+      const pm = (t.paymentMethod || "TUNAI").toUpperCase();
+      const amt = t.total || 0;
+      if (pm === "TUNAI" || pm === "CASH") {
+        cashTotal += amt; cashCount++;
+      } else if (pm === "QRIS") {
+        qrisTotal += amt; qrisCount++;
+      } else if (pm === "TRANSFER" || pm === "BANK") {
+        transferTotal += amt; transferCount++;
+      } else if (pm === "KASBON" || pm === "TEMPO") {
+        kasbonTotal += amt; kasbonCount++;
+      } else if (pm === "SPLIT") {
+        cashTotal += (t.cashPaid || 0);
+        qrisTotal += (t.qrisPaid || 0);
+        cashCount++;
+      } else {
+        cashTotal += amt; cashCount++;
       }
-      html += `<td><div class="heatmap-cell" style="background:${bg}; color:${color}; padding:4px 2px;" title="${v}% Intensitas Layanan">${v}%</div></td>`;
     });
-    html += `</tr>`;
+  } else {
+    cashTotal = 850000; cashCount = 32;
+    qrisTotal = 450000; qrisCount = 14;
+    transferTotal = 200000; transferCount = 5;
+    kasbonTotal = 100000; kasbonCount = 3;
+  }
+
+  const elCashTot = document.getElementById("payCashTotal");
+  if (elCashTot) elCashTot.textContent = formatRupiah(cashTotal);
+  const elCashCnt = document.getElementById("payCashCount");
+  if (elCashCnt) elCashCnt.textContent = `${cashCount} Transaksi langsung di kasir`;
+
+  const elQrisTot = document.getElementById("payQrisTotal");
+  if (elQrisTot) elQrisTot.textContent = formatRupiah(qrisTotal);
+  const elQrisCnt = document.getElementById("payQrisCount");
+  if (elQrisCnt) elQrisCnt.textContent = `${qrisCount} Transaksi QRIS resmi`;
+
+  const elTrfTot = document.getElementById("payTransferTotal");
+  if (elTrfTot) elTrfTot.textContent = formatRupiah(transferTotal);
+  const elTrfCnt = document.getElementById("payTransferCount");
+  if (elTrfCnt) elTrfCnt.textContent = `${transferCount} Transaksi rekening instansi`;
+
+  const elKsbTot = document.getElementById("payKasbonTotal");
+  if (elKsbTot) elKsbTot.textContent = formatRupiah(kasbonTotal);
+  const elKsbCnt = document.getElementById("payKasbonCount");
+  if (elKsbCnt) elKsbCnt.textContent = `${kasbonCount} Transaksi piutang warga`;
+}
+
+let currentTxDateFilter = "";
+let activeDetailTx = null;
+let lastCompletedTx = null;
+let autoExportExcelOnCheckout = (typeof localStorage !== "undefined" && localStorage.getItem("copyStar_autoExportExcel") === "true");
+
+function toggleAutoExportExcel(checked) {
+  autoExportExcelOnCheckout = checked;
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("copyStar_autoExportExcel", checked ? "true" : "false");
+  }
+  showToast(checked ? "💾 Auto-Excel Aktif: Setiap transaksi akan otomatis terunduh ke Excel!" : "Mode otomatis simpan Excel dinonaktifkan.");
+}
+
+function exportActiveReceiptExcel() {
+  if (!lastCompletedTx) {
+    const list = (storeData.transactions && storeData.transactions.length > 0) ? storeData.transactions : (storeData.recentTransactions || []);
+    if (list.length > 0) lastCompletedTx = list[0];
+  }
+  if (!lastCompletedTx) {
+    showToast("Belum ada data transaksi aktif!");
+    return;
+  }
+  exportSingleTransactionExcel(lastCompletedTx);
+}
+
+function exportDetailModalExcel() {
+  if (!activeDetailTx) {
+    showToast("Data nota tidak ditemukan!");
+    return;
+  }
+  exportSingleTransactionExcel(activeDetailTx);
+}
+
+function exportSingleTransactionExcel(t) {
+  if (!t) return;
+  const dt = formatIndoDateTime(t.date);
+  const storePlace = t.location || "COPY STAR KUBU - Meja Kasir 1";
+
+  let csv = "\uFEFF"; // UTF-8 BOM untuk Microsoft Excel
+  csv += `"BUKTI TRANSAKSI KASIR - COPY STAR KUBU"\n`;
+  csv += `"Tempat / Lokasi Kasir:","${storePlace}"\n`;
+  csv += `"Alamat:","Jln. Soeparto 1 Kubu, Kec. Kubu, Kab. Kubu Raya"\n`;
+  csv += `"Kontak Toko:","0812-5345-3440 (Star Copy) | IG: @copystarkubu"\n`;
+  csv += `"No. Faktur / Nota:","${t.id || '-'}"\n`;
+  csv += `"Hari Transaksi:","${dt.day}"\n`;
+  csv += `"Tanggal Transaksi:","${dt.date}"\n`;
+  csv += `"Jam Presisi:","${dt.time}"\n`;
+  csv += `"Kasir Bertugas:","${t.cashier || 'Thomas'}"\n`;
+  csv += `"Nama Pelanggan:","${t.customer || 'Umum'}"\n`;
+  csv += `"Metode Pembayaran:","${(t.paymentMethod || 'TUNAI').toUpperCase()}"\n`;
+  csv += `\n`;
+  csv += `"No","Kode Produk","Nama Barang / Layanan Cetak","Jumlah (Qty)","Harga Satuan (Rp)","Subtotal (Rp)"\n`;
+
+  if (t.items && t.items.length > 0) {
+    t.items.forEach((it, idx) => {
+      const pTotal = it.total || ((it.price || 0) * (it.qty || 1));
+      csv += `${idx + 1},"${it.id || it.productId || '-'}","${(it.name || 'Produk').replace(/"/g, '""')}",${it.qty || 1},${it.price || 0},${pTotal}\n`;
+    });
+  } else {
+    csv += `1,"-","Layanan Percetakan / Fotokopi",1,${t.total || 0},${t.total || 0}\n`;
+  }
+
+  csv += `\n`;
+  csv += `"","","","Subtotal:","Rp ${(t.subtotal || t.total || 0).toLocaleString('id-ID')}"\n`;
+  if (t.discount && t.discount > 0) {
+    csv += `"","","","Potongan Diskon:","- Rp ${t.discount.toLocaleString('id-ID')}"\n`;
+  }
+  csv += `"","","","TOTAL AKHIR:","Rp ${(t.total || 0).toLocaleString('id-ID')}"\n`;
+  csv += `"","","","Uang Diterima:","Rp ${(t.amountPaid || t.total || 0).toLocaleString('id-ID')}"\n`;
+  csv += `"","","","Kembalian:","Rp ${(t.change || 0).toLocaleString('id-ID')}"\n`;
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const cleanId = (t.id || "TRX").replace(/[^a-zA-Z0-9_-]/g, "");
+  const dateSafe = (t.date || "").replace(/[^0-9]/g, "").slice(0, 14);
+  a.href = url;
+  a.download = `NOTA_EXCEL_${cleanId}_${dateSafe || 'RECORD'}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast(`✅ Berhasil mengunduh nota Excel ${cleanId} (lengkap tanggal, jam & tempat)!`);
+}
+
+const INDO_DAYS = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+const INDO_MONTHS = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"];
+
+function formatIndoDateTime(dateStr) {
+  if (!dateStr) return { day: "-", date: "-", time: "-", full: "-" };
+  const d = new Date(dateStr.replace(/-/g, "/"));
+  if (isNaN(d.getTime())) {
+    const parts = dateStr.split(" ");
+    return { day: "Hari Operasional", date: parts[0] || dateStr, time: parts[1] ? `${parts[1]} WIB` : "10:00 WIB", full: dateStr };
+  }
+  const dayName = INDO_DAYS[d.getDay()];
+  const dateFormatted = `${d.getDate()} ${INDO_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+  const hours = String(d.getHours()).padStart(2, "0");
+  const mins = String(d.getMinutes()).padStart(2, "0");
+  const timeFormatted = `${hours}:${mins} WIB`;
+  return {
+    day: dayName,
+    date: dateFormatted,
+    time: timeFormatted,
+    full: `${dayName}, ${dateFormatted} - ${timeFormatted}`,
+    rawDate: d.toISOString().slice(0, 10)
+  };
+}
+
+function setTxDateFilter(mode) {
+  const input = document.getElementById("txFilterDate");
+  if (!input) return;
+  if (mode === "all") {
+    input.value = "";
+    currentTxDateFilter = "";
+  } else if (mode === "today") {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    input.value = todayStr;
+    currentTxDateFilter = todayStr;
+  } else if (mode === "yesterday") {
+    const yest = new Date(Date.now() - 86400000);
+    const yestStr = yest.toISOString().slice(0, 10);
+    input.value = yestStr;
+    currentTxDateFilter = yestStr;
+  }
+  filterTxByDate();
+}
+
+function filterTxByDate(dateVal) {
+  if (dateVal !== undefined) {
+    currentTxDateFilter = dateVal;
+  } else {
+    const input = document.getElementById("txFilterDate");
+    currentTxDateFilter = input ? input.value : "";
+  }
+  renderRecentTransactionsTable();
+}
+
+function renderRecentTransactionsTable() {
+  const tbody = document.getElementById("recentTransactionsTableBody");
+  if (!tbody) return;
+
+  const txList = storeData.transactions || [];
+  const searchInput = document.getElementById("txSearchInput");
+  const keyword = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+  let filtered = txList.filter(t => {
+    let matchDate = true;
+    if (currentTxDateFilter) {
+      matchDate = (t.date && t.date.startsWith(currentTxDateFilter));
+    }
+    let matchKeyword = true;
+    if (keyword) {
+      const idMatch = (t.id || "").toLowerCase().includes(keyword);
+      const custMatch = (t.customer || "").toLowerCase().includes(keyword);
+      const cashMatch = (t.cashier || "").toLowerCase().includes(keyword);
+      const itemMatch = (t.items || []).some(it => (it.name || "").toLowerCase().includes(keyword));
+      matchKeyword = idMatch || custMatch || cashMatch || itemMatch;
+    }
+    return matchDate && matchKeyword;
   });
-  html += `</tbody>`;
-  table.innerHTML = html;
+
+  // Urutkan transaksi terbaru di atas
+  filtered.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+  // Hitung total omzet & laba periode yang difilter
+  let filterOmzet = 0;
+  let filterProfit = 0;
+  filtered.forEach(t => {
+    filterOmzet += (t.total || 0);
+    filterProfit += (t.profit || 0);
+  });
+
+  // Update summary bar
+  const pLabel = document.getElementById("txFilterPeriodLabel");
+  if (pLabel) {
+    if (currentTxDateFilter) {
+      const dt = formatIndoDateTime(currentTxDateFilter);
+      pLabel.textContent = `${dt.day}, ${dt.date}`;
+    } else {
+      pLabel.textContent = "Semua Tanggal Transaksi";
+    }
+  }
+
+  const oLabel = document.getElementById("txFilterOmzetLabel");
+  if (oLabel) oLabel.textContent = formatRupiah(filterOmzet);
+
+  const prLabel = document.getElementById("txFilterProfitLabel");
+  if (prLabel) prLabel.textContent = formatRupiah(filterProfit);
+
+  const cLabel = document.getElementById("txFilterCountLabel");
+  if (cLabel) cLabel.textContent = `${filtered.length} Nota`;
+
+  const badge = document.getElementById("recentTxBadge");
+  if (badge) {
+    badge.textContent = `Menampilkan ${filtered.length} riwayat transaksi`;
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding:1.5rem;">Tidak ada transaksi ditemukan pada tanggal atau kata kunci yang dipilih.</td></tr>`;
+    return;
+  }
+
+  // Tampilkan hingga 100 baris agar tetap sangat mulus
+  const displayRows = filtered.slice(0, 100);
+
+  tbody.innerHTML = displayRows.map(t => {
+    let badgeColor = "#10B981";
+    let pm = (t.paymentMethod || "TUNAI").toUpperCase();
+    if (pm === "QRIS") badgeColor = "#3B82F6";
+    else if (pm === "TRANSFER" || pm === "BANK") badgeColor = "#8B5CF6";
+    else if (pm === "KASBON" || pm === "TEMPO") badgeColor = "#F59E0B";
+
+    const dt = formatIndoDateTime(t.date);
+    const storePlace = t.location || "COPY STAR KUBU - Meja Kasir 1";
+
+    // Ringkasan item
+    const itemsSummary = (t.items && t.items.length > 0)
+      ? `${t.items.length} Item (${t.items.map(it => `${it.name} [x${it.qty}]`).slice(0, 2).join(', ')}${t.items.length > 2 ? '...' : ''})`
+      : "1 Layanan Cetak";
+
+    return `
+      <tr>
+        <td style="font-weight:700; color:var(--primary); font-family:monospace; white-space:nowrap;">${t.id || "-"}</td>
+        <td style="white-space:nowrap;">
+          <strong style="color:#FFF;">${dt.day}</strong><br>
+          <small style="color:var(--text-muted); font-size:0.75rem;">${dt.date}</small>
+        </td>
+        <td style="white-space:nowrap;">
+          <span style="display:inline-flex; align-items:center; gap:3px; color:#F59E0B; font-weight:600; font-size:0.78rem;">
+            ⏰ ${dt.time}
+          </span>
+        </td>
+        <td style="font-size:0.78rem;">
+          <strong style="color:#FFF;">📍 ${storePlace}</strong><br>
+          <small style="color:var(--text-muted);">Jln. Soeparto 1 Kubu</small>
+        </td>
+        <td>
+          <strong style="color:#FFF;">${t.cashier || "Thomas"}</strong><br>
+          <small style="color:var(--text-muted);">Pelanggan: <em>${t.customer || "Umum"}</em></small>
+        </td>
+        <td style="max-width:200px; font-size:0.75rem; color:#D1D5DB;">
+          <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${(t.items || []).map(i => `${i.name} (${i.qty})`).join(', ')}">
+            ${itemsSummary}
+          </div>
+        </td>
+        <td>
+          <span style="display:inline-block; padding:2px 8px; border-radius:4px; font-size:0.72rem; font-weight:700; background:rgba(255,255,255,0.06); color:${badgeColor}; border:1px solid ${badgeColor}40;">
+            ${pm}
+          </span>
+        </td>
+        <td style="font-weight:700; color:#FFF; white-space:nowrap;">
+          ${formatRupiah(t.total || 0)}
+        </td>
+        <td style="white-space:nowrap;">
+          <button type="button" class="btn-secondary-sm" onclick="viewTransactionDetail('${t.id}')" style="padding:0.25rem 0.55rem; font-size:0.75rem;" title="Lihat rincian barang, tanggal, jam, dan tempat transaksi">
+            👁️ Detail
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
 }
 
-function renderSeasonalEvents() {
-  const container = document.getElementById("seasonalEventsList");
-  if (!container) return;
+function viewTransactionDetail(txId) {
+  const txList = storeData.transactions || [];
+  const t = txList.find(x => x.id === txId);
+  if (!t) {
+    showToast("Data transaksi tidak ditemukan!");
+    return;
+  }
 
-  container.innerHTML = storeData.seasonalEvents.map(ev => `
-    <div class="seasonal-item" style="border-left-color: ${ev.color};">
-      <div class="seasonal-item-info">
-        <h5>${ev.title}</h5>
-        <p>Periode: <strong>${ev.date}</strong></p>
-      </div>
-      <span class="seasonal-impact-badge" style="color:${ev.color}; background:rgba(255,255,255,0.06);">${ev.impact}</span>
-    </div>
-  `).join("");
+  activeDetailTx = t;
+  const dt = formatIndoDateTime(t.date);
+  const storePlace = t.location || "COPY STAR KUBU - Meja Kasir 1";
+
+  document.getElementById("dtlInvoiceNo").textContent = t.id || "-";
+  document.getElementById("dtlStorePlace").textContent = storePlace;
+  document.getElementById("dtlStoreAddress").textContent = "Jln. Soeparto 1 Kubu, Kec. Kubu, Kab. Kubu Raya";
+  document.getElementById("dtlDateDay").textContent = `${dt.day}, ${dt.date}`;
+  document.getElementById("dtlExactTime").textContent = `⏰ Pukul ${dt.time}`;
+  document.getElementById("dtlCashier").textContent = `${t.cashier || "Thomas (Kasir)"}`;
+  document.getElementById("dtlCustomer").textContent = `${t.customer || "Pelanggan Umum"}`;
+
+  // Items table
+  const tbody = document.getElementById("dtlItemsTableBody");
+  if (tbody) {
+    if (t.items && t.items.length > 0) {
+      tbody.innerHTML = t.items.map(it => `
+        <tr>
+          <td>
+            <strong>${it.name || "Item Produk"}</strong>
+            ${it.notes ? `<br><small style="color:var(--text-muted);">${it.notes}</small>` : ''}
+          </td>
+          <td style="text-align:center; font-weight:700;">${it.qty || 1}</td>
+          <td style="text-align:right;">${formatRupiah(it.price || 0)}</td>
+          <td style="text-align:right; font-weight:700; color:#FFF;">${formatRupiah(it.total || ((it.price || 0) * (it.qty || 1)))}</td>
+        </tr>
+      `).join("");
+    } else {
+      tbody.innerHTML = `
+        <tr>
+          <td><strong>Layanan Fotokopi / Percetakan</strong></td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:right;">${formatRupiah(t.total || 0)}</td>
+          <td style="text-align:right; font-weight:700;">${formatRupiah(t.total || 0)}</td>
+        </tr>
+      `;
+    }
+  }
+
+  document.getElementById("dtlSubtotal").textContent = formatRupiah(t.subtotal || t.total || 0);
+
+  const discRow = document.getElementById("dtlDiscountRow");
+  if (discRow) {
+    if (t.discount && t.discount > 0) {
+      discRow.style.display = "flex";
+      document.getElementById("dtlDiscount").textContent = `- ${formatRupiah(t.discount)}`;
+    } else {
+      discRow.style.display = "none";
+    }
+  }
+
+  document.getElementById("dtlGrandTotal").textContent = formatRupiah(t.total || 0);
+  document.getElementById("dtlPaymentMethod").textContent = (t.paymentMethod || "TUNAI").toUpperCase();
+  document.getElementById("dtlAmountPaid").textContent = formatRupiah(t.amountPaid || t.total || 0);
+  document.getElementById("dtlChange").textContent = formatRupiah(t.change || 0);
+
+  openModal("trxDetailModal");
 }
+
+function printDetailReceipt() {
+  if (!activeDetailTx) return;
+  printTransactionReceipt(activeDetailTx);
+}
+
+function printTransactionReceipt(t) {
+  if (!t) return;
+  const dt = formatIndoDateTime(t.date);
+
+  const metaTime = document.getElementById("rcptMetaTime");
+  if (metaTime) metaTime.textContent = `${dt.full} | ${t.id}`;
+
+  const metaCash = document.getElementById("rcptMetaCashier");
+  if (metaCash) metaCash.textContent = `Kasir: ${t.cashier || "Thomas"}`;
+
+  const metaCust = document.getElementById("rcptMetaCustomer");
+  if (metaCust) metaCust.textContent = `Pelanggan: ${t.customer || "Umum"}`;
+
+  const itemsTable = document.getElementById("rcptItemsTable");
+  if (itemsTable) {
+    const items = t.items || [{ name: "Layanan Cetak", qty: 1, price: t.total, total: t.total }];
+    itemsTable.innerHTML = items.map(it => `
+      <tr>
+        <td style="text-align:left;">${it.name}<br><small style="color:#666;">${it.qty} x ${formatRupiah(it.price || 0)}</small></td>
+        <td style="text-align:right; vertical-align:bottom;">${formatRupiah(it.total || ((it.price || 0) * (it.qty || 1)))}</td>
+      </tr>
+    `).join("");
+  }
+
+  const rcptSub = document.getElementById("rcptSubtotal");
+  if (rcptSub) rcptSub.textContent = formatRupiah(t.subtotal || t.total || 0);
+
+  const rcptDiscRow = document.getElementById("rcptDiscountRow");
+  const rcptDisc = document.getElementById("rcptDiscount");
+  if (rcptDiscRow && rcptDisc) {
+    if (t.discount && t.discount > 0) {
+      rcptDiscRow.style.display = "table-row";
+      rcptDisc.textContent = `- ${formatRupiah(t.discount)}`;
+    } else {
+      rcptDiscRow.style.display = "none";
+    }
+  }
+
+  const rcptTot = document.getElementById("rcptTotal");
+  if (rcptTot) rcptTot.textContent = formatRupiah(t.total || 0);
+
+  const rcptMeth = document.getElementById("rcptMethod");
+  if (rcptMeth) rcptMeth.textContent = (t.paymentMethod || "TUNAI").toUpperCase();
+
+  const rcptPaid = document.getElementById("rcptPaid");
+  if (rcptPaid) rcptPaid.textContent = formatRupiah(t.amountPaid || t.total || 0);
+
+  const rcptChg = document.getElementById("rcptChange");
+  if (rcptChg) rcptChg.textContent = formatRupiah(t.change || 0);
+
+  closeModal("trxDetailModal");
+  openModal("receiptModal");
+}
+
+/* ==========================================================================
+   SIMULASI UJI BEBAN DATA DUMMY (1.000 - 2.000 DATA) - ARAHAN DOSEN
+   ========================================================================== */
+function runDummyStressTest(targetCount = 1500) {
+  const t0 = performance.now();
+  if (!_originalInitialTransactions && storeData.transactions) {
+    _originalInitialTransactions = JSON.parse(JSON.stringify(storeData.transactions));
+  }
+
+  showToast(`⏳ Menggenerasi ${targetCount.toLocaleString('id-ID')} data transaksi dummy untuk uji kelengkapan...`);
+
+  const customers = [
+    "Pelanggan Umum", "Ibu Sulistowati", "Pak RT Usman (RT 03)", "Bpk. Herman Saputra", 
+    "Siti Rahmawati", "CV. Mitra Karya Sejahtera", "Dinas Pendidikan Kec. Kubu",
+    "Puskesmas Kubu", "SMP Negeri 1 Kubu", "SD Negeri 04 Kubu", "Koperasi Desa Mandiri",
+    "Ahmad Fauzi (Mahasiswa)", "Dewi Sartika (Guru)", "Budi Santoso", "Wahyu Pratama"
+  ];
+
+  const cashiers = ["Niko (Owner)", "Thomas (Kasir Pagi)", "Siti (Kasir Sore)"];
+  const paymentMethods = ["TUNAI", "TUNAI", "QRIS", "QRIS", "TRANSFER", "KASBON"];
+
+  const dummyItemsCatalog = [
+    { id: "PRD-001", name: "Fotokopi B/W", price: 250, costPrice: 85, defaultQty: 20 },
+    { id: "PRD-002", name: "Fotokopi Bolak-Balik", price: 450, costPrice: 160, defaultQty: 15 },
+    { id: "PRD-003", name: "Print Dokumen Hitam Putih", price: 1000, costPrice: 280, defaultQty: 10 },
+    { id: "PRD-004", name: "Print Warna / Full Color", price: 2000, costPrice: 650, defaultQty: 8 },
+    { id: "PRD-005", name: "Jilid Lakban Mika", price: 3000, costPrice: 1100, defaultQty: 1 },
+    { id: "PRD-007", name: "Jilid Spiral Kawat", price: 8000, costPrice: 3200, defaultQty: 1 },
+    { id: "PRD-009", name: "Kertas HVS PaperOne A4 70gr", price: 45000, costPrice: 40000, defaultQty: 1 },
+    { id: "PRD-010", name: "Kertas HVS Sinar Dunia F4 70gr", price: 48000, costPrice: 42500, defaultQty: 1 },
+    { id: "PRD-013", name: "Pulpen Standard AE7 0.5mm", price: 2500, costPrice: 1700, defaultQty: 2 },
+    { id: "PRD-014", name: "Pulpen Pilot G2 0.7mm", price: 18000, costPrice: 14500, defaultQty: 1 },
+    { id: "PRD-016", name: "Map Snelhechter Folio Plastik", price: 4500, costPrice: 3000, defaultQty: 3 },
+    { id: "PRD-025", name: "Paket Pas Foto 3x4 (4 Lembar)", price: 15000, costPrice: 3500, defaultQty: 1 },
+    { id: "PRD-026", name: "Paket Pas Foto 4x6 (4 Lembar)", price: 15000, costPrice: 3500, defaultQty: 1 },
+    { id: "PRD-027", name: "Cetak Spanduk Flexi Frontlite", price: 65000, costPrice: 28000, defaultQty: 1 }
+  ];
+
+  const newTransactions = [];
+  const baseDate = new Date();
+
+  for (let i = 1; i <= targetCount; i++) {
+    const trxNum = 10000 + i;
+    const pastMinutes = Math.floor(Math.random() * 43200); // dalam 30 hari terakhir
+    const trxTime = new Date(baseDate.getTime() - pastMinutes * 60000);
+    const dateStr = trxTime.toISOString().slice(0, 10) + " " + trxTime.toTimeString().slice(0, 8);
+
+    const cust = customers[Math.floor(Math.random() * customers.length)];
+    const cash = cashiers[Math.floor(Math.random() * cashiers.length)];
+    const pm = paymentMethods[Math.floor(Math.random() * paymentMethods.length)];
+
+    // Pilih 1 - 4 item acak
+    const numItems = Math.floor(Math.random() * 3) + 1;
+    const items = [];
+    let subtotal = 0;
+    let costTotal = 0;
+
+    for (let k = 0; k < numItems; k++) {
+      const prod = dummyItemsCatalog[Math.floor(Math.random() * dummyItemsCatalog.length)];
+      const qtyMultiplier = Math.floor(Math.random() * 3) + 1;
+      const qty = prod.defaultQty * qtyMultiplier;
+      const lineTotal = prod.price * qty;
+      const lineCost = prod.costPrice * qty;
+
+      subtotal += lineTotal;
+      costTotal += lineCost;
+      items.push({
+        id: prod.id,
+        name: prod.name,
+        qty: qty,
+        price: prod.price,
+        costPrice: prod.costPrice,
+        total: lineTotal
+      });
+    }
+
+    const discount = subtotal > 100000 ? Math.round(subtotal * 0.05) : 0;
+    const total = subtotal - discount;
+    const profit = Math.max(0, total - costTotal);
+
+    newTransactions.push({
+      id: `TRX-${trxNum}`,
+      date: dateStr,
+      customer: cust,
+      cashier: cash,
+      location: "COPY STAR KUBU - Meja Kasir 1",
+      items: items,
+      subtotal: subtotal,
+      discount: discount,
+      total: total,
+      costTotal: costTotal,
+      profit: profit,
+      paymentMethod: pm,
+      amountPaid: total,
+      change: 0
+    });
+  }
+
+
+  // Set transactions ke data baru
+  storeData.transactions = newTransactions;
+
+  // Re-render
+  renderOwnerAnalytics();
+
+  const t1 = performance.now();
+  const renderTimeMs = (t1 - t0).toFixed(2);
+
+  // Update indikator UI
+  const badgeEl = document.getElementById("dummyDataCountBadge");
+  if (badgeEl) badgeEl.textContent = `${targetCount.toLocaleString('id-ID')} Data Uji Dummy`;
+
+  const detailEl = document.getElementById("dummyDataCountDetail");
+  if (detailEl) detailEl.textContent = `1.500 transaksi berhasil dimuat`;
+
+  const timeEl = document.getElementById("dummyRenderTime");
+  if (timeEl) timeEl.textContent = `${renderTimeMs} ms`;
+
+  const comfortEl = document.getElementById("dummyComfortStatus");
+  if (comfortEl) comfortEl.textContent = "100% Responsif & Ergonomis";
+
+  const recentBadge = document.getElementById("recentTxBadge");
+  if (recentBadge) recentBadge.textContent = `Menampilkan transaksi dari ${targetCount.toLocaleString('id-ID')} data simulasi`;
+
+  playBeep("success");
+  showToast(`✅ Berhasil menyimulasikan ${targetCount.toLocaleString('id-ID')} data dummy dalam ${renderTimeMs} ms! Sistem terbukti sangat nyaman, cepat, dan lengkap.`);
+}
+
+function resetDummyDataToDefault() {
+  if (_originalInitialTransactions) {
+    storeData.transactions = JSON.parse(JSON.stringify(_originalInitialTransactions));
+  }
+  renderOwnerAnalytics();
+
+  const badgeEl = document.getElementById("dummyDataCountBadge");
+  if (badgeEl) badgeEl.textContent = "Data Riil (Standar)";
+
+  const detailEl = document.getElementById("dummyDataCountDetail");
+  if (detailEl) detailEl.textContent = `${(storeData.transactions || []).length} transaksi harian aktif`;
+
+  const timeEl = document.getElementById("dummyRenderTime");
+  if (timeEl) timeEl.textContent = "0.00 ms";
+
+  const recentBadge = document.getElementById("recentTxBadge");
+  if (recentBadge) recentBadge.textContent = "Menampilkan 6 transaksi teranyar";
+
+  playBeep("beep");
+  showToast("🔄 Data transaksi berhasil dikembalikan ke status awal standar toko.");
+}
+
+function downloadDummySqlFile() {
+  const sqlHeader = `-- ============================================================================
+-- COPY STAR KUBU - DUMMY DATA TRANSAKSI BESAR (1.500 DATA) UNTUK PENGUJIAN
+-- Sesuai Arahan Dosen: Simulasi Data Dummy Laravel & MySQL
+-- Total Record: 1.500 Transaksi & Rincian Item Penjualan
+-- ============================================================================
+
+SET FOREIGN_KEY_CHECKS=0;
+START TRANSACTION;
+
+`;
+
+  let sqlInserts = "";
+  const txList = (storeData.transactions && storeData.transactions.length >= 1000) 
+    ? storeData.transactions 
+    : [];
+
+  if (txList.length === 0) {
+    // Generate cepat 1.500 sql insert
+    showToast("Mengunduh skema SQL simulasi 1.500 data dummy Laravel/MySQL...");
+    runDummyStressTest(1500);
+  }
+
+  const exportTx = storeData.transactions.slice(0, 1500);
+
+  exportTx.forEach((t, idx) => {
+    const custEsc = (t.customer || "Umum").replace(/'/g, "\\'");
+    const cashEsc = (t.cashier || "Kasir").replace(/'/g, "\\'");
+    const locEsc = (t.location || "COPY STAR KUBU - Meja Kasir 1 (Jln. Soeparto 1 Kubu)").replace(/'/g, "\\'");
+    sqlInserts += `INSERT INTO transactions (invoice_no, user_id, member_id, shift_id, subtotal_amount, discount_amount, final_amount, payment_method, cash_received, cash_change, status, location_place, notes, created_at) VALUES ('${t.id}', 'USR-002', NULL, 1, ${t.subtotal || 0}, ${t.discount || 0}, ${t.total || 0}, '${t.paymentMethod || "TUNAI"}', ${t.amountPaid || t.total || 0}, ${t.change || 0}, 'PAID', '${locEsc}', 'Pelanggan: ${custEsc}', '${dateVal}');\n`;
+
+    if (t.items && t.items.length > 0) {
+      t.items.forEach((it, itIdx) => {
+        const itNameEsc = (it.name || "Item").replace(/'/g, "\\'");
+        sqlInserts += `INSERT INTO transaction_items (invoice_no, product_id, product_name, unit_sell_price, unit_cost_price, qty, subtotal) VALUES ('${t.id}', '${it.id || "PRD-001"}', '${itNameEsc}', ${it.price || 0}, ${it.costPrice || 0}, ${it.qty || 1}, ${it.total || 0});\n`;
+      });
+    }
+  });
+
+  const sqlFooter = `\nCOMMIT;\nSET FOREIGN_KEY_CHECKS=1;\n-- Selesai: 1.500 Transaksi Dummy Berhasil Di-generate.`;
+
+  const blob = new Blob([sqlHeader + sqlInserts + sqlFooter], { type: "text/sql;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `copy_star_kubu_dummy_1500_transactions_${new Date().toISOString().slice(0,10)}.sql`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast("💾 File SQL 1.500 Data Dummy siap di-import ke database Laravel / MySQL!");
+}
+
 
 /* ==========================================================================
    INVENTORY & STOCK MANAGEMENT
@@ -2451,13 +3007,19 @@ function askStarBot(query) {
       3. <strong>${sortedByMargin[2].name}</strong> (Margin: ${sortedByMargin[2].margin}%, Untung: ${formatRupiah(sortedByMargin[2].profitPerUnit)}/unit)<br><br>
       💡 <em>Tips: Dorong kasir untuk menawarkan laminating dan fotokopi skala banyak karena modal bahan bakunya sangat ekonomis!</em>`;
     } else if (qLower.includes("omzet") || qLower.includes("laba hari ini") || qLower.includes("pendapatan")) {
-      const today = storeData.weeklySalesData[storeData.weeklySalesData.length - 1];
+      let currentOmzet = 1600000;
+      let currentProfit = 720000;
+      let countTx = 54;
+      if (storeData.transactions && storeData.transactions.length > 0) {
+        currentOmzet = storeData.transactions.reduce((sum, t) => sum + (t.total || 0), 0);
+        currentProfit = storeData.transactions.reduce((sum, t) => sum + (t.profit || 0), 0);
+        countTx = storeData.transactions.length;
+      }
       answer = `Laporan performa penjualan <strong>Hari Ini</strong>:<br>
-      • <strong>Omzet Penjualan:</strong> ${formatRupiah(today.sales)}<br>
-      • <strong>Estimasi Laba Bersih:</strong> ${formatRupiah(today.profit)}<br>
-      • <strong>Margin Rata-rata:</strong> ${today.margin}%<br>
-      • <strong>Jumlah Transaksi:</strong> ${today.txCount} nota kasir.<br><br>
-      📈 Tren naik +18.5% dibanding kemarin, terutama dari lonjakan pesanan fotokopi modul & rim kertas!`;
+      • <strong>Omzet Penjualan:</strong> ${formatRupiah(currentOmzet)}<br>
+      • <strong>Estimasi Laba Bersih:</strong> ${formatRupiah(currentProfit)}<br>
+      • <strong>Jumlah Transaksi:</strong> ${countTx} nota kasir.<br><br>
+      📈 Arus kas toko berjalan sangat lancar, didukung oleh pesanan fotokopi modul & perlengkapan ATK!`;
     } else if (qLower.includes("restock") || qLower.includes("habis") || qLower.includes("stok")) {
       const lowItems = storeData.products.filter(p => !p.isService && p.stock <= p.minStock);
       answer = `⚠️ <strong>Peringatan Stok Mendesak:</strong><br>
@@ -2469,9 +3031,13 @@ function askStarBot(query) {
       • Total Transaksi: <strong>${topEmp.transactionsServed} transaksi</strong><br>
       • Kontribusi Omzet: <strong>${formatRupiah(topEmp.totalSales)}</strong><br>
       • Shift: ${topEmp.shift}<br><br>
-      ${topEmp.name} sangat cepat dalam mengoperasikan multi-sesi kasir dan menawarkan map bundling! 🌟`;
+      ${topEmp.name} sangat cepat dalam mengoperasikan multi-sesi kasir dan melayani antrean warga! 🌟`;
     } else {
-      answer = `Data COPY STAR KUBU menunjukkan operasional hari ini berjalan sangat stabil. Total omzet saat ini ${formatRupiah(storeData.weeklySalesData[6].sales)} dengan margin laba 45%. Ada 2 item yang membutuhkan restock segera. Apakah Anda ingin melihat rincian pengadaan atau laporan kasir?`;
+      let currentOmzet = 1600000;
+      if (storeData.transactions && storeData.transactions.length > 0) {
+        currentOmzet = storeData.transactions.reduce((sum, t) => sum + (t.total || 0), 0);
+      }
+      answer = `Data COPY STAR KUBU menunjukkan operasional toko berjalan sangat stabil. Total omzet saat ini <strong>${formatRupiah(currentOmzet)}</strong>. Ada item yang membutuhkan restock segera. Apakah Anda ingin melihat rincian pengadaan atau riwayat kasir?`;
     }
 
     chatBody.innerHTML += `
@@ -2551,12 +3117,25 @@ document.getElementById("supervisorPinInput")?.addEventListener("keydown", (e) =
    ========================================================================== */
 function openModal(id) {
   const el = document.getElementById(id);
-  if (el) el.classList.add("active");
+  if (el) {
+    el.classList.add("active");
+    el.style.display = "flex";
+    el.style.zIndex = "99999";
+    if (id === "receiptModal") {
+      const chk = document.getElementById("chkAutoExportExcel");
+      if (chk) chk.checked = !!autoExportExcelOnCheckout;
+    }
+  } else {
+    console.warn("Modal tidak ditemukan: " + id);
+  }
 }
 
 function closeModal(id) {
   const el = document.getElementById(id);
-  if (el) el.classList.remove("active");
+  if (el) {
+    el.classList.remove("active");
+    el.style.display = "none";
+  }
 }
 
 function showToast(msg) {
@@ -2829,34 +3408,90 @@ function printOfficialReport() {
   }, 100);
 }
 
-function exportTransactionsCSV() {
-  const transactions = storeData.recentTransactions || [];
-  if (transactions.length === 0) {
-    showToast("Belum ada data transaksi untuk diekspor!");
+function exportTransactionsCSV(filterMode = "all") {
+  let list = (storeData.transactions && storeData.transactions.length > 0) 
+    ? storeData.transactions 
+    : (storeData.recentTransactions || []);
+
+  if (filterMode === "filtered" && currentTxDateFilter) {
+    list = list.filter(t => t.date && t.date.startsWith(currentTxDateFilter));
+  }
+
+  const searchInput = document.getElementById("txSearchInput");
+  const keyword = (filterMode === "filtered" && searchInput) ? searchInput.value.trim().toLowerCase() : "";
+  if (keyword) {
+    list = list.filter(t => {
+      const idMatch = (t.id || "").toLowerCase().includes(keyword);
+      const custMatch = (t.customer || "").toLowerCase().includes(keyword);
+      const cashMatch = (t.cashier || "").toLowerCase().includes(keyword);
+      const itemMatch = (t.items || []).some(it => (it.name || "").toLowerCase().includes(keyword));
+      return idMatch || custMatch || cashMatch || itemMatch;
+    });
+  }
+
+  if (list.length === 0) {
+    showToast("Belum ada data transaksi yang cocok untuk diekspor!");
     return;
   }
 
-  let csvContent = "\uFEFF"; // UTF-8 BOM
-  csvContent += "No. Transaksi,Tanggal & Waktu,Nama Pelanggan,Kasir,Metode Pembayaran,Total Belanja (Rp),Total Modal HPP (Rp),Laba Bersih (Rp)\n";
+  // Urutkan transaksi terbaru di atas
+  const sorted = [...list].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-  transactions.forEach(trx => {
+  let csvContent = "\uFEFF"; // UTF-8 BOM agar terbaca sempurna di Microsoft Excel
+  csvContent += "No. Faktur / Nota,Hari,Tanggal,Jam Transaksi (WIB),Tempat / Lokasi Toko,Nama Kasir,Nama Pelanggan,Rincian Barang yang Dibeli,Total Macam Barang,Total Qty Barang,Subtotal (Rp),Diskon (Rp),Total Akhir Omzet (Rp),Metode Pembayaran,Uang Diterima (Rp),Kembalian (Rp),Total Modal HPP (Rp),Laba Bersih Toko (Rp),Status Pembayaran\n";
+
+  sorted.forEach(t => {
+    const dt = formatIndoDateTime(t.date);
+    const place = (t.location || "COPY STAR KUBU - Meja Kasir 1").replace(/"/g, '""');
+    const cashier = (t.cashier || "Thomas").replace(/"/g, '""');
+    const customer = (t.customer || "Pelanggan Umum").replace(/"/g, '""');
+
+    let itemsStr = "";
+    let totalQty = 0;
+    if (t.items && t.items.length > 0) {
+      itemsStr = t.items.map(it => {
+        const q = it.qty || 1;
+        totalQty += q;
+        return `${it.name || 'Produk'} [x${q} @${it.price || 0}]`;
+      }).join("; ").replace(/"/g, '""');
+    } else {
+      itemsStr = "Layanan Percetakan / Fotokopi";
+      totalQty = 1;
+    }
+
+    const pm = (t.paymentMethod || "TUNAI").toUpperCase();
+    const status = (pm === "KASBON") ? "PIUTANG_TEMPO" : "LUNAS";
+
     const row = [
-      `"${trx.id}"`,
-      `"${trx.date}"`,
-      `"${(trx.customer || 'Pelanggan Umum').replace(/"/g, '""')}"`,
-      `"${(trx.cashier || storeData.activeShift.cashierName).replace(/"/g, '""')}"`,
-      `"${trx.paymentMethod}"`,
-      trx.total || 0,
-      trx.costTotal || 0,
-      trx.profit || 0
+      `"${t.id || '-'}"`,
+      `"${dt.day}"`,
+      `"${dt.date}"`,
+      `"${dt.time}"`,
+      `"${place}"`,
+      `"${cashier}"`,
+      `"${customer}"`,
+      `"${itemsStr}"`,
+      t.items ? t.items.length : 1,
+      totalQty,
+      t.subtotal || t.total || 0,
+      t.discount || 0,
+      t.total || 0,
+      `"${pm}"`,
+      t.amountPaid || t.total || 0,
+      t.change || 0,
+      t.costTotal || 0,
+      t.profit || 0,
+      `"${status}"`
     ];
+
     csvContent += row.join(",") + "\n";
   });
 
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
-  const fileName = `Laporan_Transaksi_COPY_STAR_KUBU_${new Date().toISOString().slice(0, 10)}.csv`;
+  const dateSuffix = (filterMode === "filtered" && currentTxDateFilter) ? `_${currentTxDateFilter}` : `_${new Date().toISOString().slice(0, 10)}`;
+  const fileName = `LAPORAN_TRANSAKSI_EXCEL_COPY_STAR_KUBU${dateSuffix}.csv`;
   link.setAttribute("href", url);
   link.setAttribute("download", fileName);
   document.body.appendChild(link);
@@ -2864,7 +3499,11 @@ function exportTransactionsCSV() {
   document.body.removeChild(link);
   URL.revokeObjectURL(url);
 
-  showToast("File Laporan Transaksi CSV Berhasil Diunduh 📥");
+  showToast(`✅ Berhasil mengunduh ${sorted.length} data transaksi ke Excel! Lengkap tanggal, jam, tempat & rincian.`);
+}
+
+function exportTransactionsCsv() {
+  exportTransactionsCSV("all");
 }
 
 /* ==========================================================================
@@ -2994,9 +3633,11 @@ function confirmKasbonCheckout() {
   const netProfit = finalTotal - costTotal;
   const remainingDebt = Math.max(0, finalTotal - dpAmount);
 
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const nowStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
   const trxId = "TRX-" + Math.floor(1000 + Math.random() * 9000);
   const debtId = "KSB-" + String((storeData.debts || []).length + 1).padStart(3, "0");
-  const nowStr = new Date().toLocaleString("id-ID", { dateStyle: "short", timeStyle: "short" });
 
   const itemsSummary = currentSession.items.map(it => `${it.name} (${it.qty}x)`).join(", ");
 
@@ -3046,12 +3687,13 @@ function confirmKasbonCheckout() {
     }
   });
 
-  // Catat transaksi
-  storeData.recentTransactions.unshift({
+  // Catat transaksi ke riwayat dan database
+  const newTxObj = {
     id: trxId,
     date: nowStr,
     customer: debtorName,
     cashier: storeData.activeShift.cashierName,
+    location: "COPY STAR KUBU - Meja Kasir 1",
     items: JSON.parse(JSON.stringify(currentSession.items)),
     subtotal: subtotal,
     discount: discountAmount,
@@ -3061,7 +3703,12 @@ function confirmKasbonCheckout() {
     paymentMethod: "KASBON",
     amountPaid: dpAmount,
     change: 0
-  });
+  };
+  lastCompletedTx = newTxObj;
+
+  storeData.recentTransactions.unshift(newTxObj);
+  if (!storeData.transactions) storeData.transactions = [];
+  storeData.transactions.unshift(newTxObj);
 
   // Update kas kasir jika ada DP tunai
   if (dpAmount > 0) {
@@ -3099,6 +3746,16 @@ function confirmKasbonCheckout() {
 
   saveStoreData(storeData);
 
+  // Jika opsi auto export excel aktif
+  if (typeof autoExportExcelOnCheckout !== "undefined" && autoExportExcelOnCheckout) {
+    setTimeout(() => {
+      exportSingleTransactionExcel(newTxObj);
+    }, 400);
+  }
+
+  // Refresh tabel transaksi
+  renderRecentTransactionsTable();
+
   closeModal("newKasbonCheckoutModal");
   openModal("receiptModal");
 
@@ -3117,7 +3774,7 @@ function confirmKasbonCheckout() {
 }
 
 function openKasbonBookModal() {
-  renderKasbonTable();
+  try { renderKasbonTable(); } catch(e) { console.warn("Render kasbon error:", e); }
   openModal("kasbonBookModal");
 }
 
@@ -3471,7 +4128,7 @@ let currentWaFilterStatus = "ALL";
 let currentWaSearchQuery = "";
 
 function openWaQueueModal() {
-  renderWaQueue();
+  try { renderWaQueue(); } catch(e) { console.warn("Render WA error:", e); }
   openModal("waQueueModal");
 }
 

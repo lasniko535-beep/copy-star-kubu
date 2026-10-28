@@ -35,37 +35,47 @@ Sistem ini dibangun dengan arsitektur **100% Offline-First** tanpa ketergantunga
    * Notifikasi stok menipis (*Low Stock Alert*) dan deteksi barang lambat laku (*Dead Stock*).
 7. **💰 Audit Shift Kasir & Rekonsiliasi Laci Kasir (*Cash Drawer*)**
    * Pengecekan selisih uang fisik laci (*cash variance*) saat tutup giliran kerja staf.
-8. **📊 Dashboard Business Intelligence & Asisten StarBot AI**
-   * Grafik tren omzet harian, estimasi HPP, margin laba bersih riil, dan *heatmap* jam-jam sibuk toko.
-   * Chatbot AI yang dapat diajak tanya jawab mengenai performa finansial toko.
+8. **📊 Dashboard Analitik Owner Sederhana & StarBot AI Assistant**
+   * Rekapitulasi omzet penjualan, laba bersih riil, transparansi metode bayar (Tunai, QRIS, Bank, Kasbon).
+   * Fitur simulasi uji beban 1.000 - 2.000 transaksi dummy berbasis Laravel & MySQL sesuai arahan dosen.
+   * Chatbot AI yang dapat diajak tanya jawab mengenai performa finansial toko dalam bahasa manusia yang ramah.
 9. **🛡️ Pusat Cadangan & Pemulihan Database (*Backup & Restore*)**
-   * 1-klik unduh seluruh database ke file JSON untuk disimpan di flashdisk atau Google Drive.
+   * 1-klik unduh seluruh database ke file JSON atau SQL untuk disimpan di flashdisk atau Google Drive.
    * Fitur pulihkan data (*restore*) jika berganti laptop kasir.
    * Fitur ganti PIN Supervisor Owner dan ekspor data ke format Microsoft Excel (.csv).
 
 ---
 
-## 🛠️ Teknologi yang Digunakan
+## 🛠️ Teknologi & Framework yang Digunakan
 
-* **Front-End:** HTML5 Semantic, Modern Vanilla CSS3 (Glassmorphism & Responsive Layout), JavaScript ES6+ State Machine.
-* **Penyimpanan Data:** Web LocalStorage Persistency (*Offline-First Architecture*).
-* **Database Schema:** SQL Relational Schema (`schema.sql`).
-* **Desktop Launcher:** PowerShell & Batch Scripts (`buka_aplikasi.bat`, `server.ps1`).
+* **Frontend:** Blade Templates / HTML5, CSS3 Modern, JavaScript ES6+ (*Responsive POS & Management Dashboard*).
+* **Backend:** Laravel 13 (PHP 8.x) Framework (`artisan`, Controllers, Eloquent Models, API Routes).
+* **Database:** MySQL / MariaDB / PostgreSQL (7 Migrations, Seeders, dan SQL Dump 1.500 Transaksi Simulasi Dosen).
+* **Format Ekspor:** Microsoft Excel Spreadsheet (`.csv` UTF-8 BOM lengkap hari, tanggal, jam presisi, dan tempat).
+* **Offline-First Resilience:** LocalStorage Persistency jika internet di desa padam.
 
 ---
 
 ## 🚀 Cara Menjalankan Aplikasi
 
-### Opsi 1: Langsung Buka di Browser (Paling Mudah)
-Cukup klik ganda (double-click) file `index.html` menggunakan Google Chrome, Microsoft Edge, atau browser modern lainnya.
+### Opsi 1: Menjalankan Server Resmi Laravel (Rekomendasi Dosen)
+Klik ganda file `jalankan_laravel.bat` atau jalankan via terminal:
+```bash
+php artisan serve --port=8000
+```
+Aplikasi Laravel akan aktif di browser pada alamat:
+`http://localhost:8000`
 
-### Opsi 2: Menggunakan Server Lokal
-Klik ganda file `jalankan_server.bat` atau jalankan perintah berikut di terminal:
+### Opsi 2: Menjalankan Server Lokal Cepat (Port 8080)
+Klik ganda file `jalankan_server.bat` atau jalankan perintah:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\server.ps1
 ```
 Aplikasi akan otomatis terbuka di browser pada alamat:
 `http://localhost:8080`
+
+### Opsi 3: Langsung Buka di Browser (Mode Portabel Tanpa Server)
+Cukup klik ganda file `index.html` menggunakan Google Chrome atau Microsoft Edge.
 
 ---
 

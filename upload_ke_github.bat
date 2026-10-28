@@ -11,6 +11,8 @@ echo.
 echo Sedang melakukan sinkronisasi dan push ke branch main...
 echo.
 
+git add .
+git commit -m "Update sistem: Laravel 13, Blade templates, riwayat transaksi per hari & tanggal, tempat, jam, ekspor Excel, dan simulasi 1500 data dummy"
 git branch -M main
 git push -u origin main
 

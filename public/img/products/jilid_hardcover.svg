@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hcBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="coverNavy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="50%" stop-color="#172554"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="goldEmboss" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="30%" stop-color="#facc15"/>
+      <stop offset="70%" stop-color="#ca8a04"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+    <filter id="hcShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="360" fill="url(#hcBg)"/>
+  
+  <circle cx="320" cy="180" r="160" fill="#facc15" opacity="0.06"/>
+
+  <!-- Hardcover Book Perspective -->
+  <g transform="translate(180, 45) rotate(-6)" filter="url(#hcShadow)">
+    <!-- Book Spine thickness back -->
+    <path d="M 15 25 L 260 25 L 275 255 L 30 255 Z" fill="#090d16" opacity="0.6"/>
+    <!-- Page block edges (white paper block) -->
+    <polygon points="260,35 285,45 285,250 260,240" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <!-- Page lines -->
+    <line x1="262" y1="50" x2="283" y2="58" stroke="#94a3b8" stroke-width="1"/>
+    <line x1="262" y1="90" x2="283" y2="98" stroke="#94a3b8" stroke-width="1"/>
+    <line x1="262" y1="130" x2="283" y2="138" stroke="#94a3b8" stroke-width="1"/>
+    <line x1="262" y1="180" x2="283" y2="188" stroke="#94a3b8" stroke-width="1"/>
+
+    <!-- Front Hardcover (Navy Leather/Linen) -->
+    <rect x="20" y="20" width="245" height="235" rx="6" fill="url(#coverNavy)" stroke="#3b82f6" stroke-width="1.5"/>
+
+    <!-- Gold Foil Border Frame -->
+    <rect x="35" y="35" width="215" height="205" rx="4" fill="none" stroke="url(#goldEmboss)" stroke-width="2.5" stroke-dasharray="none"/>
+    <rect x="40" y="40" width="205" height="195" rx="3" fill="none" stroke="url(#goldEmboss)" stroke-width="1" opacity="0.7"/>
+
+    <!-- University Seal Emblem Placeholder in Gold -->
+    <circle cx="142" cy="78" r="22" fill="none" stroke="url(#goldEmboss)" stroke-width="2"/>
+    <polygon points="142,64 148,74 159,75 151,83 153,94 142,88 131,94 133,83 125,75 136,74" fill="url(#goldEmboss)" opacity="0.9"/>
+
+    <!-- Gold Embossed Title Typography -->
+    <text x="142" y="122" fill="url(#goldEmboss)" font-family="Georgia, serif" font-size="16" font-weight="900" letter-spacing="3" text-anchor="middle">SKRIPSI</text>
+    <line x1="85" y1="130" x2="200" y2="130" stroke="url(#goldEmboss)" stroke-width="1.5"/>
+
+    <text x="142" y="148" fill="url(#goldEmboss)" font-family="system-ui, sans-serif" font-size="9" font-weight="700" letter-spacing="1" text-anchor="middle">ANALISIS SISTEM INFORMASI</text>
+    <text x="142" y="162" fill="url(#goldEmboss)" font-family="system-ui, sans-serif" font-size="8" font-weight="600" letter-spacing="0.5" text-anchor="middle">BISNIS &amp; TEKNOLOGI</text>
+
+    <text x="142" y="198" fill="url(#goldEmboss)" font-family="system-ui, sans-serif" font-size="9" font-weight="700" text-anchor="middle">OLEH : MAHASISWA</text>
+    <text x="142" y="218" fill="url(#goldEmboss)" font-family="system-ui, sans-serif" font-size="8" font-weight="600" letter-spacing="1" text-anchor="middle">TAHUN 2024</text>
+
+    <!-- Gold Bookmark Ribbon hanging down -->
+    <path d="M 142 255 L 142 285 L 150 275 L 158 285 L 158 255 Z" fill="url(#goldEmboss)"/>
+  </g>
+
+  <!-- Spec Pill -->
+  <g transform="translate(35, 25)">
+    <rect width="210" height="34" rx="17" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+    <text x="105" y="22" fill="#facc15" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle">HARDCOVER EMBOSS EMAS</text>
+  </g>
+</svg>

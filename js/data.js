@@ -1395,7 +1395,7 @@ const INITIAL_DATA = {
     }
   ],
 
-  // Data Statistik Mingguan (7 Hari) untuk Grafik Omzet & Margin
+  // Data Statistik Omzet Harian Sederhana
   weeklySalesData: [
     { day: "Kamis (01/10)", sales: 1240000, profit: 540000, margin: 43.5, txCount: 42 },
     { day: "Jumat (02/10)", sales: 1480000, profit: 650000, margin: 43.9, txCount: 51 },
@@ -1406,23 +1406,6 @@ const INITIAL_DATA = {
     { day: "Hari Ini (07/10)", sales: 1600000, profit: 720000, margin: 45.0, txCount: 54 }
   ],
 
-  // Heatmap Jam Ramai Toko (Jam vs Hari)
-  heatmapMatrix: [
-    { hour: "08:00 - 10:00", Mon: 85, Tue: 70, Wed: 75, Thu: 60, Fri: 55, Sat: 40, Sun: 20 },
-    { hour: "10:00 - 12:00", Mon: 95, Tue: 90, Wed: 85, Thu: 80, Fri: 85, Sat: 65, Sun: 35 },
-    { hour: "12:00 - 14:00", Mon: 60, Tue: 55, Wed: 50, Thu: 50, Fri: 45, Sat: 40, Sun: 25 },
-    { hour: "14:00 - 16:00", Mon: 88, Tue: 85, Wed: 80, Thu: 75, Fri: 70, Sat: 55, Sun: 30 },
-    { hour: "16:00 - 18:00", Mon: 92, Tue: 88, Wed: 82, Thu: 78, Fri: 80, Sat: 60, Sun: 35 },
-    { hour: "18:00 - 21:00", Mon: 50, Tue: 45, Wed: 40, Thu: 45, Fri: 50, Sat: 45, Sun: 20 }
-  ],
-
-  // Kalender Event & Seasonal Insight
-  seasonalEvents: [
-    { date: "15 Juli - 10 Ags", title: "Tahun Ajaran Baru & Masuk Sekolah", impact: "+65% Buku Tulis, Kertas Sampul & Map", color: "#F59E0B" },
-    { date: "25 - 30 Tiap Bulan", title: "Periode Gajian Kantor (B2B Restock)", impact: "+40% Rim Kertas & Tinta Cetak", color: "#10B981" },
-    { date: "Oktober - November", title: "Musim Skripsi & Laporan Magang", impact: "+80% Fotokopi, Print Warna & Jilid Skripsi", color: "#3B82F6" },
-    { date: "Awal Desember", title: "Ujian Akhir Semester (UAS)", impact: "+50% Print Kisi-kisi & Modul", color: "#8B5CF6" }
-  ],
 
   // Buku Kasbon & Utang Piutang Warga Desa
   debts: [

@@ -166,16 +166,16 @@
           "paragraph": "Pusat informasi strategis pemilik usaha (Owner) berbasis Business Intelligence.",
           "bullets": [
             {
-              "prefix": "Visualisasi Metrik Finansial:",
-              "text": "Grafik tren omzet harian, estimasi modal pokok (HPP), serta margin laba bersih riil."
+              "prefix": "Visualisasi Keuangan Sederhana:",
+              "text": "Rekapitulasi omzet penjualan harian, modal pokok (HPP), keuntungan bersih riil, serta transparansi metode bayar tunai/non-tunai yang mudah dipahami orang awam."
             },
             {
-              "prefix": "Heatmap Jam Ramai (Peak Hours):",
-              "text": "Matriks analitik jam-jam toko paling sibuk untuk membantu penataan jadwal kerja staf kasir."
+              "prefix": "Uji Skalabilitas Dummy Data (1.000 - 2.000 Transaksi):",
+              "text": "Fitur simulasi pengujian beban data skala besar berbasis Laravel & MySQL untuk memastikan sistem tetap responsif, cepat, dan lengkap."
             },
             {
               "prefix": "StarBot AI:",
-              "text": "Chatbot asisten cerdas yang menganalisis database penjualan untuk menjawab pertanyaan strategis pemilik mengenai tren produk terlaris dan evaluasi performa toko."
+              "text": "Chatbot asisten cerdas yang menganalisis database penjualan untuk menjawab pertanyaan strategis pemilik mengenai tren produk terlaris dan evaluasi performa toko dalam bahasa manusia yang ramah."
             }
           ]
         }
@@ -230,7 +230,7 @@
         },
         {
           "prefix": "Dukungan Keputusan Strategis:",
-          "text": "POS Biasa: Hanya tabel angka omzet kasar | COPY STAR KUBU: Heatmap jam sibuk, grafik laba bersih, dan konsultasi StarBot AI."
+          "text": "POS Biasa: Hanya tabel angka omzet kasar | COPY STAR KUBU: Rekapitulasi laba bersih riil, transparansi metode bayar, simulasi uji beban 1.500 dummy data, dan konsultasi StarBot AI."
         }
       ]
     },
