@@ -9,8 +9,10 @@ echo Menyinkronkan file aset statis (JS, CSS, Gambar) ke folder public...
 xcopy /Y /E /I /Q "%~dp0js" "%~dp0public\js" >nul 2>&1
 xcopy /Y /E /I /Q "%~dp0css" "%~dp0public\css" >nul 2>&1
 xcopy /Y /E /I /Q "%~dp0img" "%~dp0public\img" >nul 2>&1
+copy /Y "%~dp0index.html" "%~dp0public\index.html" >nul 2>&1
 copy /Y "%~dp0logo.png" "%~dp0public\logo.png" >nul 2>&1
 copy /Y "%~dp0manifest.json" "%~dp0public\manifest.json" >nul 2>&1
+copy /Y "%~dp0ui-ux-prototype.html" "%~dp0public\ui-ux-prototype.html" >nul 2>&1
 
 echo.
 echo Membuka aplikasi di browser: http://localhost:8000 ...

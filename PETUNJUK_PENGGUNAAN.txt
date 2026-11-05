@@ -1,0 +1,69 @@
+================================================================================
+  COPY STAR KUBU - SISTEM KASIR, PERCETAKAN DIGITAL & RITEL (LARAVEL 13)
+================================================================================
+
+Proyek ini telah dikonfigurasi lengkap dengan arsitektur MVC Laravel 13,
+database SQLite pre-seeded (terisi 1.500 transaksi simulasi & data master),
+antarmuka kasir Single Page Application (SPA), serta modul laporan ekspor Excel.
+
+--------------------------------------------------------------------------------
+CARA MENJALANKAN SISTEM:
+--------------------------------------------------------------------------------
+1. Menggunakan File Batch (Paling Praktis):
+   Cukup klik ganda (double-click) pada file:
+   -> jalankan_laravel.bat
+   Browser akan otomatis terbuka di http://localhost:8000 dan server aktif.
+
+2. Menggunakan Terminal / Command Prompt:
+   Buka terminal di folder ini, lalu jalankan:
+   -> php artisan serve --port=8000
+   Lalu buka browser di http://localhost:8000
+
+--------------------------------------------------------------------------------
+STRUKTUR FILE & DOKUMEN PENTING:
+--------------------------------------------------------------------------------
+1. ui-ux-prototype.html
+   -> Prototipe interaktif UI/UX 8 layar, palet warna, dan alur sistem.
+      Dapat dibuka langsung di browser manapun (Chrome/Edge/Firefox).
+
+2. LAPORAN_PROTOTYPE_UI_UX.md
+   -> Dokumen laporan akademik UI/UX lengkap dengan User Persona,
+      Sitemap, User Journey, dan Evaluasi 10 Usability Heuristics Nielsen.
+
+3. PANDUAN_PERTATANAN_SIDANG_DOSEN.md
+   -> Panduan verifikasi teknis sistem, pembuktian arsitektur MVC, dan uji beban database.
+
+4. index.html & public/index.html
+   -> Antarmuka utama Meja Kasir POS, Kalkulator Print, Buku Kasbon,
+      Antrean Berkas WA, Studio Pas Foto, dan Dasbor Owner.
+
+5. css/style.css & public/css/style.css
+   -> Seluruh stylesheet terpisah untuk tema gelap/terang, layout kasir,
+      modal dialog, dan kartu produk.
+
+6. js/app.js & js/data.js (serta di folder public/js/)
+   -> Kode JavaScript logika transaksi, sinkronisasi API Laravel checkout,
+      kalkulator lembar print, audio kasir, dan antrean WhatsApp.
+
+7. database/database.sqlite
+   -> Database terisi penuh dengan 1.500 data dummy realistis dan master ATK.
+
+8. resources/views/
+   -> Template Laravel Blade (layouts/app.blade.php, transactions/index.blade.php,
+      pos/index.blade.php).
+
+--------------------------------------------------------------------------------
+DAFTAR URL UTAMA APLIKASI:
+--------------------------------------------------------------------------------
+• Meja Kasir Utama (POS)      : http://localhost:8000/
+• Riwayat Transaksi (Laravel) : http://localhost:8000/transaksi
+• Unduh Laporan Excel (.csv)  : http://localhost:8000/ekspor/excel
+• Portal Pelanggan Mandiri    : http://localhost:8000/pelanggan
+• Prototipe UI/UX             : http://localhost:8000/ui-ux-prototype.html
+• Cek Status Koneksi API      : http://localhost:8000/api/v1/health
+
+================================================================================
+  COPY STAR KUBU - Digital Photocopy, Photo Printing & ATK
+  Jln. Soeparto 1 Kubu, Kab. Kubu Raya, Kalimantan Barat 78384
+================================================================================
+

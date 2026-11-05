@@ -2058,20 +2058,23 @@ body.light-theme .price-manage-table td {
 /* ==========================================================================
    MODALS & DIALOGS
    ========================================================================== */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75);
+.modal-overlay,
+.modal {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.75) !important;
   backdrop-filter: blur(8px);
   display: none;
+  z-index: 99999 !important;
   align-items: center;
   justify-content: center;
   z-index: 200;
   padding: 1rem;
 }
 
-.modal-overlay.active {
-  display: flex;
+.modal-overlay.active,
+.modal.active {
+  display: flex !important;
 }
 
 .modal-card {
@@ -4716,3 +4719,258 @@ body.light-theme .cust-queue-card {
 }
 
 
+
+/* ==========================================================================
+   ENHANCEMENT: QUICK THEME TOGGLE & GUIDE HELP MODAL
+   ========================================================================== */
+.btn-theme-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-main);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-theme-pill:hover {
+  background: rgba(247, 201, 72, 0.15);
+  border-color: var(--primary, #F7C948);
+  transform: translateY(-1px);
+}
+body.light-theme .btn-theme-pill {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #1E293B;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+body.light-theme .btn-theme-pill:hover {
+  background: #FEF3C7;
+  border-color: #D97706;
+}
+
+.btn-help-guide {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(2, 132, 199, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #38BDF8;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-help-guide:hover {
+  background: rgba(2, 132, 199, 0.28);
+  border-color: #38BDF8;
+  transform: translateY(-1px);
+}
+body.light-theme .btn-help-guide {
+  background: #E0F2FE;
+  border-color: #0284C7;
+  color: #0369A1;
+}
+
+/* Guide Modal Tabs & Steps */
+.guide-tab-btn {
+  background: var(--bg-surface-elevated, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  color: var(--text-muted);
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.guide-tab-btn.active {
+  background: rgba(247, 201, 72, 0.18);
+  border-color: var(--primary, #F7C948);
+  color: var(--primary, #F7C948);
+}
+body.light-theme .guide-tab-btn {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+  color: #475569;
+}
+body.light-theme .guide-tab-btn.active {
+  background: #FEF3C7;
+  border-color: #D97706;
+  color: #B45309;
+}
+
+.guide-content-panel {
+  display: none;
+  animation: fadeIn 0.2s ease;
+}
+.guide-content-panel.active {
+  display: block;
+}
+
+.guide-step-card {
+  display: flex;
+  gap: 12px;
+  padding: 0.9rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+  align-items: flex-start;
+}
+body.light-theme .guide-step-card {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.guide-step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(247, 201, 72, 0.2);
+  color: var(--primary, #F7C948);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+body.light-theme .guide-step-num {
+  background: #FEF3C7;
+  color: #D97706;
+}
+
+.guide-step-body h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+.guide-step-body p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.guide-pro-tip {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #34D399;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+body.light-theme .guide-pro-tip {
+  background: #ECFDF5;
+  border-color: #A7F3D0;
+  color: #065F46;
+}
+
+
+/* EMPLOYEE EXPANDABLE ROW ENHANCEMENTS */
+.emp-row-item:hover td {
+  background: rgba(37, 99, 235, 0.08) !important;
+}
+.emp-expanded-row {
+  animation: fadeIn 0.15s ease-in-out;
+}
+
+
+/* QUICK BUNDLE HOVER ENHANCEMENTS */
+.btn-bundle-pill {
+  transition: all 0.2s ease;
+}
+.btn-bundle-pill:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.2);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+
+/* ==========================================================================
+   UNIVERSAL CLICK & OVERLAY SAFETY GUARANTEES (ANTI-CLICK-BLOCKER ENGINE)
+   Menjamin tidak ada modal / overlay / toast gaib yang menelan klik mouse
+   ========================================================================== */
+
+/* 1. Inactive overlays must NEVER intercept clicks or block screen */
+.modal-overlay:not(.active),
+.modal:not(.active),
+.cust-ticket-overlay:not(.active),
+.mobile-drawer-overlay:not(.active),
+.login-overlay.hidden,
+.login-screen-overlay.hidden {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* 2. Active modals are guaranteed to be centered, visible and interactive */
+.modal-overlay.active,
+.modal.active,
+.cust-ticket-overlay.active,
+.mobile-drawer-overlay.active {
+  display: flex !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 99999 !important;
+}
+
+/* 3. Toast container must never swallow clicks on empty space */
+.toast-container {
+  pointer-events: none !important;
+}
+.toast-container .toast {
+  pointer-events: auto !important;
+  cursor: pointer;
+}
+
+/* 4. SVGs & child icons inside buttons must never steal event target from button */
+button svg,
+button path,
+a svg,
+a path,
+.btn svg,
+.btn path,
+.nav-tab-btn svg,
+.nav-tab-btn path,
+.mob-nav-item svg,
+.mob-nav-item path {
+  pointer-events: none !important;
+}
+
+/* 5. Clear pointer cursor and tap highlight on all clickable elements */
+button,
+a,
+[onclick],
+.product-card,
+.session-tab,
+.pill-btn,
+.category-pill,
+.quick-cash-chip,
+.bundle-chip,
+.payment-method-card,
+.nav-tab-btn,
+.mob-nav-item,
+.emp-row-item,
+.shift-badge,
+.btn-header-feature,
+.btn-modal-close,
+.btn-bundle-pill,
+.btn-highlight-action,
+.btn-secondary-sm {
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent;
+}

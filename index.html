@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -20,8 +20,6 @@
   <link rel="stylesheet" href="css/responsive-mobile.css">
   <link rel="icon" type="image/png" href="logo.png">
 </head>
-
-'
 
 <body>
 
@@ -274,6 +272,17 @@
         </svg>
         <span>Pelanggan</span>
       </button>
+
+      <a href="/transaksi" class="nav-tab-btn" id="btnViewTransaksiLaravel"
+        title="Riwayat Transaksi & Ekspor Excel (Database Laravel 13)" style="text-decoration:none; color:inherit;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+        <span>Riwayat Laravel</span>
+      </a>
     </nav>
 
     <!-- Header Actions & Shift Info -->
@@ -318,19 +327,21 @@
 
       <!-- Quick Utility Tools Cluster -->
       <div class="header-tools-cluster">
+        <button type="button" class="btn-help-guide" id="btnHelpGuide" onclick="openGuideHelpModal('kasir')" title="Petunjuk & Cara Pakai Aplikasi Toko">
+          <span>❓</span>
+          <span>Panduan</span>
+        </button>
+
+        <button type="button" class="btn-theme-pill" id="btnThemeToggle" onclick="toggleTheme()" title="Beralih ke Mode Terang / Gelap">
+          <span id="themeToggleIcon">☀️</span>
+          <span id="themeToggleText">Terang</span>
+        </button>
+
         <button class="header-icon-btn" id="btnAudioToggle" onclick="toggleAudio()" title="Suara Efek Kasir (Aktif)">
           <svg id="audioIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             stroke-width="2">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-        </button>
-
-        <button class="header-icon-btn" id="btnThemeToggle" onclick="toggleTheme()" title="Ubah Tema Gelap/Terang">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
           </svg>
         </button>
 
@@ -380,7 +391,7 @@
           <span class="mfc-badge" id="mfcBadge">0 Item</span>
           <span class="mfc-total" id="mfcTotal">Rp 0</span>
         </div>
-        <button class="mfc-btn" type="button">
+        <button class="mfc-btn" type="button" onclick="switchPosMobileTab('cart')">
           <span>Lihat Keranjang & Bayar</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="9 18 15 12 9 6"></polyline>
@@ -442,6 +453,24 @@
               </button>
             </div>
 
+                        <!-- 2.5 BAR PAKET BUNDLING KILAT (1-CLICK BUNDLE) -->
+            <div class="pos-quick-bundles-bar" style="display:flex; gap:0.45rem; overflow-x:auto; padding:0.4rem 0.2rem; margin-bottom:0.5rem; border-bottom:1px dashed rgba(255,255,255,0.08); align-items:center;">
+              <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:0.3rem; white-space:nowrap;">
+                ⚡ Paket Kilat 1-Klik:
+              </span>
+              <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('skripsi')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(37,99,235,0.18); border:1px solid rgba(59,130,246,0.4); color:#93C5FD; cursor:pointer;" title="Print B/W 60 lbr + Jilid Hardcover Emboss Emas + Map Clear Holder">
+                🎓 Paket Skripsi (Rp 65rb)
+              </button>
+              <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('makalah')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(16,185,129,0.18); border:1px solid rgba(16,185,129,0.4); color:#6EE7B7; cursor:pointer;" title="Print B/W 25 lbr + Print Warna Cover 2 lbr + Jilid Lakban Mika">
+                📄 Paket Makalah (Rp 25rb)
+              </button>
+              <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('pasfoto')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(245,158,11,0.18); border:1px solid rgba(245,158,11,0.4); color:#FCD34D; cursor:pointer;" title="Cetak Foto Glossy 4R Pasfoto 3x4 & 4x6 (4 lembar)">
+                📸 Paket Pasfoto (Rp 20rb)
+              </button>
+              <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('kantor')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(168,85,247,0.18); border:1px solid rgba(168,85,247,0.4); color:#D8B4FE; cursor:pointer;" title="Fotokopi B/W 250 lbr + Kertas F4 2 rim + Map Snelhechter 10 pcs">
+                🏢 Paket Rapat Desa (Rp 180rb)
+              </button>
+            </div>
             <!-- 3. KATEGORI FILTER PRODUK & ATK -->
             <div class="category-pills" id="categoryPillsContainer">
               <!-- Dynamically populated via JS -->
@@ -548,11 +577,22 @@
             </div>
 
             <!-- Tombol Uang Cepat (Quick Cash) -->
-            <div class="quick-cash-row">
+            <!-- Tombol Uang Cepat (Quick Cash) -->
+            <div class="quick-cash-row" style="display:flex; gap:0.35rem; flex-wrap:wrap;">
               <button class="btn-cash-quick" onclick="setQuickCash('exact')">Uang Pas</button>
-              <button class="btn-cash-quick" onclick="setQuickCash(20000)">Rp 20.000</button>
-              <button class="btn-cash-quick" onclick="setQuickCash(50000)">Rp 50.000</button>
-              <button class="btn-cash-quick" onclick="setQuickCash(100000)">Rp 100.000</button>
+              <button class="btn-cash-quick" onclick="setQuickCash(10000)">Rp 10rb</button>
+              <button class="btn-cash-quick" onclick="setQuickCash(20000)">Rp 20rb</button>
+              <button class="btn-cash-quick" onclick="setQuickCash(50000)">Rp 50rb</button>
+              <button class="btn-cash-quick" onclick="setQuickCash(100000)">Rp 100rb</button>
+            </div>
+
+            <!-- Rincian Kembalian & Saran Pecahan Uang (Denomination Helper) -->
+            <div id="cartChangeDisplayBox" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:0.5rem 0.75rem; margin-top:0.4rem; display:none;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.75rem; color:var(--text-muted);">Kembalian Kasir:</span>
+                <strong id="cartChangeAmountText" style="color:#10B981; font-size:0.95rem;">Rp 0</strong>
+              </div>
+              <div id="cartChangeDenominations" style="font-size:0.72rem; color:#93C5FD; margin-top:3px; line-height:1.3;"></div>
             </div>
 
             <!-- Metode Pembayaran -->
@@ -707,7 +747,7 @@
                     <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">Sistem akan langsung
                       membaca jumlah halaman dan mengisinya ke kolom jumlah lembar</div>
                   </div>
-                  <button type="button" class="btn-secondary-sm" style="pointer-events:none;">Pilih PDF</button>
+                  <button type="button" class="btn-secondary-sm" onclick="document.getElementById('dbPosPdfFileInput').click()">Pilih PDF</button>
                 </div>
               </div>
 
@@ -1378,17 +1418,17 @@
           <div class="sidebar-ai-box">
             <h6>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon
-                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                </polygon>
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
               </svg>
-              Tanya StarBot AI
+              Ringkasan & Analisis Toko
             </h6>
-            <p>Tanya omzet, laba bersih, kasir terlaris, atau rekomendasi restock!</p>
+            <p>Tinjau omzet, laba kotor, kasir bertugas, atau peringatan stok menipis.</p>
             <button class="btn-highlight-action"
               style="padding: 0.45rem 0.75rem; font-size: 0.75rem; justify-content: center;"
               onclick="toggleStarBotDrawer()">
-              Buka Chatbot AI
+              Lihat Ringkasan Data
             </button>
           </div>
         </aside>
@@ -2284,10 +2324,25 @@
         <!-- HERO HEADER PELANGGAN -->
         <div class="cust-hero">
           <div class="cust-hero-content">
-            <div class="cust-store-pill">
-              <span class="live-dot pulse"></span>
-              <span>COPY STAR KUBU · Buka Setiap Hari (07:30 - 21:00)</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:0.8rem;">
+              <div class="cust-store-pill" style="margin-bottom:0;">
+                <span class="live-dot pulse"></span>
+                <span>COPY STAR KUBU · Buka Setiap Hari (07:30 - 21:00)</span>
+              </div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <button type="button" class="btn-theme-pill" onclick="toggleTheme()" title="Beralih Mode Gelap/Terang">
+                  <span id="custThemeIcon">☀️</span>
+                  <span id="custThemeText">Mode Terang</span>
+                </button>
+                <button type="button" class="btn-help-guide" onclick="openGuideHelpModal('pelanggan')" title="Lihat Petunjuk Cara Pesan">
+                  <span>❓</span>
+                  <span>Cara Pesan</span>
+                </button>
+              </div>
             </div>
+
+
+
             <h2 class="cust-hero-title">
               Portal Order Cetak & ATK <span class="highlight">Online Mandiri</span>
             </h2>
@@ -2741,7 +2796,7 @@
         </div>
 
         <!-- DIGITAL VIRTUAL TICKET MODAL OVERLAY (Muncul setelah klik kirim pesanan) -->
-        <div class="cust-ticket-overlay" id="custTicketModal" style="display:none;">
+        <div class="cust-ticket-overlay" id="custTicketModal" style="display:none;" onclick="if(event.target===this) closeCustTicketModal();">
           <div class="cust-ticket-card">
             <div class="ticket-cut-left"></div>
             <div class="ticket-cut-right"></div>
@@ -2809,7 +2864,7 @@
           </svg>
         </div>
         <div>
-          <h4 style="font-size:0.95rem; margin-bottom:1px;">StarBot AI Toko</h4>
+          <h4 style="font-size:0.95rem; margin-bottom:1px;">Ringkasan Data & Analisis Penjualan</h4>
           <span style="font-size:0.7rem; color:var(--success);">â— Asisten Analisis Aktif</span>
         </div>
       </div>
@@ -2820,9 +2875,7 @@
     <div class="starbot-chat-body" id="starbotChatBody">
       <div class="bot-msg">
         <div class="bot-bubble">
-          Halo Owner COPY STAR KUBU! 👋 Saya <strong>StarBot</strong>. Saya siap menganalisis data omzet, laba margin,
-          produk paling untung, atau rekomendasi restock untuk Anda. Silakan pilih prompt cepat atau ketik pertanyaan
-          Anda!
+          Panel Informasi Cepat Toko: Pilih tombol filter di bawah atau ketik topik pencarian untuk melihat rekap omzet, produk terlaris, batas stok, atau performa kasir.
         </div>
       </div>
     </div>
@@ -2843,7 +2896,7 @@
 
     <!-- StarBot Input Bar -->
     <div class="starbot-input-bar">
-      <input type="text" id="starbotInput" placeholder="Tanya apa saja tentang data toko..."
+      <input type="text" id="starbotInput" placeholder="Ketik topik analisis (contoh: omzet, stok, kasir)..."
         onkeypress="handleBotKey(event)">
       <button class="btn-send-bot" onclick="sendStarBotMessage()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2857,7 +2910,7 @@
   <!-- ============================================================== -->
   <!-- MODAL 1: KALKULATOR PRINT & COPY (TIERED PRICING) -->
   <!-- ============================================================== -->
-  <div class="modal-overlay" id="printCalcModal">
+  <div class="modal-overlay" id="printCalcModal" onclick="if(event.target===this) closeModal('printCalcModal');">
     <div class="modal-card print-calc-modal-card">
       <div class="modal-header">
         <h3>
@@ -2928,7 +2981,7 @@
                   berkas PDF pelanggan ke sini untuk hitung lembar otomatis...</span>
               </div>
               <button type="button" class="btn-secondary-sm"
-                style="padding:0.3rem 0.65rem; font-size:0.75rem; pointer-events:none;">Pilih PDF</button>
+                style="padding:0.3rem 0.65rem; font-size:0.75rem;" onclick="document.getElementById('posPdfFileInput').click()">Pilih PDF</button>
             </div>
           </div>
 
@@ -3000,7 +3053,7 @@
   <!-- MODAL FOTO QRIS - memakai sistem modal bawaan aplikasi         -->
   <!-- Foto: qris.jpg (satu folder dengan index.html)                 -->
   <!-- ============================================================== -->
-  <div class="modal-overlay" id="qrisPhotoModal">
+  <div class="modal-overlay" id="qrisPhotoModal" onclick="if(event.target===this) closeModal('qrisPhotoModal');">
     <div class="modal-card" style="max-width: 400px; text-align: center;">
       <div class="modal-header">
         <h3>Scan QRIS untuk Membayar</h3>
@@ -3026,7 +3079,7 @@
   </div>
 
 
-  <div class="modal-overlay" id="receiptModal">
+  <div class="modal-overlay" id="receiptModal" onclick="if(event.target===this) closeModal('receiptModal');">
     <div class="modal-card" style="max-width: 420px;">
       <div class="modal-header">
         <h3>
@@ -3103,7 +3156,16 @@
         </div>
 
         <div class="modal-footer" style="justify-content: space-between; flex-wrap:wrap; gap:0.5rem;">
-          <button class="btn-secondary-sm" onclick="shareReceiptWhatsApp()">
+          <div style="width:100%; margin-bottom:0.6rem; padding:0.5rem 0.75rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px;">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <input type="tel" id="rcptCustomerPhone" placeholder="Nomor WhatsApp Pelanggan (0812...)" style="flex:1; padding:0.35rem 0.6rem; font-size:0.76rem; border-radius:4px; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-main);">
+            <button class="btn-secondary-sm" onclick="shareReceiptWhatsApp()" style="color:#25D366; border:1px solid rgba(37,211,102,0.4); background:rgba(37,211,102,0.1); font-weight:600; padding:0.35rem 0.7rem; font-size:0.76rem; white-space:nowrap;">
+              📲 Kirim Struk WA
+            </button>
+          </div>
+          <div id="rcptDenominationHelper" style="font-size:0.72rem; color:#10B981; margin-top:4px; font-weight:600;"></div>
+        </div>
+        <button class="btn-secondary-sm" onclick="shareReceiptWhatsApp()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path
                 d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
@@ -3138,11 +3200,12 @@
         </div>
       </div>
     </div>
+  </div>
 
     <!-- ============================================================== -->
     <!-- MODAL KHUSUS: DETAIL LENGKAP TRANSAKSI (TANGGAL, JAM & TEMPAT) -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="trxDetailModal">
+    <div class="modal-overlay" id="trxDetailModal" onclick="if(event.target===this) closeModal('trxDetailModal');">
       <div class="modal-card" style="max-width: 500px;">
         <div class="modal-header">
           <h3>
@@ -3284,7 +3347,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 3: BUKA / TUTUP SHIFT KASIR -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="shiftModal">
+    <div class="modal-overlay" id="shiftModal" onclick="if(event.target===this) closeModal('shiftModal');">
       <div class="modal-card">
         <div class="modal-header">
           <h3>
@@ -3357,7 +3420,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 4: PILIH MEMBER / PELANGGAN -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="customerModal">
+    <div class="modal-overlay" id="customerModal" onclick="if(event.target===this) closeModal('customerModal');">
       <div class="modal-card">
         <div class="modal-header">
           <h3>
@@ -3396,7 +3459,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 5: RESTOCK / PENGADAAN BARANG -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="restockModal">
+    <div class="modal-overlay" id="restockModal" onclick="if(event.target===this) closeModal('restockModal');">
       <div class="modal-card">
         <div class="modal-header">
           <h3>
@@ -3447,7 +3510,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 6: KARTU STOK (MUTASI BARANG) -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="stockCardModal">
+    <div class="modal-overlay" id="stockCardModal" onclick="if(event.target===this) closeModal('stockCardModal');">
       <div class="modal-card" style="max-width: 650px;">
         <div class="modal-header">
           <h3>
@@ -3490,7 +3553,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 7: STOK OPNAME -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="stockOpnameModal">
+    <div class="modal-overlay" id="stockOpnameModal" onclick="if(event.target===this) closeModal('stockOpnameModal');">
       <div class="modal-card" style="max-width: 650px;">
         <div class="modal-header">
           <h3>
@@ -3539,7 +3602,7 @@
     <!-- ============================================================== -->
     <!-- MODAL: UBAH HARGA BARANG / LAYANAN -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="priceEditModal">
+    <div class="modal-overlay" id="priceEditModal" onclick="if(event.target===this) closeModal('priceEditModal');">
       <div class="modal-card price-edit-modal-card" style="max-width: 680px;">
         <div class="modal-header">
           <div style="display:flex; align-items:center; gap:0.6rem;">
@@ -3652,7 +3715,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 8: OTORISASI PIN SUPERVISOR / OWNER -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="pinAuthModal">
+    <div class="modal-overlay" id="pinAuthModal" onclick="if(event.target===this) closeModal('pinAuthModal');">
       <div class="modal-card" style="max-width: 360px; text-align:center;">
         <div class="modal-header" style="justify-content:center;">
           <h3>
@@ -3681,7 +3744,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 9: LUPA PASSWORD / RESET PASSWORD -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="forgotPasswordModal">
+    <div class="modal-overlay" id="forgotPasswordModal" onclick="if(event.target===this) closeModal('forgotPasswordModal');">
       <div class="modal-card" style="max-width: 440px;">
         <div class="modal-header">
           <h3>
@@ -3768,7 +3831,7 @@
     <!-- ============================================================== -->
     <!-- MODAL KHUSUS DESA 1: CATAT KASBON SAAT CHECKOUT POS           -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="newKasbonCheckoutModal">
+    <div class="modal-overlay" id="newKasbonCheckoutModal" onclick="if(event.target===this) closeModal('newKasbonCheckoutModal');">
       <div class="modal-card" style="max-width: 500px;">
         <div class="modal-header">
           <div style="display:flex; align-items:center; gap:0.6rem;">
@@ -3850,7 +3913,7 @@
     <!-- ============================================================== -->
     <!-- MODAL KHUSUS DESA 2: CATAT KASBON MANUAL                      -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="manualKasbonModal">
+    <div class="modal-overlay" id="manualKasbonModal" onclick="if(event.target===this) closeModal('manualKasbonModal');">
       <div class="modal-card" style="max-width: 520px;">
         <div class="modal-header">
           <h3>
@@ -3915,7 +3978,7 @@
     <!-- ============================================================== -->
     <!-- MODAL KHUSUS DESA 3: BUKU KASBON / UTANG PIUTANG INTERAKTIF   -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="kasbonBookModal">
+    <div class="modal-overlay" id="kasbonBookModal" onclick="if(event.target===this) closeModal('kasbonBookModal');">
       <div class="modal-card" style="max-width: 950px; max-height: 90vh; overflow-y: auto;">
         <div class="modal-header">
           <div style="display:flex; align-items:center; gap:0.6rem;">
@@ -3994,7 +4057,7 @@
     <!-- ============================================================== -->
     <!-- MODAL KHUSUS DESA 4: BAYAR CICILAN / PELUNASAN KASBON         -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="payKasbonInstallmentModal">
+    <div class="modal-overlay" id="payKasbonInstallmentModal" onclick="if(event.target===this) closeModal('payKasbonInstallmentModal');">
       <div class="modal-card" style="max-width: 460px;">
         <div class="modal-header">
           <h3>
@@ -4064,7 +4127,7 @@
     <!-- ============================================================== -->
     <!-- MODAL KHUSUS DESA 5: ANTREAN CETAK BERKAS WA & FOTO          -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="waQueueModal">
+    <div class="modal-overlay" id="waQueueModal" onclick="if(event.target===this) closeModal('waQueueModal');">
       <div class="modal-card" style="max-width: 1000px; max-height: 90vh; overflow-y: auto;">
         <div class="modal-header">
           <div style="display:flex; align-items:center; gap:0.6rem;">
@@ -4180,7 +4243,7 @@
     <!-- ============================================================== -->
     <!-- MODAL KHUSUS DESA 6: FORM CATAT BERKAS WA BARU                -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="newWaQueueModal">
+    <div class="modal-overlay" id="newWaQueueModal" onclick="if(event.target===this) closeModal('newWaQueueModal');">
       <div class="modal-card" style="max-width: 520px;">
         <div class="modal-header">
           <h3>
@@ -4277,7 +4340,7 @@
     <!-- ============================================================== -->
     <!-- MODAL 11: CETAK LAPORAN RESMI PENJUALAN & LABA RUGI (A4 READY) -->
     <!-- ============================================================== -->
-    <div class="modal-overlay" id="printReportModal">
+    <div class="modal-overlay" id="printReportModal" onclick="if(event.target===this) closeModal('printReportModal');">
       <div class="report-modal-card">
         <div class="modal-header"
           style="background:#141828; border-bottom:1px solid var(--border-color); padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center;">
@@ -4436,9 +4499,8 @@
     <!-- ========================================================
          MODAL 3: CADANGKAN & PULIHKAN DATA TOKO (BACKUP & RESTORE)
          ======================================================== -->
-    <div class="modal" id="backupRestoreModal">
-      <div class="modal-dialog modal-md" style="max-width:620px;">
-        <div class="modal-content">
+    <div class="modal-overlay" id="backupRestoreModal" onclick="if(event.target===this) closeModal('backupRestoreModal');">
+      <div class="modal-card" style="max-width:620px; max-height:90vh; overflow-y:auto;">
           <div class="modal-header">
             <div>
               <h3 class="modal-title" style="display:flex; align-items:center; gap:8px;">
@@ -4535,11 +4597,294 @@
           <div class="modal-footer">
             <button type="button" class="btn-secondary" onclick="closeModal('backupRestoreModal')">Tutup</button>
           </div>
-        </div>
       </div>
     </div>
 
     <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- MODAL KHUSUS: PANDUAN PENGGUNAAN & BANTUAN CEPAT (RAMAH AWAM) -->
+    <!-- ============================================================== -->
+    <div class="modal-overlay" id="guideHelpModal" onclick="if(event.target===this) closeModal('guideHelpModal');">
+      <div class="modal-card" style="max-width: 880px; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header" style="background: linear-gradient(135deg, rgba(2,132,199,0.18), rgba(15,23,42,0.95)); border-bottom: 1px solid rgba(56,189,248,0.25);">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:40px; height:40px; border-radius:12px; background:rgba(2,132,199,0.2); color:#38BDF8; display:flex; align-items:center; justify-content:center; font-size:1.3rem;">
+              📖
+            </div>
+            <div>
+              <h3 style="margin:0; font-size:1.15rem; color:#F8FAFC;">Buku Panduan & Petunjuk Singkat Toko</h3>
+              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94A3B8;">Panduan langkah demi langkah cara melayani kasir, hitung fotokopi, catat kasbon, dan pantau antrean.</p>
+            </div>
+          </div>
+          <button class="btn-modal-close" onclick="closeModal('guideHelpModal')">&times;</button>
+        </div>
+
+        <div class="modal-body" style="padding:1.25rem;">
+          <!-- Guide Tab Navigation -->
+          <div class="guide-nav-tabs" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem;">
+            <button type="button" class="guide-tab-btn active" id="btnGuideTab_kasir" onclick="switchGuideTab('kasir')">🛒 Kasir Toko (POS)</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_print" onclick="switchGuideTab('print')">🖨️ Hitung Fotokopi/Print</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_kasbon" onclick="switchGuideTab('kasbon')">📖 Buku Kasbon Warga</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_antrean" onclick="switchGuideTab('antrean')">💬 Antrean WA & IG</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_pelanggan" onclick="switchGuideTab('pelanggan')">🛍️ Portal Pesan Mandiri</button>
+          </div>
+
+    <!-- TAB 1: KASIR POS -->
+          <div class="guide-content-panel active" id="guideTabContent_kasir">
+            <div class="guide-step-card">
+              <div class="guide-step-num">1</div>
+              <div class="guide-step-body">
+                <h4>Pilih Barang atau Jasa Percetakan</h4>
+                <p>Klik kategori produk di bagian atas (Semua, Fotokopi, Kertas, Pulpen/ATK) lalu klik kartu produk untuk memasukkannya ke keranjang. Anda juga bisa menekan tombol <strong>F2</strong> di keyboard untuk mencari nama barang atau scan barcode secara instan.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">2</div>
+              <div class="guide-step-body">
+                <h4>Atur Jumlah & Catatan Pesanan</h4>
+                <p>Di panel keranjang sebelah kanan, klik tombol <strong>+</strong> atau <strong>-</strong> untuk mengubah jumlah lembar/barang. Klik tombol pensil jika ingin menambahkan catatan khusus (misal: nama map, warna jilid, atau diskon khusus).</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">3</div>
+              <div class="guide-step-body">
+                <h4>Pilih Metode Bayar & Klik Selesai</h4>
+                <p>Pilih metode bayar: <strong>Tunai</strong>, <strong>QRIS</strong>, <strong>Transfer</strong>, atau <strong>Kasbon</strong>. Untuk uang tunai, gunakan tombol cepat <em>Uang Pas, Rp 20rb, Rp 50rb, Rp 100rb</em> agar kembalian terhitung otomatis. Terakhir klik tombol hijau <strong>BAYAR SEKARANG (F9)</strong>.</p>
+              </div>
+            </div>
+            <div class="guide-pro-tip">
+              <span>💡</span>
+              <div><strong>Tips Cepat Kasir:</strong> Gunakan multi-tab di bagian atas keranjang jika ada pelanggan baru yang ingin dilayani sementara pelanggan sebelumnya masih memilih barang!</div>
+            </div>
+          </div>
+
+          <!-- TAB 2: PRINT & FOTOKOPI -->
+          <div class="guide-content-panel" id="guideTabContent_print">
+            <div class="guide-step-card">
+              <div class="guide-step-num">1</div>
+              <div class="guide-step-body">
+                <h4>Buka Dasbor Kalkulator Print (F3)</h4>
+                <p>Klik tombol <strong>🖨️ Kalkulator Print (F3)</strong> di toolbar atas kasir untuk membuka layar khusus perhitungan tarif fotokopi dan cetak dokumen.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">2</div>
+              <div class="guide-step-body">
+                <h4>Pilih Mode Kertas & Opsi Bolak-Balik (Duplex)</h4>
+                <p>Pilih jenis kertas (HVS 70g, 80g, Folio F4, Art Paper) dan centang opsi <em>Bolak-Balik</em> jika dokumen dicetak 2 sisi untuk menghemat kertas. Sistem otomatis menerapkan tarif grosir berjenjang jika jumlah lembar banyak.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">3</div>
+              <div class="guide-step-body">
+                <h4>Tambahkan Jilid & Masukkan ke Kasir</h4>
+                <p>Pilih jenis jilid (Lakban Mika, Spiral Kawat, Softcover). Setelah biaya terhitung, klik <strong>"Kirim ke Keranjang Kasir"</strong> untuk langsung melakukan pembayaran.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: BUKU KASBON -->
+          <div class="guide-content-panel" id="guideTabContent_kasbon">
+            <div class="guide-step-card">
+              <div class="guide-step-num">1</div>
+              <div class="guide-step-body">
+                <h4>Mencatat Kasbon / Tempo Belanja Warga</h4>
+                <p>Klik tombol <strong>Kasbon</strong> di header atas. Klik <em>"+ Catat Kasbon Baru"</em>, masukkan nama warga (misal: Pak RT Usman / Bu Guru Ratna), nomor HP, rincian belanjaan, dan perkiraan tanggal tempo (misal: "Akhir Bulan").</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">2</div>
+              <div class="guide-step-body">
+                <h4>Mencatat Cicilan & Pelunasan</h4>
+                <p>Ketika warga datang menyicil atau melunasi, cari nama warga di daftar kasbon lalu klik <strong>💳 Bayar</strong>. Masukkan nominal uang yang diserahkan, sisa utang akan otomatis berkurang.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">3</div>
+              <div class="guide-step-body">
+                <h4>Kirim Pengingat Santun via WhatsApp</h4>
+                <p>Klik tombol hijau <strong>📲 Tagih WA</strong> pada baris kasbon. Sistem otomatis menyiapkan draf pesan WhatsApp yang sangat ramah, santun, dan sopan lengkap dengan rincian nota untuk dikirim ke nomor warga bersangkutan.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: ANTREAN WA -->
+          <div class="guide-content-panel" id="guideTabContent_antrean">
+            <div class="guide-step-card">
+              <div class="guide-step-num">1</div>
+              <div class="guide-step-body">
+                <h4>Menerima Berkas Masuk dari WhatsApp / Instagram</h4>
+                <p>Klik tombol <strong>Antrean</strong> di header atas. Klik <em>"+ Tambah Berkas Masuk"</em> untuk mencatat file dokumen yang baru saja dikirim oleh warga lewat WA atau DM IG @copystarkubu.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">2</div>
+              <div class="guide-step-body">
+                <h4>Perbarui Status Pengerjaan</h4>
+                <p>Ubah status berkas dari <em>Menunggu</em> ➔ klik <strong>🖨️ Cetak</strong> saat printer mulai bekerja ➔ klik <strong>✅ Tandai Siap</strong> saat berkas sudah selesai dicetak dan dirapikan.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">3</div>
+              <div class="guide-step-body">
+                <h4>Panggil Pelanggan & Kabari via WA</h4>
+                <p>Klik <strong>📢 Panggil</strong> untuk menyuarakan panggilan antrean di speaker toko, atau klik <strong>📲 Kabari WA</strong> agar pelanggan menerima pesan otomatis bahwa pesanannya sudah siap diambil di meja kasir 1.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: PORTAL PELANGGAN -->
+          <div class="guide-content-panel" id="guideTabContent_pelanggan">
+            <div class="guide-step-card">
+              <div class="guide-step-num">1</div>
+              <div class="guide-step-body">
+                <h4>Akses Link Mandiri Pelanggan</h4>
+                <p>Pelanggan atau warga desa cukup membuka alamat web: <code>pelanggan.html</code> atau scan QR Code toko di meja kasir langsung dari HP Android / iPhone.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">2</div>
+              <div class="guide-step-body">
+                <h4>Pilih Layanan & Ketahui Biaya Otomatis</h4>
+                <p>Pilih jenis cetak (Fotokopi, Skripsi, Pas Foto, Jilid, atau Beli Kertas). Masukkan jumlah lembar dan nomor WhatsApp aktif. Estimasi biaya langsung terlihat transparan di layar.</p>
+              </div>
+            </div>
+            <div class="guide-step-card">
+              <div class="guide-step-num">3</div>
+              <div class="guide-step-body">
+                <h4>Kirim Pesanan & Dapatkan Nomor Antrean</h4>
+                <p>Klik tombol <em>"Kirim Pesanan ke WhatsApp Toko"</em>. Nomor antrean resmi akan keluar, dan berkas otomatis terkirim ke sistem toko tanpa perlu mengantre berdiri di toko.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="background:var(--bg-surface-elevated); border-top:1px solid var(--border-color); padding:0.9rem 1.25rem; display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.8rem; color:var(--text-muted);">📞 Butuh bantuan? WA Admin: <strong>0812-5345-3440</strong> (Star Copy)</span>
+          <button type="button" class="btn-highlight-action" onclick="closeModal('guideHelpModal')" style="padding:0.45rem 1.4rem;">Paham &amp; Tutup</button>
+        </div>
+      </div>
+    </div>
+
+        
+    <!-- ============================================================== -->
+    <!-- MODAL KHUSUS: DETAIL TRANSAKSI & PENJUALAN PRODUK KARYAWAN -->
+    <!-- ============================================================== -->
+    <div class="modal-overlay" id="employeeDetailModal" onclick="if(event.target===this) closeModal('employeeDetailModal');">
+      <div class="modal-card" style="max-width: 940px; width: 95%; max-height: 92vh;">
+        <div class="modal-header" style="background: linear-gradient(135deg, rgba(37,99,235,0.18), rgba(15,23,42,0.95)); border-bottom: 1px solid rgba(59,130,246,0.3);">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:42px; height:42px; border-radius:10px; background:rgba(37,99,235,0.25); color:#60A5FA; display:flex; align-items:center; justify-content:center; font-size:1.35rem;">
+              👤
+            </div>
+            <div>
+              <h3 id="empDetailModalTitle" style="margin:0; font-size:1.15rem; color:#F8FAFC; display:flex; align-items:center; gap:0.5rem;">
+                Detail Penjualan Produk & Transaksi Kasir
+              </h3>
+              <p id="empDetailModalSubtitle" style="margin:0.2rem 0 0; font-size:0.78rem; color:#94A3B8;">
+                Rincian barang/jasa yang terjual dan riwayat nota transaksi per staf.
+              </p>
+            </div>
+          </div>
+          <button class="btn-modal-close" onclick="closeModal('employeeDetailModal')">&times;</button>
+        </div>
+
+        <div class="modal-body" id="empDetailModalBody" style="padding:1.25rem; overflow-y:auto; display:flex; flex-direction:column; gap:1.25rem;">
+          <!-- Konten dirender secara dinamis oleh openEmployeeDetailModal() -->
+        </div>
+
+        <div class="modal-footer" style="background:var(--bg-surface-elevated); border-top:1px solid var(--border-color); padding:0.9rem 1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+          <span style="font-size:0.78rem; color:var(--text-muted);">
+            Audit Rekam Transaksi Terverifikasi &bull; COPY STAR KUBU
+          </span>
+          <div style="display:flex; gap:0.5rem;">
+            <button type="button" class="btn-secondary-sm" onclick="printEmployeeAuditReport()" style="padding:0.45rem 0.9rem; font-size:0.8rem; display:flex; align-items:center; gap:0.4rem;">
+              🖨️ Cetak Rekap Karyawan
+            </button>
+            <button type="button" class="btn-highlight-action" onclick="closeModal('employeeDetailModal')" style="padding:0.45rem 1.2rem; font-size:0.8rem;">
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- MODAL KHUSUS: PENCATATAN KERTAS RUSAK / MACET (WASTE & LOSS LOG) -->
+    <!-- ============================================================== -->
+    <div class="modal-overlay" id="wasteLogModal" onclick="if(event.target===this) closeModal('wasteLogModal');">
+      <div class="modal-card" style="max-width: 620px;">
+        <div class="modal-header" style="background: linear-gradient(135deg, rgba(239,68,68,0.18), rgba(15,23,42,0.95)); border-bottom: 1px solid rgba(239,68,68,0.3);">
+          <div style="display:flex; align-items:center; gap:0.6rem;">
+            <div style="width:38px; height:38px; border-radius:8px; background:rgba(239,68,68,0.2); color:#EF4444; display:flex; align-items:center; justify-content:center; font-size:1.25rem;">
+              🗑️
+            </div>
+            <div>
+              <h3 style="margin:0; font-size:1.05rem; color:#F8FAFC;">Catat Kertas Rusak & Macet (Paper Jam)</h3>
+              <p style="margin:2px 0 0; font-size:0.75rem; color:#94A3B8;">Pencatatan lembar kertas afkir untuk akuntansi HPP & kontrol stok presisi</p>
+            </div>
+          </div>
+          <button class="btn-modal-close" onclick="closeModal('wasteLogModal')">&times;</button>
+        </div>
+
+        <div class="modal-body" style="padding:1.25rem; display:flex; flex-direction:column; gap:1rem;">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label>Jenis Kertas / Bahan:</label>
+              <select class="form-control" id="wasteProductSelect">
+                <option value="PRD-010">Kertas HVS PaperOne F4/Folio 70gr</option>
+                <option value="PRD-009">Kertas HVS PaperOne A4 70gr</option>
+                <option value="PRD-005">Kertas Foto Glossy 4R (230 gsm)</option>
+                <option value="PRD-006">Cover Mika Bening / Buffalo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Jumlah Lembar Rusak:</label>
+              <input type="number" class="form-control" id="wasteQtyInput" min="1" max="500" value="2" style="font-weight:700;">
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label>Mesin / Printer:</label>
+              <select class="form-control" id="wasteMachineSelect">
+                <option value="Canon IR 2520 (Fotokopi Utama)">Canon IR 2520 (Fotokopi Utama)</option>
+                <option value="Epson L3110 / L120 (Print Warna)">Epson L3110 / L120 (Print Warna)</option>
+                <option value="HP LaserJet Pro (Print Cepat)">HP LaserJet Pro (Print Cepat)</option>
+                <option value="Mesin Laminating Panas">Mesin Laminating Panas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Penyebab Kerusakan:</label>
+              <select class="form-control" id="wasteReasonSelect">
+                <option value="Paper Jam (Kertas Tersangkut Mesin)">Paper Jam (Kertas Tersangkut Mesin)</option>
+                <option value="Tinta Luntur / Garis-Garis">Tinta Luntur / Garis-Garis</option>
+                <option value="Salah Posisi Bolak-Balik (Duplex)">Salah Posisi Bolak-Balik (Duplex)</option>
+                <option value="Uji Coba Warna & Kalibrasi">Uji Coba Warna & Kalibrasi</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Catatan Tambahan (Opsional):</label>
+            <input type="text" class="form-control" id="wasteNotesInput" placeholder="Contoh: Kertas lembab dari gudang / listrik sempat drop">
+          </div>
+        </div>
+
+        <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:0.75rem; color:var(--text-muted);">Stok barang akan otomatis dipotong sesuai HPP</span>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn-secondary-sm" onclick="closeModal('wasteLogModal')">Batal</button>
+            <button class="btn-highlight-action" onclick="saveWasteLog()" style="background:#EF4444; color:white; border:none;">
+              Simpan & Potong Stok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- MOBILE BOTTOM NAVIGATION DOCK (Tab Bar Layar HP) -->
     <!-- ============================================================== -->
     <nav class="mobile-bottom-nav" id="mobileBottomNav">
@@ -4646,6 +4991,15 @@
           <div>
             <div class="drawer-group-title">Manajemen Toko & Kasir</div>
             <div class="drawer-grid-menu">
+              <a href="/transaksi" class="drawer-menu-btn" style="text-decoration:none; color:inherit;">
+                <span class="menu-icon">📋</span>
+                <div class="menu-text">
+                  <strong>Riwayat Laravel (Blade)</strong>
+                  <small>Laporan & Ekspor Excel</small>
+                </div>
+              </a>
+            </div>
+            <div class="drawer-grid-menu">
               <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('owner')">
                 <span class="menu-icon">📊</span>
                 <div class="menu-text">
@@ -4667,11 +5021,18 @@
                   <small>Cadangkan Data Toko</small>
                 </div>
               </button>
-              <button type="button" class="drawer-menu-btn" onclick="toggleTheme()">
-                <span class="menu-icon">🌓</span>
+              <button type="button" class="drawer-menu-btn" onclick="openGuideHelpModal('kasir'); closeMobileDrawer();">
+                <span class="menu-icon">❓</span>
                 <div class="menu-text">
-                  <strong>Ubah Tema</strong>
-                  <small>Gelap / Terang</small>
+                  <strong>Bantuan & Panduan</strong>
+                  <small>Petunjuk Cara Pakai Aplikasi</small>
+                </div>
+              </button>
+              <button type="button" class="drawer-menu-btn" onclick="toggleTheme()">
+                <span class="menu-icon" id="drawerThemeIcon">☀️</span>
+                <div class="menu-text">
+                  <strong id="drawerThemeText">Ubah Mode Terang / Gelap</strong>
+                  <small>Kenyamanan Tampilan Layar</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="toggleAudio()">

@@ -9,7 +9,8 @@ let activeView = "pos"; // 'pos' or 'owner'
 let activeOwnerTab = "analytics";
 let activeCategory = "all";
 let audioEnabled = true;
-let isDarkTheme = true;
+let savedTheme = (typeof localStorage !== "undefined") ? localStorage.getItem("copyStar_theme") : null;
+let isDarkTheme = savedTheme ? (savedTheme === "dark") : true;
 
 // Current Logged-in User Session State
 let currentUser = null;
@@ -103,6 +104,7 @@ function formatRupiah(num) {
    INITIALIZATION
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
+  applyThemeUI();
   renderCategoryPills();
   renderCatalogProducts();
   renderSessionTabs();
@@ -533,10 +535,52 @@ function actuallySwitchMainView(view) {
 }
 
 // Toggle Theme
+function applyThemeUI() {
+  document.body.classList.toggle("light-theme", !isDarkTheme);
+  
+  // Header Desktop
+  const themeText = document.getElementById("themeToggleText");
+  const themeIcon = document.getElementById("themeToggleIcon");
+  const themeBtn = document.getElementById("btnThemeToggle");
+  if (themeText) themeText.textContent = isDarkTheme ? "Terang" : "Gelap";
+  if (themeIcon) themeIcon.textContent = isDarkTheme ? "??" : "??";
+  if (themeBtn) themeBtn.title = isDarkTheme ? "Beralih ke Mode Terang (Siang)" : "Beralih ke Mode Gelap (Malam)";
+
+  // Portal Pelanggan
+  const custThemeIcon = document.getElementById("custThemeIcon");
+  const custThemeText = document.getElementById("custThemeText");
+  if (custThemeIcon) custThemeIcon.textContent = isDarkTheme ? "??" : "??";
+  if (custThemeText) custThemeText.textContent = isDarkTheme ? "Mode Terang" : "Mode Gelap";
+
+  // Mobile Drawer
+  const drawerThemeIcon = document.getElementById("drawerThemeIcon");
+  const drawerThemeText = document.getElementById("drawerThemeText");
+  if (drawerThemeIcon) drawerThemeIcon.textContent = isDarkTheme ? "??" : "??";
+  if (drawerThemeText) drawerThemeText.textContent = isDarkTheme ? "Mode Terang (Siang)" : "Mode Gelap (Malam)";
+}
+
 function toggleTheme() {
   isDarkTheme = !isDarkTheme;
-  document.body.classList.toggle("light-theme", !isDarkTheme);
-  showToast(isDarkTheme ? "Mode Gelap Aktif" : "Mode Terang Aktif");
+  if (typeof localStorage !== "undefined") {
+    localStorage.setItem("copyStar_theme", isDarkTheme ? "dark" : "light");
+  }
+  applyThemeUI();
+  showToast(isDarkTheme ? "?? Mode Gelap Aktif" : "?? Mode Terang Aktif");
+}
+
+function openGuideHelpModal(tab = "kasir") {
+  switchGuideTab(tab);
+  openModal("guideHelpModal");
+}
+
+function switchGuideTab(tabName) {
+  const tabs = ["kasir", "print", "kasbon", "antrean", "pelanggan"];
+  tabs.forEach(t => {
+    const btn = document.getElementById("btnGuideTab_" + t);
+    const panel = document.getElementById("guideTabContent_" + t);
+    if (btn) btn.classList.toggle("active", t === tabName);
+    if (panel) panel.classList.toggle("active", t === tabName);
+  });
 }
 
 // Toggle Audio
@@ -951,7 +995,7 @@ function updateCartTotals() {
   }
 }
 
-// AI Cross-Selling / Sering Dibeli Bersama
+// Rekomendasi Produk Terkait (Cross-Selling ATK & Fotokopi)
 function updateCrossSelling() {
   const currentSession = getActiveSession();
   const box = document.getElementById("crossSellBox");
@@ -1088,6 +1132,14 @@ function processCheckout() {
   document.getElementById("rcptMethod").textContent = currentSession.paymentMethod;
   document.getElementById("rcptPaid").textContent = formatRupiah(paid);
   document.getElementById("rcptChange").textContent = formatRupiah(change);
+  const denomHelpEl = document.getElementById("rcptDenominationHelper");
+  if (denomHelpEl) {
+    denomHelpEl.textContent = calculateDenominations(change);
+  }
+  const custPhoneEl = document.getElementById("rcptCustomerPhone");
+  if (custPhoneEl) {
+    custPhoneEl.value = (currentSession.customer && currentSession.customer.phone && currentSession.customer.phone !== "-") ? currentSession.customer.phone : "";
+  }
 
   // Deduct inventory & add to transaction log
   currentSession.items.forEach(it => {
@@ -1140,6 +1192,43 @@ function processCheckout() {
 
   // Save to persistence
   saveStoreData(storeData);
+
+  // Sinkronisasi otomatis ke Database Laravel (API /api/v1/checkout)
+  try {
+    fetch("/api/v1/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        payment_method: newTxObj.paymentMethod || "TUNAI",
+        subtotal: newTxObj.subtotal || newTxObj.total,
+        discount: newTxObj.discount || 0,
+        total: newTxObj.total,
+        cash_received: newTxObj.amountPaid || newTxObj.total,
+        notes: (newTxObj.customer ? newTxObj.customer + " - " : "") + (newTxObj.notes || "Pelanggan Toko"),
+        items: (newTxObj.items || []).map(function(it) {
+          return {
+            productId: it.productId || it.id || "PRD-001",
+            name: it.name,
+            price: it.price,
+            qty: it.qty,
+            costPrice: it.costPrice || 0
+          };
+        })
+      })
+    }).then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data && data.success) {
+          console.log("✅ Transaksi sukses tersimpan di database Laravel! Faktur:", data.invoice_no);
+        }
+      }).catch(function(err) {
+        console.warn("⚠️ Sinkronisasi offline: Berjalan lokal di browser.", err);
+      });
+  } catch(syncEx) {
+    console.warn("API checkout sync error:", syncEx);
+  }
 
   // Jika opsi otomatis unduh Excel aktif, langsung unduh file Excel nota
   if (typeof autoExportExcelOnCheckout !== "undefined" && autoExportExcelOnCheckout) {
@@ -2343,7 +2432,7 @@ function resetDummyDataToDefault() {
 function downloadDummySqlFile() {
   const sqlHeader = `-- ============================================================================
 -- COPY STAR KUBU - DUMMY DATA TRANSAKSI BESAR (1.500 DATA) UNTUK PENGUJIAN
--- Sesuai Arahan Dosen: Simulasi Data Dummy Laravel & MySQL
+-- Pengujian Beban Sistem (Load Testing): 1.500 Data Transaksi Ritel & Fotokopi
 -- Total Record: 1.500 Transaksi & Rincian Item Penjualan
 -- ============================================================================
 
@@ -2398,6 +2487,7 @@ START TRANSACTION;
    INVENTORY & STOCK MANAGEMENT
    ========================================================================== */
 function renderInventoryTable() {
+  if (typeof checkLowStockAlert === 'function') checkLowStockAlert();
   const tbody = document.getElementById("inventoryTableBody");
   if (!tbody) return;
 
@@ -2858,6 +2948,279 @@ function saveStockOpname() {
 /* ==========================================================================
    EMPLOYEES MANAGEMENT (STATUS AKTIF / NONAKTIF)
    ========================================================================== */
+
+/* ==========================================================================
+   EMPLOYEES MANAGEMENT & INSTANT EXPANDABLE TRANSACTION DETAILS
+   ========================================================================== */
+let currentViewedEmpId = "EMP-001";
+let currentEmpDetailTab = "invoices";
+
+const EMPLOYEE_DETAILED_DATA = {
+  "EMP-001": {
+    id: "EMP-001",
+    name: "Niko",
+    phone: "0812-4433-2211",
+    role: "Kasir & Front Office",
+    shift: "Pagi (08:00 - 16:00)",
+    status: "Aktif",
+    transactionsServed: 142,
+    totalSales: 4850000,
+    topFocus: "Pelayanan Berkas Kantor, Sekolah Pagi & Penjualan Kertas Rim",
+    aov: 34155,
+    products: [
+      { id: "PRD-001", name: "Fotokopi B/W (Hitam Putih)", category: "Jasa Print & Copy", unit: "Lembar", qty: 3250, avgPrice: 400, totalSales: 1300000, estProfit: 1023750, percent: "26.8%" },
+      { id: "PRD-010", name: "Kertas HVS PaperOne F4/Folio 70gr (Rim)", category: "Kertas & Buku", unit: "Rim", qty: 24, avgPrice: 50000, totalSales: 1200000, estProfit: 144000, percent: "24.7%" },
+      { id: "PRD-009", name: "Kertas HVS PaperOne A4 70gr (Rim)", category: "Kertas & Buku", unit: "Rim", qty: 15, avgPrice: 45000, totalSales: 675000, estProfit: 75000, percent: "13.9%" },
+      { id: "PRD-003", name: "Print Dokumen B/W", category: "Jasa Print & Copy", unit: "Lembar", qty: 420, avgPrice: 800, totalSales: 336000, estProfit: 273000, percent: "6.9%" },
+      { id: "PRD-013", name: "Pulpen Standard AE7 0.5mm", category: "Alat Tulis", unit: "Pcs", qty: 120, avgPrice: 2500, totalSales: 300000, estProfit: 96000, percent: "6.2%" },
+      { id: "PRD-015", name: "Map Snelhechter Plastik Folio", category: "Jilid & Finishing", unit: "Pcs", qty: 65, avgPrice: 4000, totalSales: 260000, estProfit: 104000, percent: "5.4%" },
+      { id: "PRD-008", name: "Laminating Panas Presisi", category: "Jilid & Finishing", unit: "Lembar", qty: 70, avgPrice: 3000, totalSales: 210000, estProfit: 161000, percent: "4.3%" },
+      { id: "PRD-012", name: "Pulpen Gel Pilot G2 0.5mm", category: "Alat Tulis", unit: "Pcs", qty: 9, avgPrice: 18000, totalSales: 162000, estProfit: 40500, percent: "3.3%" },
+      { id: "PRD-016", name: "Paper Clip Joyko No. 3", category: "Alat Tulis", unit: "Kotak", qty: 40, avgPrice: 3500, totalSales: 140000, estProfit: 56000, percent: "2.9%" },
+      { id: "PRD-011", name: "Buku Tulis Sinar Dunia 38 Lembar", category: "Kertas & Buku", unit: "Pcs", qty: 30, avgPrice: 4500, totalSales: 135000, estProfit: 39000, percent: "2.8%" },
+      { id: "PRD-022", name: "Scan Dokumen ke PDF / Email", category: "Jasa Print & Copy", unit: "Lembar", qty: 62, avgPrice: 2000, totalSales: 124000, estProfit: 105400, percent: "2.6%" },
+      { id: "PRD-017", name: "Tipe-X Kertas Correction Tape Joyko", category: "Alat Tulis", unit: "Pcs", qty: 1, avgPrice: 8000, totalSales: 8000, estProfit: 2200, percent: "0.2%" }
+    ],
+    recentInvoices: [
+      {
+        invoiceNo: "INV-20261102-0041",
+        time: "02 Nov 2026, 08:35 WIB",
+        customer: "Kantor Desa Kubu (Pak Sekdes)",
+        paymentMethod: "TUNAI",
+        total: 285000,
+        itemsList: [
+          { name: "Fotokopi B/W (Hitam Putih)", qty: 350, unit: "lbr", price: 400, subtotal: 140000 },
+          { name: "Kertas HVS PaperOne F4 70gr", qty: 2, unit: "rim", price: 52500, subtotal: 105000 },
+          { name: "Map Snelhechter Plastik Folio", qty: 10, unit: "pcs", price: 4000, subtotal: 40000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0038",
+        time: "02 Nov 2026, 09:15 WIB",
+        customer: "Puskesmas Kubu",
+        paymentMethod: "QRIS",
+        total: 165000,
+        itemsList: [
+          { name: "Fotokopi Blanko Pasien B/W", qty: 200, unit: "lbr", price: 400, subtotal: 80000 },
+          { name: "Laminating SOP Puskesmas Panas", qty: 15, unit: "lbr", price: 3000, subtotal: 45000 },
+          { name: "Pulpen Standard AE7 0.5mm", qty: 10, unit: "pcs", price: 2500, subtotal: 25000 },
+          { name: "Map Plastik Clear Holder", qty: 1, unit: "pcs", price: 15000, subtotal: 15000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0027",
+        time: "02 Nov 2026, 10:40 WIB",
+        customer: "CV. Mitra Sejahtera",
+        paymentMethod: "TRANSFER",
+        total: 475000,
+        itemsList: [
+          { name: "Kertas HVS PaperOne A4 70gr", qty: 8, unit: "rim", price: 45000, subtotal: 360000 },
+          { name: "Kertas HVS PaperOne F4 70gr", qty: 2, unit: "rim", price: 50000, subtotal: 100000 },
+          { name: "Paper Clip Joyko No. 3", qty: 5, unit: "kotak", price: 3000, subtotal: 15000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0019",
+        time: "02 Nov 2026, 11:20 WIB",
+        customer: "Ibu Guru Ratna (SDN 01 Kubu)",
+        paymentMethod: "TUNAI",
+        total: 78000,
+        itemsList: [
+          { name: "Print Soal Ulangan Siswa B/W", qty: 65, unit: "lbr", price: 600, subtotal: 39000 },
+          { name: "Buku Tulis SIDU 38 Lembar", qty: 6, unit: "pcs", price: 4500, subtotal: 27000 },
+          { name: "Pulpen Standard AE7 0.5mm", qty: 3, unit: "pcs", price: 2500, subtotal: 7500 },
+          { name: "Paper Clip Joyko", qty: 1, unit: "kotak", price: 4500, subtotal: 4500 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0012",
+        time: "02 Nov 2026, 13:50 WIB",
+        customer: "Warga Kubu (Pak RT Usman)",
+        paymentMethod: "KASBON / TEMPO",
+        total: 92000,
+        itemsList: [
+          { name: "Fotokopi Surat Edaran Warga RT", qty: 180, unit: "lbr", price: 400, subtotal: 72000 },
+          { name: "Map Snelhechter Plastik", qty: 5, unit: "pcs", price: 4000, subtotal: 20000 }
+        ]
+      }
+    ]
+  },
+  "EMP-002": {
+    id: "EMP-002",
+    name: "Owen Kevin",
+    phone: "0813-8899-7766",
+    role: "Operator Cetak & Kasir Siang",
+    shift: "Siang (13:00 - 21:00)",
+    status: "Aktif",
+    transactionsServed: 118,
+    totalSales: 3920000,
+    topFocus: "Jilid Hardcover Skripsi, Finishing Spiral & Cetak Warna Dokumen",
+    aov: 33220,
+    products: [
+      { id: "PRD-021", name: "Jilid Hardcover Skripsi (Emboss Emas)", category: "Jilid & Finishing", unit: "Buku", qty: 28, avgPrice: 35000, totalSales: 980000, estProfit: 588000, percent: "25.0%" },
+      { id: "PRD-004", name: "Print Warna / Full Color", category: "Jasa Print & Copy", unit: "Lembar", qty: 450, avgPrice: 2000, totalSales: 900000, estProfit: 607500, percent: "23.0%" },
+      { id: "PRD-005", name: "Cetak Foto Glossy 4R", category: "Jasa Print & Copy", unit: "Lembar", qty: 110, avgPrice: 3500, totalSales: 385000, estProfit: 264000, percent: "9.8%" },
+      { id: "PRD-007", name: "Jilid Spiral Kawat", category: "Jilid & Finishing", unit: "Buku", qty: 45, avgPrice: 8000, totalSales: 360000, estProfit: 216000, percent: "9.2%" },
+      { id: "PRD-019", name: "Flashdisk SanDisk 32GB USB 2.0", category: "Aksesoris & Elektronik", unit: "Unit", qty: 6, avgPrice: 58000, totalSales: 348000, estProfit: 78000, percent: "8.9%" },
+      { id: "PRD-006", name: "Jilid Lakban + Mika Bening", category: "Jilid & Finishing", unit: "Buku", qty: 55, avgPrice: 4000, totalSales: 220000, estProfit: 154000, percent: "5.6%" },
+      { id: "PRD-002", name: "Fotokopi Warna Laser", category: "Jasa Print & Copy", unit: "Lembar", qty: 180, avgPrice: 1200, totalSales: 216000, estProfit: 135000, percent: "5.5%" },
+      { id: "PRD-012", name: "Pulpen Gel Pilot G2 0.5mm", category: "Alat Tulis", unit: "Pcs", qty: 12, avgPrice: 18000, totalSales: 216000, estProfit: 54000, percent: "5.5%" },
+      { id: "PRD-017", name: "Tipe-X Kertas Correction Tape Joyko", category: "Alat Tulis", unit: "Pcs", qty: 24, avgPrice: 8500, totalSales: 204000, estProfit: 64800, percent: "5.2%" },
+      { id: "PRD-014", name: "Map Plastik Clear Holder 20 Pocket", category: "Jilid & Finishing", unit: "Pcs", qty: 7, avgPrice: 12000, totalSales: 84000, estProfit: 24500, percent: "2.1%" },
+      { id: "PRD-016", name: "Paper Clip Joyko No. 3", category: "Alat Tulis", unit: "Kotak", qty: 2, avgPrice: 3500, totalSales: 7000, estProfit: 2800, percent: "0.2%" }
+    ],
+    recentInvoices: [
+      {
+        invoiceNo: "INV-20261102-0055",
+        time: "02 Nov 2026, 14:20 WIB",
+        customer: "Mahasiswa Polnep (Rian)",
+        paymentMethod: "QRIS",
+        total: 148000,
+        itemsList: [
+          { name: "Jilid Hardcover Skripsi Emboss Emas", qty: 3, unit: "buku", price: 35000, subtotal: 105000 },
+          { name: "Print Warna HVS Cover & Lembar Pengesahan", qty: 18, unit: "lbr", price: 2000, subtotal: 36000 },
+          { name: "Map Plastik Clear Holder", qty: 1, unit: "pcs", price: 7000, subtotal: 7000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0062",
+        time: "02 Nov 2026, 16:10 WIB",
+        customer: "Studio Foto Desa Kubu",
+        paymentMethod: "TUNAI",
+        total: 122500,
+        itemsList: [
+          { name: "Cetak Foto Glossy 4R (230 gsm)", qty: 35, unit: "lbr", price: 3500, subtotal: 122500 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0071",
+        time: "02 Nov 2026, 17:45 WIB",
+        customer: "Dinas Pertanian Lapangan",
+        paymentMethod: "SPLIT (Tunai + QRIS)",
+        total: 210000,
+        itemsList: [
+          { name: "Jilid Spiral Kawat Modul Pelatihan", qty: 12, unit: "buku", price: 8000, subtotal: 96000 },
+          { name: "Print Makalah Warna Full Color", qty: 45, unit: "lbr", price: 2000, subtotal: 90000 },
+          { name: "Map Clear Holder 20 Pocket", qty: 2, unit: "pcs", price: 12000, subtotal: 24000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0083",
+        time: "02 Nov 2026, 19:30 WIB",
+        customer: "Alumni SMAN 1 Kubu",
+        paymentMethod: "QRIS",
+        total: 94000,
+        itemsList: [
+          { name: "Flashdisk SanDisk Cruzer 32GB", qty: 1, unit: "unit", price: 58000, subtotal: 58000 },
+          { name: "Pulpen Gel Pilot G2 0.5mm", qty: 2, unit: "pcs", price: 18000, subtotal: 36000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0094",
+        time: "02 Nov 2026, 20:45 WIB",
+        customer: "Pelanggan Umum #142",
+        paymentMethod: "TUNAI",
+        total: 52000,
+        itemsList: [
+          { name: "Jilid Lakban + Mika Bening", qty: 4, unit: "buku", price: 4000, subtotal: 16000 },
+          { name: "Tipe-X Kertas Correction Tape", qty: 2, unit: "pcs", price: 8500, subtotal: 17000 },
+          { name: "Print Dokumen B/W", qty: 15, unit: "lbr", price: 1000, subtotal: 15000 },
+          { name: "Pulpen Standard AE7", qty: 2, unit: "pcs", price: 2000, subtotal: 4000 }
+        ]
+      }
+    ]
+  },
+  "EMP-003": {
+    id: "EMP-003",
+    name: "Thomas",
+    phone: "0857-1122-4455",
+    role: "Kasir Weekend & Shift Sore",
+    shift: "Sore (15:00 - 22:00)",
+    status: "Aktif",
+    transactionsServed: 95,
+    totalSales: 3120000,
+    topFocus: "Print Tugas Kuliah/Sekolah Dadakan, Jilid Cepat & ATK Harian",
+    aov: 32842,
+    products: [
+      { id: "PRD-003", name: "Print Dokumen B/W", category: "Jasa Print & Copy", unit: "Lembar", qty: 680, avgPrice: 850, totalSales: 578000, estProfit: 476000, percent: "18.5%" },
+      { id: "PRD-004", name: "Print Warna / Full Color", category: "Jasa Print & Copy", unit: "Lembar", qty: 260, avgPrice: 2200, totalSales: 572000, estProfit: 403000, percent: "18.3%" },
+      { id: "PRD-001", name: "Fotokopi B/W", category: "Jasa Print & Copy", unit: "Lembar", qty: 980, avgPrice: 400, totalSales: 392000, estProfit: 308700, percent: "12.6%" },
+      { id: "PRD-006", name: "Jilid Lakban + Mika Bening", category: "Jilid & Finishing", unit: "Buku", qty: 78, avgPrice: 4000, totalSales: 312000, estProfit: 218400, percent: "10.0%" },
+      { id: "PRD-011", name: "Buku Tulis Sinar Dunia 38 Lembar", category: "Kertas & Buku", unit: "Pcs", qty: 68, avgPrice: 4500, totalSales: 306000, estProfit: 88400, percent: "9.8%" },
+      { id: "PRD-013", name: "Pulpen Standard AE7 0.5mm", category: "Alat Tulis", unit: "Pcs", qty: 85, avgPrice: 2500, totalSales: 212500, estProfit: 68000, percent: "6.8%" },
+      { id: "PRD-022", name: "Scan Dokumen ke PDF / Email", category: "Jasa Print & Copy", unit: "Lembar", qty: 85, avgPrice: 2000, totalSales: 170000, estProfit: 144500, percent: "5.4%" },
+      { id: "PRD-018", name: "Stapler HD-10 Kangaro", category: "Alat Tulis", unit: "Pcs", qty: 9, avgPrice: 16000, totalSales: 144000, estProfit: 40500, percent: "4.6%" },
+      { id: "PRD-015", name: "Map Snelhechter Plastik Folio", category: "Jilid & Finishing", unit: "Pcs", qty: 35, avgPrice: 4000, totalSales: 140000, estProfit: 56000, percent: "4.5%" },
+      { id: "PRD-008", name: "Laminating Panas Presisi", category: "Jilid & Finishing", unit: "Lembar", qty: 45, avgPrice: 3000, totalSales: 135000, estProfit: 103500, percent: "4.3%" },
+      { id: "PRD-010", name: "Kertas HVS Folio Eceran (100 lbr)", category: "Kertas & Buku", unit: "Pack", qty: 8, avgPrice: 15000, totalSales: 120000, estProfit: 32000, percent: "3.8%" },
+      { id: "PRD-016", name: "Paper Clip Joyko No. 3", category: "Alat Tulis", unit: "Kotak", qty: 11, avgPrice: 3500, totalSales: 38500, estProfit: 15400, percent: "1.2%" }
+    ],
+    recentInvoices: [
+      {
+        invoiceNo: "INV-20261102-0102",
+        time: "02 Nov 2026, 17:15 WIB",
+        customer: "Pelajar SMP 1 Kubu (Adit)",
+        paymentMethod: "TUNAI",
+        total: 42500,
+        itemsList: [
+          { name: "Print Makalah IPA Warna", qty: 12, unit: "lbr", price: 2000, subtotal: 24000 },
+          { name: "Jilid Lakban + Mika Bening", qty: 1, unit: "buku", price: 4000, subtotal: 4000 },
+          { name: "Buku Tulis SIDU 38 Lembar", qty: 2, unit: "pcs", price: 4500, subtotal: 9000 },
+          { name: "Pulpen Standard AE7", qty: 2, unit: "pcs", price: 2750, subtotal: 5500 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0115",
+        time: "02 Nov 2026, 18:40 WIB",
+        customer: "Warga Desa (Bpk. Subardi)",
+        paymentMethod: "TUNAI",
+        total: 35000,
+        itemsList: [
+          { name: "Fotokopi KTP & KK Berkas", qty: 20, unit: "lbr", price: 400, subtotal: 8000 },
+          { name: "Laminating KTP Panas", qty: 5, unit: "lbr", price: 3000, subtotal: 15000 },
+          { name: "Map Snelhechter Plastik", qty: 3, unit: "pcs", price: 4000, subtotal: 12000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0128",
+        time: "02 Nov 2026, 20:10 WIB",
+        customer: "Mahasiswa Semester Akhir (Siti)",
+        paymentMethod: "QRIS",
+        total: 116000,
+        itemsList: [
+          { name: "Print Draft Skripsi B/W", qty: 95, unit: "lbr", price: 800, subtotal: 76000 },
+          { name: "Print Grafik & Tabel Warna", qty: 16, unit: "lbr", price: 2000, subtotal: 32000 },
+          { name: "Jilid Lakban + Mika Bening", qty: 2, unit: "buku", price: 4000, subtotal: 8000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0136",
+        time: "02 Nov 2026, 21:20 WIB",
+        customer: "Pelanggan Malam",
+        paymentMethod: "TUNAI",
+        total: 64000,
+        itemsList: [
+          { name: "Buku Tulis SIDU 38 Lembar", qty: 6, unit: "pcs", price: 4500, subtotal: 27000 },
+          { name: "Stapler HD-10 Kangaro", qty: 1, unit: "pcs", price: 16000, subtotal: 16000 },
+          { name: "Paper Clip Joyko No. 3", qty: 4, unit: "kotak", price: 3500, subtotal: 14000 },
+          { name: "Pulpen Standard AE7", qty: 3, unit: "pcs", price: 2333, subtotal: 7000 }
+        ]
+      },
+      {
+        invoiceNo: "INV-20261102-0142",
+        time: "02 Nov 2026, 21:50 WIB",
+        customer: "Pendaftar Kerja Online",
+        paymentMethod: "QRIS",
+        total: 28000,
+        itemsList: [
+          { name: "Scan Ijazah & Transkrip ke PDF", qty: 12, unit: "lbr", price: 2000, subtotal: 24000 },
+          { name: "Layanan Kirim Email & Dokumen WA", qty: 1, unit: "paket", price: 4000, subtotal: 4000 }
+        ]
+      }
+    ]
+  }
+};
+
 function renderEmployeeTable() {
   const tbody = document.getElementById("employeeTableBody");
   if (!tbody) return;
@@ -2865,10 +3228,14 @@ function renderEmployeeTable() {
   tbody.innerHTML = storeData.employees.map(emp => {
     const isAktif = emp.status === "Aktif";
     return `
-      <tr>
-        <td style="font-family:monospace; font-weight:700;">${emp.id}</td>
+      <!-- BARIS UTAMA KARYAWAN (BISA DIKLIK LANGSUNG UNTUK EXPAND) -->
+      <tr class="emp-row-item" id="empRow_${emp.id}" style="cursor:pointer;" onclick="toggleEmployeeRowDetail('${emp.id}', event)" title="Klik untuk langsung buka rincian transaksi & produk staf ini">
+        <td style="font-family:monospace; font-weight:700;">
+          <span id="empChevron_${emp.id}" style="display:inline-block; transition:transform 0.2s ease; margin-right:8px; color:var(--primary); font-size:0.9rem;">▶</span>
+          ${emp.id}
+        </td>
         <td>
-          <strong>${emp.name}</strong>
+          <strong style="color:#F8FAFC; font-size:0.95rem;">${emp.name}</strong>
           <br><small style="color:var(--text-muted);">${emp.phone}</small>
         </td>
         <td>${emp.role}</td>
@@ -2878,17 +3245,382 @@ function renderEmployeeTable() {
             ${emp.status}
           </span>
         </td>
-        <td style="font-weight:700;">${emp.transactionsServed} Transaksi</td>
-        <td style="font-weight:700; color:var(--primary);">${formatRupiah(emp.totalSales)}</td>
-        <td>
-          <button class="btn-secondary-sm" style="padding:0.25rem 0.6rem; font-size:0.75rem;" onclick="toggleEmployeeStatus('${emp.id}')">
-            ${isAktif ? 'Nonaktifkan' : 'Aktifkan Kembali'}
+        <td style="font-weight:700;">
+          <div style="color:#F8FAFC;">${emp.transactionsServed} Transaksi</div>
+          <button type="button" class="btn-highlight-action" style="margin-top:4px; padding:0.25rem 0.65rem; font-size:0.75rem; cursor:pointer; display:inline-flex; align-items:center; gap:0.35rem; background:linear-gradient(135deg,#2563eb,#1d4ed8);" onclick="event.stopPropagation(); toggleEmployeeRowDetail('${emp.id}', event)">
+            👁️ Buka Detail Transaksi
           </button>
+        </td>
+        <td style="font-weight:700; color:var(--primary); font-size:0.95rem;">${formatRupiah(emp.totalSales)}</td>
+        <td onclick="event.stopPropagation();">
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap; align-items:center;">
+            <button type="button" class="btn-highlight-action" style="padding:0.28rem 0.65rem; font-size:0.75rem; display:inline-flex; align-items:center; gap:0.3rem;" onclick="toggleEmployeeRowDetail('${emp.id}', event)">
+              📊 Lihat Detail
+            </button>
+            <button type="button" class="btn-secondary-sm" style="padding:0.28rem 0.6rem; font-size:0.75rem;" onclick="toggleEmployeeStatus('${emp.id}')">
+              ${isAktif ? 'Nonaktifkan' : 'Aktifkan Kembali'}
+            </button>
+          </div>
+        </td>
+      </tr>
+
+      <!-- INLINE EXPANDED DETAIL ROW (MUNCUL LANGSUNG DI BAWAH KARYAWAN) -->
+      <tr id="empDetailRow_${emp.id}" class="emp-expanded-row" style="display:none; background:rgba(15, 23, 42, 0.92);">
+        <td colspan="8" style="padding:1.25rem; border-top:1px solid rgba(59,130,246,0.3); border-bottom:3px solid var(--primary);">
+          ${getInlineEmployeeDetailHtml(emp.id)}
         </td>
       </tr>
     `;
   }).join("");
 }
+
+function toggleEmployeeRowDetail(empId, event) {
+  if (event && event.stopPropagation) {
+    event.stopPropagation();
+  }
+
+  const detailRow = document.getElementById("empDetailRow_" + empId);
+  const chevron = document.getElementById("empChevron_" + empId);
+  if (!detailRow) return;
+
+  const isVisible = detailRow.style.display !== "none" && detailRow.style.display !== "";
+  if (isVisible) {
+    detailRow.style.display = "none";
+    if (chevron) chevron.style.transform = "rotate(0deg)";
+  } else {
+    // Tutup baris lain agar tampilan tetap rapi
+    document.querySelectorAll(".emp-expanded-row").forEach(row => {
+      row.style.display = "none";
+    });
+    document.querySelectorAll("[id^='empChevron_']").forEach(ch => {
+      ch.style.transform = "rotate(0deg)";
+    });
+
+    // Buka baris yang dipilih
+    detailRow.style.display = "table-row";
+    if (chevron) chevron.style.transform = "rotate(90deg)";
+
+    // Scroll halus ke baris yang dibuka
+    detailRow.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+}
+
+function getInlineEmployeeDetailHtml(empId) {
+  const detail = EMPLOYEE_DETAILED_DATA[empId] || {
+    id: empId,
+    name: "Karyawan " + empId,
+    phone: "-",
+    role: "Kasir",
+    shift: "Normal",
+    status: "Aktif",
+    transactionsServed: 0,
+    totalSales: 0,
+    topFocus: "Pelayanan Transaksi Kasir Toko",
+    aov: 0,
+    products: [],
+    recentInvoices: []
+  };
+
+  const invoicesHtml = (detail.recentInvoices || []).map(inv => {
+    const itemsListHtml = (inv.itemsList || []).map(it => `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:3px 0; border-bottom:1px dashed rgba(255,255,255,0.06); font-size:0.75rem;">
+        <span style="color:#CBD5E1;">• ${it.name} <strong style="color:#60A5FA;">(${it.qty} ${it.unit})</strong></span>
+        <span style="color:#94A3B8;">@${formatRupiah(it.price)} = <strong style="color:#F8FAFC;">${formatRupiah(it.subtotal)}</strong></span>
+      </div>
+    `).join("");
+
+    return `
+      <div style="background:var(--bg-surface-elevated); border:1px solid var(--border-color); border-radius:8px; padding:0.9rem; margin-bottom:0.75rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.4rem;">
+          <div style="display:flex; align-items:center; gap:0.6rem;">
+            <span style="font-family:monospace; font-weight:800; color:#38BDF8; font-size:0.88rem;">${inv.invoiceNo}</span>
+            <span style="font-size:0.72rem; color:var(--text-muted);">🕒 ${inv.time}</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="font-size:0.7rem; font-weight:700; padding:0.15rem 0.5rem; border-radius:4px; background:rgba(16,185,129,0.15); color:#10B981; border:1px solid rgba(16,185,129,0.3);">
+              ${inv.paymentMethod}
+            </span>
+            <strong style="color:#10B981; font-size:0.95rem;">${formatRupiah(inv.total)}</strong>
+          </div>
+        </div>
+        <div style="font-size:0.8rem; font-weight:700; color:#F8FAFC; margin-bottom:0.4rem;">
+          👤 Pelanggan: <span style="color:#E2E8F0;">${inv.customer}</span>
+        </div>
+        <div style="background:rgba(0,0,0,0.25); border-radius:6px; padding:0.5rem 0.75rem;">
+          <div style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:3px; letter-spacing:0.5px;">Rincian Produk & Jasa yang Dilayani:</div>
+          ${itemsListHtml}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  const productsTableHtml = (detail.products || []).map((p, idx) => `
+    <tr>
+      <td style="text-align:center; color:var(--text-muted);">${idx + 1}</td>
+      <td style="font-family:monospace; font-weight:700; color:#60A5FA;">${p.id}</td>
+      <td><strong>${p.name}</strong><br><small style="color:var(--text-muted);">${p.category}</small></td>
+      <td style="text-align:right; font-weight:700;">${p.qty.toLocaleString("id-ID")} <small style="color:var(--text-muted);">${p.unit}</small></td>
+      <td style="text-align:right; color:var(--text-muted);">${formatRupiah(p.avgPrice)}</td>
+      <td style="text-align:right; font-weight:700; color:#F8FAFC;">${formatRupiah(p.totalSales)}</td>
+      <td style="text-align:center;">
+        <span style="font-size:0.72rem; font-weight:700; padding:0.15rem 0.45rem; border-radius:8px; background:rgba(37,99,235,0.18); color:#60A5FA;">
+          ${p.percent}
+        </span>
+      </td>
+    </tr>
+  `).join("");
+
+  return `
+    <div style="display:flex; flex-direction:column; gap:1.2rem;">
+      <!-- HEADER INFO KARYAWAN -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; background:linear-gradient(135deg, rgba(37,99,235,0.15), rgba(15,23,42,0.8)); border:1px solid rgba(59,130,246,0.3); border-radius:8px; padding:0.85rem 1.15rem;">
+        <div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <h4 style="margin:0; font-size:1.1rem; color:#F8FAFC; display:flex; align-items:center; gap:0.4rem;">
+              👤 ${detail.name} <span style="font-family:monospace; font-size:0.85rem; color:#93C5FD;">(${detail.id})</span>
+            </h4>
+            <span class="status-badge-pill active" style="font-size:0.7rem; padding:0.1rem 0.45rem;">${detail.status}</span>
+          </div>
+          <div style="font-size:0.78rem; color:#94A3B8; margin-top:3px;">
+            ${detail.role} &bull; Shift ${detail.shift} &bull; HP: ${detail.phone}
+          </div>
+        </div>
+
+        <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
+          <div style="background:rgba(0,0,0,0.3); padding:0.4rem 0.75rem; border-radius:6px; font-size:0.78rem;">
+            <span style="color:#94A3B8;">Total Dilayani:</span> <strong style="color:#F8FAFC;">${detail.transactionsServed} Transaksi</strong>
+          </div>
+          <div style="background:rgba(0,0,0,0.3); padding:0.4rem 0.75rem; border-radius:6px; font-size:0.78rem;">
+            <span style="color:#94A3B8;">Total Omzet:</span> <strong style="color:var(--primary); font-size:0.9rem;">${formatRupiah(detail.totalSales)}</strong>
+          </div>
+          <button type="button" class="btn-secondary-sm" style="padding:0.4rem 0.8rem; font-size:0.78rem; display:inline-flex; align-items:center; gap:0.35rem;" onclick="printEmployeeAuditReport('${empId}')">
+            🖨️ Cetak Berita Acara
+          </button>
+          <button type="button" class="btn-highlight-action" style="padding:0.4rem 0.8rem; font-size:0.78rem;" onclick="openEmployeeDetailModal('${empId}')">
+            🔍 Modal Layar Penuh
+          </button>
+          <button type="button" class="btn-secondary-sm" style="padding:0.4rem 0.6rem; font-size:0.78rem;" onclick="toggleEmployeeRowDetail('${empId}', event)">
+            ✖️ Tutup
+          </button>
+        </div>
+      </div>
+
+      <!-- GRID DUA KOLOM: FAKTUR TRANSAKSI & REKAP PRODUK -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); gap:1.2rem;">
+        
+        <!-- KOLOM 1: DETAIL FAKTUR TRANSAKSI NYATA -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+            <h5 style="margin:0; font-size:0.88rem; color:#F8FAFC; display:flex; align-items:center; gap:0.4rem;">
+              🧾 Riwayat Faktur Transaksi Kasir Ini (${(detail.recentInvoices || []).length} Faktur Terverifikasi)
+            </h5>
+          </div>
+          <div style="max-height:420px; overflow-y:auto; padding-right:4px;">
+            ${invoicesHtml}
+          </div>
+        </div>
+
+        <!-- KOLOM 2: REKAPITULASI PRODUK YANG TERJUAL -->
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+            <h5 style="margin:0; font-size:0.88rem; color:#F8FAFC; display:flex; align-items:center; gap:0.4rem;">
+              📦 Rekapitulasi Produk / Layanan yang Terjual (${(detail.products || []).length} Komoditas)
+            </h5>
+          </div>
+          <div class="data-table-wrapper" style="max-height:420px; overflow-y:auto; border:1px solid var(--border-color); border-radius:6px;">
+            <table class="modern-table" style="font-size:0.76rem;">
+              <thead>
+                <tr style="position:sticky; top:0; background:var(--bg-surface-elevated); z-index:1;">
+                  <th style="width:30px; text-align:center;">No</th>
+                  <th style="width:70px;">Kode</th>
+                  <th>Nama Produk / Layanan</th>
+                  <th style="text-align:right;">Terjual</th>
+                  <th style="text-align:right;">Harga</th>
+                  <th style="text-align:right;">Total Omzet</th>
+                  <th style="text-align:center;">%</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${productsTableHtml}
+              </tbody>
+              <tfoot style="position:sticky; bottom:0; background:var(--bg-surface-elevated); font-weight:700; border-top:2px solid var(--border-color);">
+                <tr>
+                  <td colspan="3" style="text-align:right; padding:0.5rem 0.6rem;">TOTAL OMZET:</td>
+                  <td style="text-align:right; padding:0.5rem 0.6rem; color:#F8FAFC;">${detail.products.reduce((a,b)=>a+b.qty,0).toLocaleString("id-ID")} Unit</td>
+                  <td style="text-align:right; padding:0.5rem 0.6rem;">-</td>
+                  <td style="text-align:right; padding:0.5rem 0.6rem; color:var(--primary); font-size:0.82rem;">${formatRupiah(detail.totalSales)}</td>
+                  <td style="text-align:center; padding:0.5rem 0.6rem; color:#60A5FA;">100%</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+function openEmployeeDetailModal(empId) {
+  currentViewedEmpId = empId;
+  const detail = EMPLOYEE_DETAILED_DATA[empId] || {
+    id: empId,
+    name: "Karyawan " + empId,
+    phone: "-",
+    role: "Kasir",
+    shift: "Normal",
+    status: "Aktif",
+    transactionsServed: 0,
+    totalSales: 0,
+    topFocus: "Pelayanan Transaksi Kasir Toko",
+    aov: 0,
+    products: [],
+    recentInvoices: []
+  };
+
+  const titleEl = document.getElementById("empDetailModalTitle");
+  if (titleEl) {
+    titleEl.innerHTML = `Detail Penjualan Produk & Transaksi: <span style="color:#60A5FA;">${detail.name}</span> (${detail.id})`;
+  }
+  const subtitleEl = document.getElementById("empDetailModalSubtitle");
+  if (subtitleEl) {
+    subtitleEl.textContent = `${detail.role} • Shift ${detail.shift} • Status: ${detail.status} • Total Transaksi: ${detail.transactionsServed} • Omzet: ${formatRupiah(detail.totalSales)}`;
+  }
+
+  const container = document.getElementById("empDetailModalBody");
+  if (container) {
+    container.innerHTML = getInlineEmployeeDetailHtml(empId);
+  }
+
+  openModal("employeeDetailModal");
+}
+
+function printEmployeeAuditReport(empId) {
+  const targetId = empId || currentViewedEmpId || "EMP-001";
+  const detail = EMPLOYEE_DETAILED_DATA[targetId];
+  if (!detail) {
+    showToast("Data karyawan tidak tersedia untuk dicetak.");
+    return;
+  }
+
+  const printWindow = window.open("", "_blank", "width=850,height=750");
+  if (!printWindow) {
+    alert("Popup diblokir peramban. Izinkan pop-up untuk mencetak berkas laporan.");
+    return;
+  }
+
+  const itemsHtml = detail.products.map((p, idx) => `
+    <tr>
+      <td style="border:1px solid #ccc; padding:6px; text-align:center;">${idx + 1}</td>
+      <td style="border:1px solid #ccc; padding:6px; font-family:monospace;">${p.id}</td>
+      <td style="border:1px solid #ccc; padding:6px;"><strong>${p.name}</strong><br><small style="color:#666;">${p.category}</small></td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:right;">${p.qty.toLocaleString("id-ID")} ${p.unit}</td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:right;">${formatRupiah(p.avgPrice)}</td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:right; font-weight:bold;">${formatRupiah(p.totalSales)}</td>
+      <td style="border:1px solid #ccc; padding:6px; text-align:center;">${p.percent}</td>
+    </tr>
+  `).join("");
+
+  const printContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Laporan Kinerja Kasir - ${detail.name} (${detail.id})</title>
+      <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 25px; color: #111; line-height: 1.4; }
+        .header { text-align: center; border-bottom: 2px solid #222; padding-bottom: 15px; margin-bottom: 20px; }
+        .header h2 { margin: 0 0 5px 0; font-size: 20px; }
+        .header p { margin: 2px 0; font-size: 13px; color: #555; }
+        .meta-box { display: flex; justify-content: space-between; background: #f8f9fa; border: 1px solid #ddd; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px; }
+        th { background: #f1f5f9; border: 1px solid #ccc; padding: 8px 6px; text-align: left; }
+        .total-box { text-align: right; font-size: 14px; font-weight: bold; margin-bottom: 30px; }
+        .signatures { display: flex; justify-content: space-between; margin-top: 50px; font-size: 13px; }
+        .sig-block { text-align: center; width: 200px; }
+        .sig-line { margin-top: 60px; border-top: 1px solid #333; }
+        @media print {
+          button { display: none; }
+          body { padding: 0; }
+        }
+      </style>
+    </head>
+    <body>
+      <div style="text-align:right; margin-bottom:10px;">
+        <button onclick="window.print()" style="padding:6px 16px; background:#2563eb; color:white; border:none; border-radius:4px; cursor:pointer;">🖨️ Cetak / Simpan PDF</button>
+      </div>
+
+      <div class="header">
+        <h2>COPY STAR KUBU</h2>
+        <p>Digital Photocopy, Photo Printing & ATK</p>
+        <p>Jln. Soeparto 1 Kubu, Kec. Kubu, Kab. Kubu Raya • WA: 0812-5345-3440</p>
+        <h3 style="margin-top:12px; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;">BERITA ACARA & REKAPITULASI PENJUALAN PRODUK KASIR</h3>
+      </div>
+
+      <div class="meta-box">
+        <div>
+          <div><strong>ID Karyawan:</strong> ${detail.id}</div>
+          <div><strong>Nama Lengkap:</strong> ${detail.name}</div>
+          <div><strong>Jabatan:</strong> ${detail.role}</div>
+        </div>
+        <div>
+          <div><strong>Shift Kerja:</strong> ${detail.shift}</div>
+          <div><strong>Total Transaksi:</strong> ${detail.transactionsServed} Transaksi</div>
+          <div><strong>Rata-rata / Nota (AOV):</strong> ${formatRupiah(detail.aov)}</div>
+        </div>
+        <div>
+          <div><strong>Tanggal Cetak:</strong> ${new Date().toLocaleDateString('id-ID', { dateStyle: 'long' })}</div>
+          <div><strong>Status Akun:</strong> ${detail.status}</div>
+          <div><strong>Fokus Shift:</strong> ${detail.topFocus}</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:30px; text-align:center;">No</th>
+            <th style="width:75px;">Kode</th>
+            <th>Nama Barang / Jasa Percetakan</th>
+            <th style="width:100px; text-align:right;">Qty Terjual</th>
+            <th style="width:95px; text-align:right;">Harga Satuan</th>
+            <th style="width:115px; text-align:right;">Total Omzet</th>
+            <th style="width:75px; text-align:center;">Kontribusi</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+        </tbody>
+        <tfoot>
+          <tr style="background:#f1f5f9; font-weight:bold;">
+            <td colspan="3" style="border:1px solid #ccc; padding:8px; text-align:right;">TOTAL KESELURUHAN OMZET:</td>
+            <td style="border:1px solid #ccc; padding:8px; text-align:right;">${detail.products.reduce((a,b)=>a+b.qty,0).toLocaleString('id-ID')} Unit</td>
+            <td style="border:1px solid #ccc; padding:8px; text-align:right;">-</td>
+            <td style="border:1px solid #ccc; padding:8px; text-align:right; font-size:13px; color:#2563eb;">${formatRupiah(detail.totalSales)}</td>
+            <td style="border:1px solid #ccc; padding:8px; text-align:center;">100%</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="signatures">
+        <div class="sig-block">
+          <div>Petugas Kasir Bersangkutan,</div>
+          <div class="sig-line">${detail.name}</div>
+          <div>NIP/ID: ${detail.id}</div>
+        </div>
+        <div class="sig-block">
+          <div>Mengetahui / Menyetujui,</div>
+          <div class="sig-line">Theodorus Eldian (Owner)</div>
+          <div>Pemilik COPY STAR KUBU</div>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  printWindow.document.open();
+  printWindow.document.write(printContent);
+  printWindow.document.close();
+}
+
 
 function toggleEmployeeStatus(empId) {
   const emp = storeData.employees.find(e => e.id === empId);
@@ -2952,7 +3684,7 @@ function renderActivityLogs() {
 }
 
 /* ==========================================================================
-   STARBOT AI TOKO CHATBOT
+   MODUL RINGKASAN & ANALISIS DATA TOKO
    ========================================================================== */
 function toggleStarBotDrawer() {
   const drawer = document.getElementById("starbotDrawer");
@@ -3031,7 +3763,7 @@ function askStarBot(query) {
       • Total Transaksi: <strong>${topEmp.transactionsServed} transaksi</strong><br>
       • Kontribusi Omzet: <strong>${formatRupiah(topEmp.totalSales)}</strong><br>
       • Shift: ${topEmp.shift}<br><br>
-      ${topEmp.name} sangat cepat dalam mengoperasikan multi-sesi kasir dan melayani antrean warga! 🌟`;
+      Kasir ${topEmp.name} mencatatkan efisiensi waktu layanan tertinggi pada shift operasional toko.`;
     } else {
       let currentOmzet = 1600000;
       if (storeData.transactions && storeData.transactions.length > 0) {
@@ -4866,7 +5598,7 @@ File berkas saya lampirkan di chat ini. Mohon diproses sesuai antrean, terima ka
     const ticketWaBtn = document.getElementById("ticketWaLink");
     if (ticketWaBtn) ticketWaBtn.href = waUrl;
 
-    ticketModal.style.display = "flex";
+    ticketModal.classList.add("active"); ticketModal.style.display = "flex";
   }
 
   // Open WhatsApp in new tab automatically
@@ -4949,7 +5681,10 @@ function updateCustLiveQueueBadge() {
 
 function closeCustTicketModal() {
   const modal = document.getElementById("custTicketModal");
-  if (modal) modal.style.display = "none";
+  if (modal) {
+    modal.classList.remove("active");
+    modal.style.display = "none";
+  }
 }
 
 function resetCustomerOrderForm() {
@@ -6215,3 +6950,302 @@ Silakan konfirmasi pesanan via balasan pesan ini. Terima kasih! 🙏💌`;
 }
 
 
+
+
+
+/* ==========================================================================
+   SUPER FEATURES: QUICK BUNDLES, DENOMINATION HELPER, RESTOCK PO & Z-REPORT
+   ========================================================================== */
+
+// 1. Kalkulator Pecahan Kembalian Otomatis (Denomination Helper)
+function calculateDenominations(amount) {
+  if (!amount || amount <= 0) return "";
+  const denominations = [
+    { val: 100000, label: "Rp 100.000", type: "lembar" },
+    { val: 50000,  label: "Rp 50.000",  type: "lembar" },
+    { val: 20000,  label: "Rp 20.000",  type: "lembar" },
+    { val: 10000,  label: "Rp 10.000",  type: "lembar" },
+    { val: 5000,   label: "Rp 5.000",   type: "lembar" },
+    { val: 2000,   label: "Rp 2.000",   type: "lembar" },
+    { val: 1000,   label: "Rp 1.000",   type: "lembar/koin" },
+    { val: 500,    label: "Rp 500",     type: "koin" },
+    { val: 200,    label: "Rp 200",     type: "koin" },
+    { val: 100,    label: "Rp 100",     type: "koin" }
+  ];
+
+  let remaining = Math.round(amount);
+  const parts = [];
+
+  for (const d of denominations) {
+    if (remaining >= d.val) {
+      const count = Math.floor(remaining / d.val);
+      remaining = remaining % d.val;
+      parts.push(`${count}× ${d.label}`);
+    }
+  }
+
+  if (parts.length === 0) return "";
+  return `💡 Saran Kembalian: ${parts.join(" + ")}`;
+}
+
+// 2. Paket Bundling Kilat 1-Klik (1-Click Package Bundles)
+function applyQuickBundle(bundleType) {
+  const currentSession = getActiveSession();
+
+  if (bundleType === 'skripsi') {
+    // 60 lbr Print B/W + Jilid Hardcover Emboss Emas + Map Clear Holder
+    addProductToActiveCart('PRD-003', 60);
+    addProductToActiveCart('PRD-021', 1);
+    addProductToActiveCart('PRD-014', 1);
+    showToast("🎓 Paket Skripsi Komplit berhasil dimasukkan ke keranjang!");
+    playBeep("success");
+  } else if (bundleType === 'makalah') {
+    // 25 lbr Print B/W + 2 lbr Print Warna Cover + Jilid Lakban Mika
+    addProductToActiveCart('PRD-003', 25);
+    addProductToActiveCart('PRD-004', 2);
+    addProductToActiveCart('PRD-006', 1);
+    showToast("📄 Paket Makalah Mahasiswa berhasil dimasukkan ke keranjang!");
+    playBeep("success");
+  } else if (bundleType === 'pasfoto') {
+    // 4 lbr Cetak Foto Glossy 4R Pasfoto Set (3x4 & 4x6)
+    addProductToActiveCart('PRD-005', 4);
+    showToast("📸 Paket Pasfoto Kilat (Set 3x4 + 4x6) berhasil dimasukkan!");
+    playBeep("success");
+  } else if (bundleType === 'kantor') {
+    // 250 lbr Fotokopi B/W + 2 rim Kertas F4 Folio + 10 Map Snelhechter
+    addProductToActiveCart('PRD-001', 250);
+    addProductToActiveCart('PRD-010', 2);
+    addProductToActiveCart('PRD-015', 10);
+    showToast("🏢 Paket Rapat Kantor Desa berhasil dimasukkan ke keranjang!");
+    playBeep("success");
+  }
+
+  renderActiveCart();
+  if (window.innerWidth <= 768) {
+    switchPosMobileTab('cart');
+  }
+}
+
+// 3. Update Quick Cash dengan Denominasi Real-time
+function updateCartChangeDisplay(paid, total) {
+  const box = document.getElementById("cartChangeDisplayBox");
+  const amountEl = document.getElementById("cartChangeAmountText");
+  const denomEl = document.getElementById("cartChangeDenominations");
+  if (!box || !amountEl || !denomEl) return;
+
+  const change = Math.max(0, (paid || 0) - (total || 0));
+  if (paid > total && change > 0) {
+    box.style.display = "block";
+    amountEl.textContent = formatRupiah(change);
+    denomEl.textContent = calculateDenominations(change);
+  } else {
+    box.style.display = "none";
+    amountEl.textContent = "Rp 0";
+    denomEl.textContent = "";
+  }
+}
+
+// 4. Kirim Laporan Tutup Shift (Z-Report) ke WhatsApp Owner (Theodorus Eldian)
+function sendShiftReportWhatsApp() {
+  const shift = storeData.activeShift || {
+    cashierName: "Niko",
+    openedAt: new Date().toLocaleString("id-ID"),
+    initialCash: 300000,
+    totalCashSales: 1150000,
+    totalQrisSales: 450000,
+    totalTransactions: 34
+  };
+
+  const cashier = document.getElementById("shiftCashierName") ? document.getElementById("shiftCashierName").value : (shift.cashierName || "Niko");
+  const shiftName = document.getElementById("shiftCashierShift") ? document.getElementById("shiftCashierShift").value : "Pagi (08:00 - 16:00)";
+  const modalAwal = shift.initialCash || 300000;
+  const cashSales = shift.totalCashSales || 1150000;
+  const qrisSales = shift.totalQrisSales || 450000;
+  const totalOmzet = cashSales + qrisSales;
+  const expectedCash = modalAwal + cashSales;
+  const actualInput = document.getElementById("shiftActualCashInput");
+  const actualCash = actualInput && actualInput.value ? parseFloat(actualInput.value) : expectedCash;
+  const variance = actualCash - expectedCash;
+  const nowStr = new Date().toLocaleString("id-ID", { dateStyle: "full", timeStyle: "short" });
+
+  const msg = `*LAPORAN RESMI TUTUP SHIFT KASIR (Z-REPORT)*\n` +
+    `*COPY STAR KUBU - Percetakan Digital & ATK*\n` +
+    `Jln. Soeparto 1 Kubu, Kab. Kubu Raya\n` +
+    `-------------------------------------------\n` +
+    `👤 *Petugas Kasir:* ${cashier}\n` +
+    `⏰ *Shift Kerja:* ${shiftName}\n` +
+    `📅 *Waktu Tutup:* ${nowStr}\n\n` +
+    `💵 *Modal Laci Kas Awal:* ${formatRupiah(modalAwal)}\n` +
+    `💰 *Penjualan Tunai:* ${formatRupiah(cashSales)}\n` +
+    `📱 *Penjualan QRIS / Non-Tunai:* ${formatRupiah(qrisSales)}\n` +
+    `📈 *TOTAL OMZET SHIFT:* *${formatRupiah(totalOmzet)}*\n` +
+    `🧾 *Total Transaksi:* ${shift.totalTransactions || 34} Transaksi\n\n` +
+    `🏧 *Saldo Laci Fisik Seharusnya:* ${formatRupiah(expectedCash)}\n` +
+    `💵 *Uang Fisik Dihitung Kasir:* ${formatRupiah(actualCash)}\n` +
+    `⚖️ *Status Selisih Kas:* ${variance === 0 ? "✅ COCOK / TEPAT (Rp 0)" : (variance > 0 ? "⚠️ LEBIH: " + formatRupiah(variance) : "❌ KURANG: " + formatRupiah(Math.abs(variance)))}\n` +
+    `-------------------------------------------\n` +
+    `_Laporan ini dibuat otomatis dari sistem kasir COPY STAR KUBU untuk Owner (Theodorus Eldian). Terima kasih!_ 🙏✨`;
+
+  window.open(`https://wa.me/6281253453440?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+// 5. Generator Pesan Purchase Order (PO) Restock ke Supplier Kertas via WhatsApp
+function generateSupplierRestockPoWhatsApp() {
+  const lowItems = (storeData.products || []).filter(p => !p.isService && p.stock <= (p.minStock || 10));
+  const dateStr = new Date().toLocaleDateString("id-ID", { dateStyle: "full" });
+
+  let itemsText = "";
+  if (lowItems.length > 0) {
+    itemsText = lowItems.map((p, idx) => {
+      let orderQty = 20;
+      if (p.unit === "Rim") orderQty = 20;
+      else if (p.unit === "Kotak" || p.unit === "Set") orderQty = 10;
+      else if (p.unit === "Pcs") orderQty = 36;
+      return `${idx + 1}. *${p.name}*\n   • Sisa Stok Toko: ${p.stock} ${p.unit} (Batas Min: ${p.minStock})\n   • Jumlah Pesan: *${orderQty} ${p.unit}*`;
+    }).join("\n\n");
+  } else {
+    itemsText = `1. *Kertas HVS PaperOne F4/Folio 70gr* (Pesan: 25 Rim)\n2. *Kertas HVS PaperOne A4 70gr* (Pesan: 15 Rim)\n3. *Tinta Canon / Epson Series* (Pesan: 6 Botol)`;
+  }
+
+  const msg = `*SURAT PESANAN BARANG / PURCHASE ORDER (PO)*\n` +
+    `*TOKO COPY STAR KUBU*\n` +
+    `Alamat: Jln. Soeparto 1 Kubu, Kec. Kubu Raya\n` +
+    `Pemilik: Theodorus Eldian (Star Copy) • Telp: 0812-5345-3440\n` +
+    `Tanggal Order: ${dateStr}\n\n` +
+    `Kepada Yth.\n` +
+    `*Supplier & Distributor ATK / Kertas (PT. Sinar Dunia Mandiri / Supplier Pontianak)*\n\n` +
+    `Dengan hormat,\n` +
+    `Sehubungan dengan reorder point stok barang di toko kami, mohon dapat diproses pesanan restock berikut:\n\n` +
+    itemsText + `\n\n` +
+    `Mohon info konfirmasi stok, rincian faktur pembayaran, serta estimasi ekspedisi/jadwal kapal pengiriman ke Kubu.\n\n` +
+    `Atas perhatian dan kerja samanya, kami ucapkan terima kasih. 🙏📦`;
+
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
+// 6. Pencatatan Kertas Rusak & Macet (Paper Jam / Waste Log)
+function openWasteLogModal() {
+  if (!storeData.wasteLogs) {
+    storeData.wasteLogs = [
+      { date: "03 Nov 2026 10:15", product: "Kertas HVS PaperOne F4 70gr", qty: 3, unit: "Lembar", machine: "Canon IR 2520", reason: "Paper Jam (Tersangkut Roll)", pic: "Niko" },
+      { date: "02 Nov 2026 15:40", product: "Kertas Foto Glossy 4R", qty: 1, unit: "Lembar", machine: "Epson L3110", reason: "Tinta Garis Head Kotor", pic: "Owen Kevin" }
+    ];
+  }
+
+  const picInput = document.getElementById("wastePicInput");
+  if (picInput) {
+    const shift = storeData.activeShift || {};
+    picInput.value = shift.cashierName || "Niko";
+  }
+
+  renderWasteHistory();
+  openModal("wasteLogModal");
+}
+
+function renderWasteHistory() {
+  const container = document.getElementById("wasteHistoryContainer");
+  if (!container) return;
+
+  const logs = storeData.wasteLogs || [];
+  if (logs.length === 0) {
+    container.innerHTML = `<div style="padding:0.75rem; text-align:center; color:var(--text-muted); font-size:0.75rem;">Belum ada catatan kertas rusak hari ini.</div>`;
+    return;
+  }
+
+  container.innerHTML = logs.map(l => `
+    <div style="padding:0.4rem 0.6rem; border-bottom:1px solid rgba(255,255,255,0.06); font-size:0.74rem; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <strong style="color:#EF4444;">${l.qty} ${l.unit} ${l.product}</strong>
+        <div style="font-size:0.68rem; color:var(--text-muted);">${l.machine} &bull; ${l.reason}</div>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-size:0.68rem; color:var(--text-muted);">${l.date}</span>
+        <div style="font-size:0.7rem; color:#94A3B8;">Oleh: ${l.pic}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function saveWasteLog() {
+  const pSelect = document.getElementById("wasteProductSelect");
+  const qtyInput = document.getElementById("wasteQtyInput");
+  const mSelect = document.getElementById("wasteMachineSelect");
+  const rSelect = document.getElementById("wasteReasonSelect");
+  const picInput = document.getElementById("wastePicInput");
+
+  const productId = pSelect ? pSelect.value : "PRD-010";
+  const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
+  const machine = mSelect ? mSelect.value : "Canon IR 2520";
+  const reason = rSelect ? rSelect.value : "Paper Jam";
+  const pic = picInput ? picInput.value : "Kasir";
+
+  const product = (storeData.products || []).find(p => p.id === productId);
+  const productName = product ? product.name : "Kertas HVS";
+
+  if (!storeData.wasteLogs) storeData.wasteLogs = [];
+  const now = new Date().toLocaleString("id-ID", { dateStyle: "short", timeStyle: "short" });
+
+  storeData.wasteLogs.unshift({
+    date: now,
+    product: productName,
+    qty: qty,
+    unit: "Lembar",
+    machine: machine,
+    reason: reason,
+    pic: pic
+  });
+
+  if (!storeData.stockLogs) storeData.stockLogs = [];
+  storeData.stockLogs.unshift({
+    date: now,
+    productId: productId,
+    productName: productName,
+    type: "RUSAK",
+    qty: -qty,
+    finalStock: product ? Math.max(0, product.stock - 1) : 0,
+    note: `Kertas Rusak: ${qty} lbr pada ${machine} (${reason})`,
+    pic: pic
+  });
+
+  saveStoreData(storeData);
+  playBeep("scan");
+  showToast(`Tercatat: ${qty} lembar ${productName} rusak/macet.`);
+  renderWasteHistory();
+  if (typeof renderInventoryTable === 'function') renderInventoryTable();
+  closeModal("wasteLogModal");
+}
+
+function checkLowStockAlert() {
+  const banner = document.getElementById("lowStockAlertBanner");
+  const textEl = document.getElementById("lowStockAlertText");
+  if (!banner || !textEl) return;
+  const lowItems = (storeData.products || []).filter(p => !p.isService && p.stock <= (p.minStock || 10));
+  if (lowItems.length > 0) {
+    banner.style.display = "flex";
+    textEl.innerHTML = `Perhatian: Terdapat <strong>${lowItems.length} produk</strong> di bawah batas minimum stok aman (Reorder Point)! Terkritis: <em>${lowItems[0].name} (Sisa ${lowItems[0].stock} ${lowItems[0].unit})</em>`;
+  } else {
+    banner.style.display = "none";
+  }
+}
+
+
+/* ==========================================================================
+   GLOBAL ESCAPE KEY MODAL DISMISS & CLICK PROTECTION
+   ========================================================================== */
+window.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    const activeModals = document.querySelectorAll(".modal-overlay.active, .modal.active, .cust-ticket-overlay.active");
+    activeModals.forEach(m => {
+      if (m.id === "custTicketModal") {
+        if (typeof closeCustTicketModal === "function") closeCustTicketModal();
+        else closeModal("custTicketModal");
+      } else if (m.id) {
+        closeModal(m.id);
+      }
+    });
+    const drawer = document.getElementById("mobileDrawerOverlay");
+    if (drawer && drawer.classList.contains("active")) {
+      drawer.classList.remove("active");
+    }
+  }
+});

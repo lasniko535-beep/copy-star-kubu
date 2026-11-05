@@ -11,10 +11,8 @@ use App\Http\Controllers\ExportController;
 |--------------------------------------------------------------------------
 */
 
-// Halaman Utama Kasir & Dasbor POS
-Route::get('/', function () {
-    return file_get_contents(base_path('index.html'));
-})->name('home');
+// Halaman Utama Kasir & Dasbor POS (MVC Controller)
+Route::get('/', [PosController::class, 'index'])->name('home');
 
 // Halaman Riwayat Transaksi Laravel Blade
 Route::get('/transaksi', [TransactionController::class, 'index'])->name('transactions.index');
@@ -23,15 +21,7 @@ Route::get('/transaksi/{invoiceNo}', [TransactionController::class, 'show'])->na
 // Ekspor Laporan Excel Laravel
 Route::get('/ekspor/excel', [ExportController::class, 'exportExcel'])->name('transactions.export_excel');
 
-// Shortcut Rute Peran
-Route::get('/kasir', function () {
-    return redirect('/?mode=kasir');
-})->name('kasir');
-
-Route::get('/owner', function () {
-    return redirect('/?mode=owner');
-})->name('owner');
-
-Route::get('/pelanggan', function () {
-    return redirect('/?mode=customer');
-})->name('pelanggan');
+// Shortcut Rute Peran (MVC Architecture)
+Route::get('/kasir', [PosController::class, 'kasirMode'])->name('kasir');
+Route::get('/owner', [PosController::class, 'ownerMode'])->name('owner');
+Route::get('/pelanggan', [PosController::class, 'customerPortal'])->name('pelanggan');

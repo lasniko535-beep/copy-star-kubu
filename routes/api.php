@@ -35,6 +35,9 @@ Route::prefix('v1')->group(function () {
         return response()->json($transactions);
     });
 
+    // 2b. Simpan Transaksi Baru dari Meja Kasir ke Database Laravel
+    Route::post('/checkout', [\App\Http\Controllers\TransactionController::class, 'store']);
+
     // 3. Ringkasan Kinerja Keuangan Owner
     Route::get('/reports/summary', function () {
         $today = today();
