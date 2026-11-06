@@ -111,7 +111,7 @@ const INITIAL_DATA = {
       unit: "Lembar",
       tieredKey: "copy_bw",
       image: "copy",
-      photo: "img/products/fotokopi_bw.jpg",
+      photo: "img/products/fotokopi_bw.jpg?v=3",
       badge: "Layanan Cepat",
       description: "Fotokopi dokumen resolusi tinggi mesin Canon digital IR series."
     },
@@ -127,7 +127,7 @@ const INITIAL_DATA = {
       unit: "Lembar",
       tieredKey: "copy_color",
       image: "printer-color",
-      photo: "img/products/print_warna.jpg",
+      photo: "img/products/fotokopi_warna.jpg?v=3",
       badge: "Warna Tajam",
       description: "Fotokopi full color laser toner tahan air."
     },
@@ -143,7 +143,7 @@ const INITIAL_DATA = {
       unit: "Lembar",
       tieredKey: "print_doc_bw",
       image: "file-text",
-      photo: "img/products/fotokopi_bw.jpg",
+      photo: "img/products/fotokopi_bw.jpg?v=3",
       badge: "Print Cepat",
       description: "Cetak dokumen PDF/Word/Excel dari HP / Flashdisk / WA."
     },
@@ -159,7 +159,7 @@ const INITIAL_DATA = {
       unit: "Lembar",
       tieredKey: "print_doc_color",
       image: "printer",
-      photo: "img/products/print_warna.jpg",
+      photo: "img/products/print_warna.jpg?v=3",
       badge: "Vivid Color",
       description: "Cetak makalah, brosur, diagram full color."
     },
@@ -428,7 +428,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "Buku",
       image: "book",
-      photo: "img/products/jilid_hardcover.jpg",
+      photo: "img/products/jilid_hardcover.jpg?v=3",
       badge: "Musim Skripsi",
       description: "Jilid hardcover tebal berlapis linen mewah dengan tulisan emboss foil emas standar universitas."
     },
@@ -568,7 +568,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "Lembar",
       image: "award",
-      photo: "img/products/sertifikat.jpg",
+      photo: "img/products/sertifikat.jpg?v=3",
       badge: "Profesional",
       description: "Desain + cetak sertifikat / piagam penghargaan kertas linen / fancy paper 210gsm. Tersedia desain template atau custom sesuai permintaan. Cetak per lembar, cocok untuk sekolah, lomba, pelatihan, dan organisasi.",
       variants: ["Kertas HVS Biasa (Rp 5.000/lbr)", "Kertas Linen Fancy (Rp 8.000/lbr)", "Kertas Linen + Laminasi Doff (Rp 12.000/lbr)", "Frame + Sertifikat (Rp 35.000)"]
@@ -586,7 +586,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "100 lbr",
       image: "credit-card",
-      photo: "img/products/kartu_nama.jpg?v=2",
+      photo: "img/products/kartu_nama.jpg?v=3",
       badge: "Desain Gratis",
       description: "Desain + cetak kartu nama profesional art carton 260gsm full color 2 sisi. Termasuk desain eksklusif, revisi 2x. Selesai 1–2 hari kerja.",
       variants: ["Art Carton 260gsm (Rp 35.000/100lbr)", "Laminasi Doff (Rp 45.000/100lbr)", "Laminasi Glossy (Rp 43.000/100lbr)", "Soft Touch / Beludru (Rp 60.000/100lbr)"]
@@ -618,7 +618,7 @@ const INITIAL_DATA = {
       minStock: 5,
       unit: "Buku (50 set)",
       image: "file-text",
-      photo: "img/products/nota_kwitansi.jpg",
+      photo: "img/products/nota_kwitansi.jpg?v=3",
       badge: "Custom Nama Toko",
       description: "Cetak nota / kwitansi 2 rangkap NCR carbonless custom nama toko / usaha. 50 set per buku, dijilid rapi. Bisa upload desain sendiri atau kami buatkan gratis.",
       variants: ["Nota 2 Rangkap - 50 set (Rp 45.000/buku)", "Nota 3 Rangkap - 50 set (Rp 60.000/buku)", "Faktur Pajak Custom (Rp 75.000/buku)"]
@@ -634,7 +634,7 @@ const INITIAL_DATA = {
       minStock: 5,
       unit: "Pcs",
       image: "calendar",
-      photo: "img/products/kalender.jpg",
+      photo: "img/products/kalender.jpg?v=3",
       badge: "Musiman Nov–Jan",
       description: "Cetak kalender dinding 12 bulan custom foto/logo perusahaan. Kertas art paper 150gsm full color. Cocok untuk souvenir, promosi usaha, atau hadiah akhir tahun.",
       variants: ["Kalender Foto A3 1 lembar (Rp 25.000)", "Kalender 12 Lembar A3 (Rp 85.000)", "Kalender Meja 13 Lembar (Rp 45.000)"]
@@ -650,7 +650,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "Lembar",
       image: "image",
-      photo: "img/products/poster_a3.jpg",
+      photo: "img/products/poster_a3.jpg?v=3",
       badge: "Warna Vivid",
       description: "Cetak poster, foto besar, atau infografis ukuran A3 (29.7x42cm) dan A2 (42x59.4cm) full color resolusi tinggi. Kertas foto glossy atau doff.",
       variants: ["Poster A3 - Kertas HVS (Rp 8.000)", "Poster A3 - Foto Glossy (Rp 12.000)", "Poster A3 - Foto Doff (Rp 13.000)", "Poster A2 - Foto Glossy (Rp 22.000)"]
@@ -720,7 +720,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "Pcs",
       image: "pen-tool",
-      photo: "img/products/spidol.jpg?v=2",
+      photo: "img/products/spidol.jpg?v=3",
       badge: "Mudah Hapus",
       description: "Spidol whiteboard Snowman tinta mudah terhapus, tidak bau menyengat. Cocok untuk papan tulis kelas, kantor, dan seminar. Juga tersedia spidol permanen.",
       variants: ["Whiteboard - Hitam", "Whiteboard - Merah", "Whiteboard - Biru", "Whiteboard Set 4 Warna (Rp 32.000)", "Spidol Permanen Hitam (Rp 7.500)"]
@@ -772,7 +772,7 @@ const INITIAL_DATA = {
       minStock: 15,
       unit: "Pcs",
       image: "minus",
-      photo: "img/products/penggaris.jpg",
+      photo: "img/products/penggaris.jpg?v=3",
       badge: "Wajib Sekolah",
       description: "Penggaris plastik transparan bening anti pecah. Skala mm dan cm jelas terbaca. Tersedia ukuran 15cm, 30cm, dan 60cm untuk keperluan gambar teknik.",
       variants: ["Penggaris 15cm (Rp 3.000)", "Penggaris 30cm (Rp 5.000)", "Penggaris 60cm (Rp 9.000)", "Set Segitiga (Rp 10.000)"]
@@ -788,7 +788,7 @@ const INITIAL_DATA = {
       minStock: 8,
       unit: "Pcs",
       image: "scissors",
-      photo: "img/products/gunting_cutter.jpg?v=2",
+      photo: "img/products/gunting_cutter.jpg?v=3",
       badge: "Tajam & Aman",
       description: "Gunting serbaguna baja anti karat gagang karet ergonomis, atau cutter / silet dengan blade lock aman. Wajib ada untuk keperluan print, kerajinan, dan administrasi.",
       variants: ["Gunting 18cm (Rp 12.000)", "Gunting 21cm (Rp 16.000)", "Cutter Kecil (Rp 7.000)", "Cutter Besar (Rp 12.000)", "Isi Ulang Cutter 10pcs (Rp 4.000)"]
@@ -806,7 +806,7 @@ const INITIAL_DATA = {
       minStock: 5,
       unit: "Pcs",
       image: "archive",
-      photo: "img/products/ordner.jpg",
+      photo: "img/products/ordner.jpg?v=3",
       badge: "Arsip Rapi",
       description: "Ordner / map besar Bantex A4 kapasitas tebal 7cm atau 5cm. Cover karton tebal anti robek, ring D-clip besi kokoh. Warna pilihan untuk kode arsip kantor dan instansi.",
       variants: ["Ordner Tebal 7cm (Rp 28.000)", "Ordner Tipis 5cm (Rp 24.000)", "Ordner Slim 3.5cm (Rp 18.000)"]
@@ -824,7 +824,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "Pack (2 pcs)",
       image: "zap",
-      photo: "img/products/baterai.jpg",
+      photo: "img/products/baterai.jpg?v=3",
       badge: "Tahan Lama",
       description: "Baterai alkaline AA atau AAA tahan lama untuk remote, mainan, senter, dan perangkat elektronik. Merk Panasonic / ABC / Energizer tersedia.",
       variants: ["Baterai AA 2pcs (Rp 12.000)", "Baterai AAA 2pcs (Rp 12.000)", "Baterai AA 4pcs (Rp 22.000)", "Baterai 9V Kotak (Rp 18.000)"]
@@ -844,7 +844,7 @@ const INITIAL_DATA = {
       minStock: 5,
       unit: "Pcs",
       image: "zap",
-      photo: "img/products/kabel_data.jpg",
+      photo: "img/products/kabel_data.jpg?v=3",
       badge: "Fast Charging",
       description: "Kabel data dan charging kualitas tinggi, support transfer data print dari HP ke komputer/laptop kasir dengan cepat dan stabil. Bahan braided anti putus.",
       variants: ["Type-C to USB (Rp 20.000)", "Micro USB (Rp 18.000)", "Lightning iPhone (Rp 25.000)", "Type-C to Type-C 60W (Rp 30.000)"]
@@ -862,7 +862,7 @@ const INITIAL_DATA = {
       minStock: 8,
       unit: "Pcs",
       image: "hard-drive",
-      photo: "img/products/otg_adapter.jpg",
+      photo: "img/products/otg_adapter.jpg?v=3",
       badge: "Praktis Cetak",
       description: "Adapter OTG untuk colok flashdisk langsung ke HP Android/iPhone. Sangat membantu transfer dokumen kuliah/kantor sebelum dicetak.",
       variants: ["OTG Type-C Metal (Rp 15.000)", "OTG Micro USB (Rp 12.000)", "OTG 2-in-1 Dual Port (Rp 20.000)"]
@@ -880,7 +880,7 @@ const INITIAL_DATA = {
       minStock: 5,
       unit: "Pcs",
       image: "database",
-      photo: "img/products/card_reader.jpg",
+      photo: "img/products/card_reader.jpg?v=3",
       badge: "Multi Slot",
       description: "Card reader USB multifungsi membaca MicroSD dan SD Card kamera/HP. Praktis untuk cetak foto langsung dari kartu memori.",
       variants: ["Card Reader Mini USB (Rp 18.000)", "Card Reader Multi-Slot 4in1 (Rp 28.000)"]
@@ -934,7 +934,7 @@ const INITIAL_DATA = {
       minStock: 15,
       unit: "Pcs",
       image: "disc",
-      photo: "img/products/cd_dvd.jpg?v=2",
+      photo: "img/products/cd_dvd.jpg?v=3",
       badge: "Burning Skripsi",
       description: "Keping CD-R (700MB) atau DVD-R (4.7GB) blank + slim jewel case transparan. Sangat dicari mahasiswa untuk pengumpulan CD skripsi/tugas akhir dan arsip.",
       variants: ["CD-R Blank + Case (Rp 8.000)", "DVD-R Blank + Case (Rp 10.000)", "Paket Burning File + CD + Label (Rp 18.000)"]
@@ -970,7 +970,7 @@ const INITIAL_DATA = {
       minStock: 5,
       unit: "Pcs",
       image: "headphones",
-      photo: "img/products/earphone.jpg",
+      photo: "img/products/earphone.jpg?v=3",
       badge: "Bass Jernih + Mic",
       description: "Earphone kabel in-ear jack 3.5mm dilengkapi mic & tombol panggilan. Suara jernih dan bass mantap untuk kuliah online, meeting zoom, atau denger musik.",
       variants: ["Earphone Jack 3.5mm (Rp 22.000)", "Earphone Port Type-C (Rp 32.000)"]
@@ -1024,7 +1024,7 @@ const INITIAL_DATA = {
       minStock: 3,
       unit: "Pcs",
       image: "share-2",
-      photo: "img/products/usb_hub.jpg",
+      photo: "img/products/usb_hub.jpg?v=3",
       badge: "Multi Port",
       description: "Ekspansi 1 port USB menjadi 4 port USB 2.0/3.0. Solusi praktis laptop tipis yang kekurangan colokan untuk flashdisk, mouse, printer, dan keyboard.",
       variants: ["USB Hub 4 Port 2.0 (Rp 32.000)", "USB Hub 4 Port 3.0 High-Speed (Rp 55.000)"]
