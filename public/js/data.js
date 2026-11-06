@@ -586,7 +586,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "100 lbr",
       image: "credit-card",
-      photo: "img/products/kartu_nama.jpg",
+      photo: "img/products/kartu_nama.jpg?v=2",
       badge: "Desain Gratis",
       description: "Desain + cetak kartu nama profesional art carton 260gsm full color 2 sisi. Termasuk desain eksklusif, revisi 2x. Selesai 1–2 hari kerja.",
       variants: ["Art Carton 260gsm (Rp 35.000/100lbr)", "Laminasi Doff (Rp 45.000/100lbr)", "Laminasi Glossy (Rp 43.000/100lbr)", "Soft Touch / Beludru (Rp 60.000/100lbr)"]
@@ -720,7 +720,7 @@ const INITIAL_DATA = {
       minStock: 10,
       unit: "Pcs",
       image: "pen-tool",
-      photo: "img/products/spidol.jpg",
+      photo: "img/products/spidol.jpg?v=2",
       badge: "Mudah Hapus",
       description: "Spidol whiteboard Snowman tinta mudah terhapus, tidak bau menyengat. Cocok untuk papan tulis kelas, kantor, dan seminar. Juga tersedia spidol permanen.",
       variants: ["Whiteboard - Hitam", "Whiteboard - Merah", "Whiteboard - Biru", "Whiteboard Set 4 Warna (Rp 32.000)", "Spidol Permanen Hitam (Rp 7.500)"]
@@ -788,7 +788,7 @@ const INITIAL_DATA = {
       minStock: 8,
       unit: "Pcs",
       image: "scissors",
-      photo: "img/products/gunting_cutter.jpg",
+      photo: "img/products/gunting_cutter.jpg?v=2",
       badge: "Tajam & Aman",
       description: "Gunting serbaguna baja anti karat gagang karet ergonomis, atau cutter / silet dengan blade lock aman. Wajib ada untuk keperluan print, kerajinan, dan administrasi.",
       variants: ["Gunting 18cm (Rp 12.000)", "Gunting 21cm (Rp 16.000)", "Cutter Kecil (Rp 7.000)", "Cutter Besar (Rp 12.000)", "Isi Ulang Cutter 10pcs (Rp 4.000)"]
@@ -934,7 +934,7 @@ const INITIAL_DATA = {
       minStock: 15,
       unit: "Pcs",
       image: "disc",
-      photo: "img/products/cd_dvd.jpg",
+      photo: "img/products/cd_dvd.jpg?v=2",
       badge: "Burning Skripsi",
       description: "Keping CD-R (700MB) atau DVD-R (4.7GB) blank + slim jewel case transparan. Sangat dicari mahasiswa untuk pengumpulan CD skripsi/tugas akhir dan arsip.",
       variants: ["CD-R Blank + Case (Rp 8.000)", "DVD-R Blank + Case (Rp 10.000)", "Paket Burning File + CD + Label (Rp 18.000)"]

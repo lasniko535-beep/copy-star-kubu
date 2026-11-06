@@ -72,13 +72,16 @@ body.light-theme {
 }
 
 /* Base Resets */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-app);
@@ -87,13 +90,21 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: 0.9rem;
   color: inherit;
@@ -225,9 +236,20 @@ button:active {
 }
 
 @keyframes pulse-dot {
-  0% { transform: scale(0.95); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(0.95); opacity: 0.8; }
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
 }
 
 .header-icon-btn {
@@ -526,10 +548,25 @@ button:active {
   border-radius: 6px;
 }
 
-.dh-badge-cyan { background: rgba(0, 229, 255, 0.18); color: #00E5FF; }
-.dh-badge-gold { background: rgba(247, 201, 72, 0.18); color: #F7C948; }
-.dh-badge-emerald { background: rgba(16, 185, 129, 0.18); color: #10B981; }
-.dh-badge-amber { background: rgba(249, 115, 22, 0.18); color: #F97316; }
+.dh-badge-cyan {
+  background: rgba(0, 229, 255, 0.18);
+  color: #00E5FF;
+}
+
+.dh-badge-gold {
+  background: rgba(247, 201, 72, 0.18);
+  color: #F7C948;
+}
+
+.dh-badge-emerald {
+  background: rgba(16, 185, 129, 0.18);
+  color: #10B981;
+}
+
+.dh-badge-amber {
+  background: rgba(249, 115, 22, 0.18);
+  color: #F97316;
+}
 
 .btn-return-pos {
   display: inline-flex;
@@ -1027,7 +1064,7 @@ body.light-theme .price-manage-table td {
 
 /* Badge shadow agar terbaca di atas foto */
 .card-img-area .badge-tag {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -1666,9 +1703,17 @@ body.light-theme .price-manage-table td {
   background: var(--primary);
 }
 
-.kpi-card.green::after { background: var(--success); }
-.kpi-card.purple::after { background: var(--purple); }
-.kpi-card.red::after { background: var(--danger); }
+.kpi-card.green::after {
+  background: var(--success);
+}
+
+.kpi-card.purple::after {
+  background: var(--purple);
+}
+
+.kpi-card.red::after {
+  background: var(--danger);
+}
 
 .kpi-header {
   display: flex;
@@ -1695,8 +1740,13 @@ body.light-theme .price-manage-table td {
   font-weight: 600;
 }
 
-.kpi-trend.positive { color: var(--success); }
-.kpi-trend.negative { color: var(--danger); }
+.kpi-trend.positive {
+  color: var(--success);
+}
+
+.kpi-trend.negative {
+  color: var(--danger);
+}
 
 /* AI Human-language Insight Banner */
 .ai-insight-banner {
@@ -1799,7 +1849,8 @@ body.light-theme .price-manage-table td {
   font-size: 0.72rem;
 }
 
-.heatmap-table th, .heatmap-table td {
+.heatmap-table th,
+.heatmap-table td {
   padding: 0.4rem 0.25rem;
   text-align: center;
 }
@@ -2092,8 +2143,15 @@ body.light-theme .price-manage-table td {
 }
 
 @keyframes modal-pop {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .modal-header {
@@ -2276,8 +2334,15 @@ body.light-theme .price-manage-table td {
 }
 
 @keyframes toast-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Print CSS */
@@ -2285,9 +2350,12 @@ body.light-theme .price-manage-table td {
   body * {
     visibility: hidden;
   }
-  #thermalReceiptContent, #thermalReceiptContent * {
+
+  #thermalReceiptContent,
+  #thermalReceiptContent * {
     visibility: visible;
   }
+
   #thermalReceiptContent {
     position: absolute;
     left: 0;
@@ -2371,8 +2439,15 @@ body.light-theme .price-manage-table td {
 }
 
 @keyframes login-card-pop {
-  from { opacity: 0; transform: scale(0.92) translateY(15px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .login-brand-header {
@@ -2629,43 +2704,72 @@ body.light-theme .price-manage-table td {
 }
 
 .particle.p1 {
-  width: 380px; height: 380px;
+  width: 380px;
+  height: 380px;
   background: radial-gradient(circle, #FFB800 0%, transparent 70%);
-  top: -120px; left: -120px;
-  animation-delay: 0s; animation-duration: 10s;
+  top: -120px;
+  left: -120px;
+  animation-delay: 0s;
+  animation-duration: 10s;
 }
+
 .particle.p2 {
-  width: 260px; height: 260px;
+  width: 260px;
+  height: 260px;
   background: radial-gradient(circle, #FFB800 0%, transparent 70%);
-  bottom: -80px; right: -80px;
-  animation-delay: -3s; animation-duration: 12s;
+  bottom: -80px;
+  right: -80px;
+  animation-delay: -3s;
+  animation-duration: 12s;
 }
+
 .particle.p3 {
-  width: 180px; height: 180px;
+  width: 180px;
+  height: 180px;
   background: radial-gradient(circle, #8B5CF6 0%, transparent 70%);
-  top: 30%; right: 10%;
-  animation-delay: -5s; animation-duration: 9s;
+  top: 30%;
+  right: 10%;
+  animation-delay: -5s;
+  animation-duration: 9s;
   opacity: 0.09;
 }
+
 .particle.p4 {
-  width: 120px; height: 120px;
+  width: 120px;
+  height: 120px;
   background: radial-gradient(circle, #10B981 0%, transparent 70%);
-  bottom: 25%; left: 8%;
-  animation-delay: -2s; animation-duration: 11s;
+  bottom: 25%;
+  left: 8%;
+  animation-delay: -2s;
+  animation-duration: 11s;
   opacity: 0.08;
 }
+
 .particle.p5 {
-  width: 60px; height: 60px;
+  width: 60px;
+  height: 60px;
   background: radial-gradient(circle, #FFB800 0%, transparent 70%);
-  top: 55%; left: 45%;
-  animation-delay: -7s; animation-duration: 7s;
+  top: 55%;
+  left: 45%;
+  animation-delay: -7s;
+  animation-duration: 7s;
   opacity: 0.15;
 }
 
 @keyframes particleFloat {
-  0%, 100% { transform: translateY(0) scale(1); }
-  33%       { transform: translateY(-18px) scale(1.04); }
-  66%       { transform: translateY(10px) scale(0.97); }
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  33% {
+    transform: translateY(-18px) scale(1.04);
+  }
+
+  66% {
+    transform: translateY(10px) scale(0.97);
+  }
 }
 
 /* Grid pattern overlay */
@@ -2674,8 +2778,8 @@ body.light-theme .price-manage-table td {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255,184,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,184,0,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 184, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 184, 0, 0.03) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
 }
@@ -2693,15 +2797,22 @@ body.light-theme .price-manage-table td {
   border-radius: 24px;
   padding: 40px 36px;
   box-shadow:
-    0 0 0 1px rgba(255,184,0,0.06) inset,
-    0 32px 64px rgba(0,0,0,0.7),
-    0 0 80px rgba(255,184,0,0.08);
+    0 0 0 1px rgba(255, 184, 0, 0.06) inset,
+    0 32px 64px rgba(0, 0, 0, 0.7),
+    0 0 80px rgba(255, 184, 0, 0.08);
   animation: cardSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes cardSlideUp {
-  from { opacity: 0; transform: translateY(32px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* --- Brand / Logo Section --- */
@@ -2717,13 +2828,13 @@ body.light-theme .price-manage-table td {
   width: 64px;
   height: 64px;
   border-radius: 16px;
-  background: rgba(255,184,0,0.1);
-  border: 1.5px solid rgba(255,184,0,0.25);
+  background: rgba(255, 184, 0, 0.1);
+  border: 1.5px solid rgba(255, 184, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 0 0 24px rgba(255,184,0,0.2);
+  box-shadow: 0 0 24px rgba(255, 184, 0, 0.2);
 }
 
 .login-logo-img {
@@ -2739,7 +2850,9 @@ body.light-theme .price-manage-table td {
   justify-content: center;
 }
 
-.login-brand-text { flex: 1; }
+.login-brand-text {
+  flex: 1;
+}
 
 .login-brand-name {
   font-family: 'Outfit', sans-serif;
@@ -2750,7 +2863,9 @@ body.light-theme .price-manage-table td {
   line-height: 1.2;
 }
 
-.login-brand-name span { color: var(--primary); }
+.login-brand-name span {
+  color: var(--primary);
+}
 
 .login-brand-tagline {
   font-size: 11.5px;
@@ -2770,7 +2885,7 @@ body.light-theme .price-manage-table td {
 .login-divider-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
 }
 
 .login-divider-text {
@@ -2799,14 +2914,33 @@ body.light-theme .price-manage-table td {
 }
 
 @keyframes shakeAlert {
-  0%, 100% { transform: translateX(0); }
-  20%       { transform: translateX(-6px); }
-  40%       { transform: translateX(6px); }
-  60%       { transform: translateX(-4px); }
-  80%       { transform: translateX(4px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-6px);
+  }
+
+  40% {
+    transform: translateX(6px);
+  }
+
+  60% {
+    transform: translateX(-4px);
+  }
+
+  80% {
+    transform: translateX(4px);
+  }
 }
 
-.login-error-alert svg { flex-shrink: 0; color: var(--danger); }
+.login-error-alert svg {
+  flex-shrink: 0;
+  color: var(--danger);
+}
 
 /* --- Form Fields --- */
 .login-form {
@@ -2831,7 +2965,10 @@ body.light-theme .price-manage-table td {
   letter-spacing: 0.2px;
 }
 
-.login-label svg { color: var(--primary); flex-shrink: 0; }
+.login-label svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
 
 .login-input-wrap {
   position: relative;
@@ -2841,8 +2978,8 @@ body.light-theme .price-manage-table td {
 
 .login-input {
   width: 100%;
-  background: rgba(255,255,255,0.05);
-  border: 1.5px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 13px 44px 13px 16px;
   font-size: 15px;
@@ -2853,12 +2990,15 @@ body.light-theme .price-manage-table td {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.login-input::placeholder { color: var(--text-dim); font-weight: 400; }
+.login-input::placeholder {
+  color: var(--text-dim);
+  font-weight: 400;
+}
 
 .login-input:focus {
   border-color: var(--primary);
-  background: rgba(255,184,0,0.05);
-  box-shadow: 0 0 0 3px rgba(255,184,0,0.12);
+  background: rgba(255, 184, 0, 0.05);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.12);
 }
 
 .login-toggle-pass {
@@ -2875,7 +3015,9 @@ body.light-theme .price-manage-table td {
   border-radius: 6px;
 }
 
-.login-toggle-pass:hover { color: var(--primary); }
+.login-toggle-pass:hover {
+  color: var(--primary);
+}
 
 /* --- Options Row --- */
 .login-options-row {
@@ -2895,14 +3037,16 @@ body.light-theme .price-manage-table td {
   user-select: none;
 }
 
-.login-checkbox { display: none; }
+.login-checkbox {
+  display: none;
+}
 
 .login-checkbox-custom {
   width: 18px;
   height: 18px;
   border-radius: 5px;
-  border: 1.5px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2911,12 +3055,12 @@ body.light-theme .price-manage-table td {
   position: relative;
 }
 
-.login-checkbox:checked + .login-checkbox-custom {
+.login-checkbox:checked+.login-checkbox-custom {
   background: var(--primary);
   border-color: var(--primary);
 }
 
-.login-checkbox:checked + .login-checkbox-custom::after {
+.login-checkbox:checked+.login-checkbox-custom::after {
   content: '';
   width: 10px;
   height: 6px;
@@ -2937,7 +3081,10 @@ body.light-theme .price-manage-table td {
   transition: opacity 0.2s;
 }
 
-.login-forgot-btn:hover { opacity: 0.75; text-decoration: underline; }
+.login-forgot-btn:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
 
 /* --- Submit Button --- */
 .login-submit-btn {
@@ -2955,7 +3102,7 @@ body.light-theme .price-manage-table td {
   overflow: hidden;
   margin-top: 4px;
   transition: transform 0.15s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 20px rgba(255,184,0,0.35);
+  box-shadow: 0 4px 20px rgba(255, 184, 0, 0.35);
 }
 
 .login-btn-text {
@@ -2970,27 +3117,32 @@ body.light-theme .price-manage-table td {
 .login-btn-shimmer {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 35%,
-    rgba(255,255,255,0.35) 50%,
-    transparent 65%
-  );
+  background: linear-gradient(105deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 65%);
   background-size: 200% 100%;
   animation: shimmerSlide 2.5s infinite;
 }
 
 @keyframes shimmerSlide {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .login-submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(255,184,0,0.45);
+  box-shadow: 0 8px 28px rgba(255, 184, 0, 0.45);
 }
 
-.login-submit-btn:active { transform: translateY(0); }
+.login-submit-btn:active {
+  transform: translateY(0);
+}
 
 /* --- Quick Login Section --- */
 .login-quick-section {
@@ -3072,25 +3224,25 @@ body.light-theme .login-card {
   background: rgba(255, 255, 255, 0.92);
   border-color: rgba(255, 184, 0, 0.3);
   box-shadow:
-    0 0 0 1px rgba(255,184,0,0.1) inset,
-    0 24px 64px rgba(0,0,0,0.12),
-    0 0 60px rgba(255,184,0,0.06);
+    0 0 0 1px rgba(255, 184, 0, 0.1) inset,
+    0 24px 64px rgba(0, 0, 0, 0.12),
+    0 0 60px rgba(255, 184, 0, 0.06);
 }
 
 body.light-theme .login-overlay::before {
   background-image:
-    linear-gradient(rgba(255,184,0,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,184,0,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255, 184, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 184, 0, 0.05) 1px, transparent 1px);
 }
 
 body.light-theme .login-input {
-  background: rgba(0,0,0,0.04);
-  border-color: rgba(0,0,0,0.12);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
   color: var(--text-main);
 }
 
 body.light-theme .login-input:focus {
-  background: rgba(255,184,0,0.04);
+  background: rgba(255, 184, 0, 0.04);
 }
 
 /* --- Responsive Mobile --- */
@@ -3102,11 +3254,22 @@ body.light-theme .login-input:focus {
     max-width: calc(100% - 32px);
   }
 
-  .login-brand-name { font-size: 18px; }
-  .login-logo-wrap { width: 52px; height: 52px; }
+  .login-brand-name {
+    font-size: 18px;
+  }
 
-  .login-quick-btns { flex-direction: column; }
-  .login-quick-btn { justify-content: center; }
+  .login-logo-wrap {
+    width: 52px;
+    height: 52px;
+  }
+
+  .login-quick-btns {
+    flex-direction: column;
+  }
+
+  .login-quick-btn {
+    justify-content: center;
+  }
 }
 
 /* --- Instagram & Order Channels Styling --- */
@@ -3358,9 +3521,20 @@ body.light-theme .login-input:focus {
 }
 
 @keyframes pulseGreen {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
 }
 
 .cust-hero-title {
@@ -3942,8 +4116,13 @@ body.light-theme .login-input:focus {
 }
 
 @keyframes sweep {
-  0% { left: -100%; }
-  100% { left: 200%; }
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 200%;
+  }
 }
 
 .btn-ig-cust-alt {
@@ -4096,8 +4275,15 @@ body.light-theme .login-input:focus {
 }
 
 @keyframes scaleUp {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .ticket-cut-left,
@@ -4110,8 +4296,14 @@ body.light-theme .login-input:focus {
   border-radius: 50%;
 }
 
-.ticket-cut-left { left: -12px; }
-.ticket-cut-right { right: -12px; }
+
+.ticket-cut-left {
+  left: -12px;
+}
+
+.ticket-cut-right {
+  right: -12px;
+}
 
 .ticket-top {
   text-align: center;
@@ -4295,9 +4487,11 @@ body.light-theme .cust-queue-card {
     flex-direction: column;
     align-items: stretch;
   }
+
   .cust-order-main-layout {
     grid-template-columns: 1fr;
   }
+
   .cust-summary-sidebar {
     position: static;
   }
@@ -4307,9 +4501,11 @@ body.light-theme .cust-queue-card {
   .cust-form-grid {
     grid-template-columns: 1fr;
   }
+
   .cust-hero-title {
     font-size: 1.35rem;
   }
+
   .cust-service-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -4512,10 +4708,23 @@ body.light-theme .cust-queue-card {
   transform: scale(1.08);
 }
 
-.swatch-btn.red { background: #D32F2F; }
-.swatch-btn.blue { background: #0D47A1; }
-.swatch-btn.white { background: #FFFFFF; border: 1px solid #CBD5E1; }
-.swatch-btn.yellow { background: #FBC02D; }
+.swatch-btn.red {
+  background: #D32F2F;
+}
+
+.swatch-btn.blue {
+  background: #0D47A1;
+}
+
+.swatch-btn.white {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+}
+
+.swatch-btn.yellow {
+  background: #FBC02D;
+}
+
 .swatch-btn.original {
   background: transparent;
   border: 1px dashed var(--text-muted);
@@ -4552,7 +4761,7 @@ body.light-theme .cust-queue-card {
   background: #FFFFFF;
   border-radius: 6px;
   display: block;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================================================
@@ -4604,8 +4813,15 @@ body.light-theme .cust-queue-card {
 }
 
 @keyframes fadeInStatus {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .pos-pdf-dropzone:hover span {
@@ -4737,17 +4953,20 @@ body.light-theme .cust-queue-card {
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .btn-theme-pill:hover {
   background: rgba(247, 201, 72, 0.15);
   border-color: var(--primary, #F7C948);
   transform: translateY(-1px);
 }
+
 body.light-theme .btn-theme-pill {
   background: #FFFFFF;
   border-color: rgba(0, 0, 0, 0.15);
   color: #1E293B;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
+
 body.light-theme .btn-theme-pill:hover {
   background: #FEF3C7;
   border-color: #D97706;
@@ -4767,11 +4986,13 @@ body.light-theme .btn-theme-pill:hover {
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .btn-help-guide:hover {
   background: rgba(2, 132, 199, 0.28);
   border-color: #38BDF8;
   transform: translateY(-1px);
 }
+
 body.light-theme .btn-help-guide {
   background: #E0F2FE;
   border-color: #0284C7;
@@ -4790,16 +5011,19 @@ body.light-theme .btn-help-guide {
   cursor: pointer;
   transition: all 0.2s ease;
 }
+
 .guide-tab-btn.active {
   background: rgba(247, 201, 72, 0.18);
   border-color: var(--primary, #F7C948);
   color: var(--primary, #F7C948);
 }
+
 body.light-theme .guide-tab-btn {
   background: #F1F5F9;
   border-color: #CBD5E1;
   color: #475569;
 }
+
 body.light-theme .guide-tab-btn.active {
   background: #FEF3C7;
   border-color: #D97706;
@@ -4810,6 +5034,7 @@ body.light-theme .guide-tab-btn.active {
   display: none;
   animation: fadeIn 0.2s ease;
 }
+
 .guide-content-panel.active {
   display: block;
 }
@@ -4824,10 +5049,11 @@ body.light-theme .guide-tab-btn.active {
   margin-bottom: 0.75rem;
   align-items: flex-start;
 }
+
 body.light-theme .guide-step-card {
   background: #FFFFFF;
   border-color: #E2E8F0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .guide-step-num {
@@ -4843,6 +5069,7 @@ body.light-theme .guide-step-card {
   font-size: 0.9rem;
   flex-shrink: 0;
 }
+
 body.light-theme .guide-step-num {
   background: #FEF3C7;
   color: #D97706;
@@ -4853,12 +5080,14 @@ body.light-theme .guide-step-num {
   font-size: 0.92rem;
   color: var(--text-main);
 }
+
 .guide-step-body p {
   margin: 0;
   font-size: 0.82rem;
   color: var(--text-muted);
   line-height: 1.5;
 }
+
 .guide-pro-tip {
   margin-top: 0.75rem;
   padding: 0.75rem 1rem;
@@ -4871,6 +5100,7 @@ body.light-theme .guide-step-num {
   align-items: center;
   gap: 8px;
 }
+
 body.light-theme .guide-pro-tip {
   background: #ECFDF5;
   border-color: #A7F3D0;
@@ -4882,6 +5112,7 @@ body.light-theme .guide-pro-tip {
 .emp-row-item:hover td {
   background: rgba(37, 99, 235, 0.08) !important;
 }
+
 .emp-expanded-row {
   animation: fadeIn 0.15s ease-in-out;
 }
@@ -4891,86 +5122,9 @@ body.light-theme .guide-pro-tip {
 .btn-bundle-pill {
   transition: all 0.2s ease;
 }
+
 .btn-bundle-pill:hover {
   transform: translateY(-1px);
   filter: brightness(1.2);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-
-/* ==========================================================================
-   UNIVERSAL CLICK & OVERLAY SAFETY GUARANTEES (ANTI-CLICK-BLOCKER ENGINE)
-   Menjamin tidak ada modal / overlay / toast gaib yang menelan klik mouse
-   ========================================================================== */
-
-/* 1. Inactive overlays must NEVER intercept clicks or block screen */
-.modal-overlay:not(.active),
-.modal:not(.active),
-.cust-ticket-overlay:not(.active),
-.mobile-drawer-overlay:not(.active),
-.login-overlay.hidden,
-.login-screen-overlay.hidden {
-  display: none !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
-
-/* 2. Active modals are guaranteed to be centered, visible and interactive */
-.modal-overlay.active,
-.modal.active,
-.cust-ticket-overlay.active,
-.mobile-drawer-overlay.active {
-  display: flex !important;
-  pointer-events: auto !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  z-index: 99999 !important;
-}
-
-/* 3. Toast container must never swallow clicks on empty space */
-.toast-container {
-  pointer-events: none !important;
-}
-.toast-container .toast {
-  pointer-events: auto !important;
-  cursor: pointer;
-}
-
-/* 4. SVGs & child icons inside buttons must never steal event target from button */
-button svg,
-button path,
-a svg,
-a path,
-.btn svg,
-.btn path,
-.nav-tab-btn svg,
-.nav-tab-btn path,
-.mob-nav-item svg,
-.mob-nav-item path {
-  pointer-events: none !important;
-}
-
-/* 5. Clear pointer cursor and tap highlight on all clickable elements */
-button,
-a,
-[onclick],
-.product-card,
-.session-tab,
-.pill-btn,
-.category-pill,
-.quick-cash-chip,
-.bundle-chip,
-.payment-method-card,
-.nav-tab-btn,
-.mob-nav-item,
-.emp-row-item,
-.shift-badge,
-.btn-header-feature,
-.btn-modal-close,
-.btn-bundle-pill,
-.btn-highlight-action,
-.btn-secondary-sm {
-  cursor: pointer !important;
-  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
