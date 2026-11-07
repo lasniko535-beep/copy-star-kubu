@@ -106,7 +106,10 @@ function formatRupiah(num) {
 document.addEventListener("DOMContentLoaded", () => {
   applyThemeUI();
   renderCategoryPills();
-  renderCatalogProducts();
+  renderCatalogSkeleton(8);
+  setTimeout(() => {
+    renderCatalogProducts();
+  }, 220);
   renderSessionTabs();
   renderActiveCart();
   renderOwnerAnalytics();
@@ -641,10 +644,47 @@ function renderCategoryPills() {
 }
 
 function selectCategory(catId) {
+  if (activeCategory === catId) return;
   activeCategory = catId;
   renderCategoryPills();
-  renderCatalogProducts();
+  renderCatalogSkeleton(8);
+  setTimeout(() => {
+    renderCatalogProducts();
+  }, 180);
 }
+
+function renderCatalogSkeleton(count = 8) {
+  const container = document.getElementById("productGridContainer");
+  if (!container) return;
+
+  let skeletonHtml = "";
+  for (let i = 0; i < count; i++) {
+    const titleWidth1 = 70 + (i % 4) * 8;
+    const titleWidth2 = 45 + (i % 3) * 12;
+    skeletonHtml += `
+      <div class="product-card skeleton-card">
+        <div class="skeleton-img-box skeleton-shimmer"></div>
+        <div style="padding: 2px 0; display: flex; flex-direction: column; gap: 7px;">
+          <div class="skeleton-line skeleton-shimmer" style="width: ${titleWidth1}%; height: 14px;"></div>
+          <div class="skeleton-line skeleton-shimmer" style="width: ${titleWidth2}%; height: 11px;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+            <div class="skeleton-pill skeleton-shimmer" style="width: 72px;"></div>
+            <div class="skeleton-btn skeleton-shimmer"></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+  container.innerHTML = skeletonHtml;
+}
+
+// Global helper to trigger skeleton loading animation on demand
+window.triggerCatalogShimmer = function(duration = 350) {
+  renderCatalogSkeleton(8);
+  setTimeout(() => {
+    renderCatalogProducts();
+  }, duration);
+};
 
 function getProductIconSvg(iconName) {
   switch (iconName) {
@@ -759,9 +799,13 @@ function renderCatalogProducts() {
   }).join("");
 }
 
-// Search input listener
+// Search input listener with smooth debounce
+let posSearchDebounce = null;
 document.getElementById("posSearchInput")?.addEventListener("input", () => {
-  renderCatalogProducts();
+  clearTimeout(posSearchDebounce);
+  posSearchDebounce = setTimeout(() => {
+    renderCatalogProducts();
+  }, 100);
 });
 
 /* ==========================================================================
@@ -878,6 +922,17 @@ function addProductToActiveCart(productId, customQty = 1) {
   playBeep("scan");
   renderSessionTabs();
   renderActiveCart();
+
+  // Card click pulse micro-interaction feedback
+  try {
+    const cardEl = document.querySelector(`.product-card[onclick*="'${productId}'"]`);
+    if (cardEl && !cardEl.classList.contains("skeleton-card")) {
+      cardEl.classList.remove("card-click-pulse");
+      void cardEl.offsetWidth; // trigger reflow
+      cardEl.classList.add("card-click-pulse");
+      setTimeout(() => cardEl.classList.remove("card-click-pulse"), 350);
+    }
+  } catch (e) {}
 }
 
 function updateItemQty(index, delta) {
