@@ -40,6 +40,9 @@
             <a href="{{ route('transactions.export_excel') }}" class="btn-nav" style="display:flex; align-items:center; gap:0.35rem; text-decoration:none; color:#FFF; font-size:0.82rem; font-weight:600; padding:0.4rem 0.85rem; border-radius:6px; background:#10B981;">
                 📥 <span>Unduh Excel</span>
             </a>
+            <a href="{{ route('owner') }}" class="btn-nav" style="display:flex; align-items:center; gap:0.35rem; text-decoration:none; color:#FFF; font-size:0.82rem; font-weight:600; padding:0.4rem 0.85rem; border-radius:6px; background:rgba(255,255,255,0.08);">
+                📊 <span>Dasbor Pemilik</span>
+            </a>
             <a href="{{ route('pelanggan') }}" class="btn-nav" style="display:flex; align-items:center; gap:0.35rem; text-decoration:none; color:#FFF; font-size:0.82rem; font-weight:600; padding:0.4rem 0.85rem; border-radius:6px; background:rgba(255,255,255,0.08);">
                 📱 <span>Portal Pelanggan</span>
             </a>

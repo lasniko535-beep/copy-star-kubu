@@ -273,7 +273,7 @@
         <span>Pelanggan</span>
       </button>
 
-      <a href="/transaksi" class="nav-tab-btn" id="btnViewTransaksiLaravel"
+      <a href="/transaksi" class="nav-tab-btn" id="btnViewTransaksiLaravel" onclick="openRiwayatTransaksiView(event)"
         title="Riwayat Transaksi & Ekspor Excel (Database Laravel 13)" style="text-decoration:none; color:inherit;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -4991,7 +4991,7 @@
           <div>
             <div class="drawer-group-title">Manajemen Toko & Kasir</div>
             <div class="drawer-grid-menu">
-              <a href="/transaksi" class="drawer-menu-btn" style="text-decoration:none; color:inherit;">
+              <a href="/transaksi" class="drawer-menu-btn" onclick="openRiwayatTransaksiView(event); closeMobileDrawer();" style="text-decoration:none; color:inherit;">
                 <span class="menu-icon">📋</span>
                 <div class="menu-text">
                   <strong>Riwayat Laravel (Blade)</strong>

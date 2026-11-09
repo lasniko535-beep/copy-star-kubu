@@ -154,6 +154,19 @@ function checkAuthSession() {
     }
   }
 
+  // 4. Link Khusus Riwayat Transaksi Toko
+  if (mode === "transaksi" || mode === "riwayat") {
+    if (!localStorage.getItem("COPY_STAR_CURRENT_USER") && !sessionStorage.getItem("COPY_STAR_CURRENT_USER")) {
+      quickLoginAs("OWNER");
+    }
+    actuallySwitchMainView("owner");
+    setTimeout(() => {
+      const el = document.getElementById("recentTransactionsTableBody") || document.querySelector(".data-table-wrapper");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 250);
+    return;
+  }
+
   const savedUser = localStorage.getItem("COPY_STAR_CURRENT_USER") || sessionStorage.getItem("COPY_STAR_CURRENT_USER");
   if (savedUser) {
     try {
@@ -535,6 +548,25 @@ function actuallySwitchMainView(view) {
     customer: "Portal Pesanan Pelanggan Dibuka 🛍️"
   };
   showToast(toastMessages[activeView] || "Layar diperbarui");
+}
+
+// Navigasi Riwayat Transaksi (Cerdas & Anti-Gagal: Web Laravel / Mode Offline File)
+function openRiwayatTransaksiView(e) {
+  if (e) e.preventDefault();
+
+  // Jika sedang dijalankan melalui server web (http / https)
+  if (window.location.protocol.startsWith("http")) {
+    window.location.href = "/transaksi";
+  } else {
+    // Jika dibuka langsung via file offline (file:///) tanpa server artisan
+    // Alihkan langsung ke Dasbor Pemilik -> Riwayat Transaksi
+    switchMainView("owner");
+    setTimeout(() => {
+      const el = document.getElementById("recentTransactionsTableBody") || document.querySelector(".data-table-wrapper");
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 200);
+    showToast("Membuka Riwayat Transaksi Toko & Laporan Penjualan 📋");
+  }
 }
 
 // Toggle Theme
