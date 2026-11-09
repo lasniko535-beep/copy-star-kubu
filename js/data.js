@@ -6,7 +6,7 @@
 const INITIAL_DATA = {
   storeInfo: {
     name: "COPY STAR KUBU",
-    tagline: "Digital Photocopy, Photo Printing & ATK",
+    tagline: "Fotokopi Digital, Percetakan Foto & ATK",
     address: "Jln. Soeparto 1 Kubu, Desa Kubu, Kec. Kubu, Kabupaten Kubu Raya",
     phone: "0812-5345-3440",
     waNumber: "6281253453440",
@@ -64,7 +64,7 @@ const INITIAL_DATA = {
 
   categories: [
     { id: "all", name: "Semua Produk", icon: "grid" },
-    { id: "print_copy", name: "Jasa Print & Copy", icon: "printer" },
+    { id: "print_copy", name: "Jasa Cetak & Fotokopi", icon: "printer" },
     { id: "kertas", name: "Kertas & Buku", icon: "book-open" },
     { id: "atk", name: "Alat Tulis", icon: "edit-3" },
     { id: "jilid", name: "Jilid & Finishing", icon: "layers" },
@@ -133,7 +133,7 @@ const INITIAL_DATA = {
     },
     {
       id: "PRD-003",
-      name: "Print Dokumen B/W",
+      name: "Cetak Dokumen Hitam Putih (B/W)",
       category: "print_copy",
       isService: true,
       price: 1000,
@@ -144,12 +144,12 @@ const INITIAL_DATA = {
       tieredKey: "print_doc_bw",
       image: "file-text",
       photo: "img/products/fotokopi_bw.jpg?v=3",
-      badge: "Print Cepat",
+      badge: "Cetak Cepat",
       description: "Cetak dokumen PDF/Word/Excel dari HP / Flashdisk / WA."
     },
     {
       id: "PRD-004",
-      name: "Print Warna / Full Color",
+      name: "Cetak Warna / Full Color",
       category: "print_copy",
       isService: true,
       price: 2500,
@@ -160,7 +160,7 @@ const INITIAL_DATA = {
       tieredKey: "print_doc_color",
       image: "printer",
       photo: "img/products/print_warna.jpg?v=3",
-      badge: "Vivid Color",
+      badge: "Warna Cerah",
       description: "Cetak makalah, brosur, diagram full color."
     },
     {
@@ -305,7 +305,7 @@ const INITIAL_DATA = {
       unit: "Pcs",
       image: "edit-2",
       photo: "img/products/pulpen_standard.jpg",
-      badge: "Best Seller",
+      badge: "Paling Laris",
       description: "Pulpen bola sejuta umat anti bocor lancar menulis."
     },
     {
@@ -320,7 +320,7 @@ const INITIAL_DATA = {
       unit: "Pcs",
       image: "folder",
       photo: "img/products/map_clear_holder.jpg",
-      badge: "Cross-Sell",
+      badge: "Produk Pelengkap",
       description: "Map dokumen isi 20 lembar plastik bening untuk berkas rapi."
     },
     {
@@ -410,7 +410,7 @@ const INITIAL_DATA = {
       unit: "Set",
       image: "feather",
       photo: "img/products/pulpen_pastel.jpg",
-      badge: "Dead Stock (>60 Hari)",
+      badge: "Stok Mengendap (>60 Hari)",
       isDeadStock: true,
       lastSoldDaysAgo: 64,
       description: "Pulpen warna pastel estetik. Perlu bundling diskon agar cepat laku!"
@@ -603,7 +603,7 @@ const INITIAL_DATA = {
       unit: "Lembar A4",
       image: "tag",
       photo: "img/products/stiker_label.jpg",
-      badge: "UMKM Friendly",
+      badge: "Ramah UMKM",
       description: "Cetak stiker label custom untuk produk UMKM, packaging, atau undangan. Bahan stiker vinyl / kertas glossy A4. Potong per lembar atau cutting custom.",
       variants: ["Stiker Kertas Glossy A4 (Rp 15.000/lbr)", "Stiker Vinyl Waterproof A4 (Rp 25.000/lbr)", "Stiker Transparan A4 (Rp 28.000/lbr)", "Roll Stiker (Rp 120.000/m)"]
     },
@@ -651,7 +651,7 @@ const INITIAL_DATA = {
       unit: "Lembar",
       image: "image",
       photo: "img/products/poster_a3.jpg?v=3",
-      badge: "Warna Vivid",
+      badge: "Warna Cerah",
       description: "Cetak poster, foto besar, atau infografis ukuran A3 (29.7x42cm) dan A2 (42x59.4cm) full color resolusi tinggi. Kertas foto glossy atau doff.",
       variants: ["Poster A3 - Kertas HVS (Rp 8.000)", "Poster A3 - Foto Glossy (Rp 12.000)", "Poster A3 - Foto Doff (Rp 13.000)", "Poster A2 - Foto Glossy (Rp 22.000)"]
     },
@@ -833,7 +833,7 @@ const INITIAL_DATA = {
     // ─── AKSESORIS & ELEKTRONIK TAMBAHAN ─────────
     {
       id: "PRD-046",
-      name: "Kabel Data Fast Charging USB / Type-C",
+      name: "Kabel Data Pengisian Cepat USB / Type-C",
       category: "elektronik",
       isService: false,
       price: 20000,
@@ -845,7 +845,7 @@ const INITIAL_DATA = {
       unit: "Pcs",
       image: "zap",
       photo: "img/products/kabel_data.jpg?v=3",
-      badge: "Fast Charging",
+      badge: "Pengisian Cepat",
       description: "Kabel data dan charging kualitas tinggi, support transfer data print dari HP ke komputer/laptop kasir dengan cepat dan stabil. Bahan braided anti putus.",
       variants: ["Type-C to USB (Rp 20.000)", "Micro USB (Rp 18.000)", "Lightning iPhone (Rp 25.000)", "Type-C to Type-C 60W (Rp 30.000)"]
     },
@@ -881,7 +881,7 @@ const INITIAL_DATA = {
       unit: "Pcs",
       image: "database",
       photo: "img/products/card_reader.jpg?v=3",
-      badge: "Multi Slot",
+      badge: "Banyak Slot",
       description: "Card reader USB multifungsi membaca MicroSD dan SD Card kamera/HP. Praktis untuk cetak foto langsung dari kartu memori.",
       variants: ["Card Reader Mini USB (Rp 18.000)", "Card Reader Multi-Slot 4in1 (Rp 28.000)"]
     },
@@ -953,13 +953,13 @@ const INITIAL_DATA = {
       unit: "Pcs",
       image: "mouse-pointer",
       photo: "img/products/mouse_usb.jpg",
-      badge: "Plug & Play",
+      badge: "Langsung Pakai",
       description: "Mouse optik USB kabel panjang 1.2m, sensor 1000 DPI akurat dan responsif. Desain ergonomis nyaman dipakai kerja seharian di laptop atau PC.",
       variants: ["Mouse USB Kabel Standar (Rp 25.000)", "Mouse Wireless 2.4GHz + Baterai (Rp 45.000)"]
     },
     {
       id: "PRD-053",
-      name: "Earphone / Headset Wired 3.5mm",
+      name: "Earphone / Headset Kabel 3.5mm",
       category: "elektronik",
       isService: false,
       price: 22000,
@@ -1025,7 +1025,7 @@ const INITIAL_DATA = {
       unit: "Pcs",
       image: "share-2",
       photo: "img/products/usb_hub.jpg?v=3",
-      badge: "Multi Port",
+      badge: "Banyak Port",
       description: "Ekspansi 1 port USB menjadi 4 port USB 2.0/3.0. Solusi praktis laptop tipis yang kekurangan colokan untuk flashdisk, mouse, printer, dan keyboard.",
       variants: ["USB Hub 4 Port 2.0 (Rp 32.000)", "USB Hub 4 Port 3.0 High-Speed (Rp 55.000)"]
     },
@@ -1360,7 +1360,7 @@ const INITIAL_DATA = {
       customer: "Ibu Sulistowati",
       cashier: "Thomas",
       items: [
-        { id: "PRD-004", name: "Print Warna / Full Color", qty: 25, price: 2000, costPrice: 650, total: 50000 },
+        { id: "PRD-004", name: "Cetak Warna / Full Color", qty: 25, price: 2000, costPrice: 650, total: 50000 },
         { id: "PRD-007", name: "Jilid Spiral Kawat", qty: 2, price: 8000, costPrice: 3200, total: 16000 }
       ],
       subtotal: 66000,
@@ -1500,7 +1500,7 @@ const INITIAL_DATA = {
       source: "WhatsApp",
       senderName: "Ahmad Dani (Siswa SMK)",
       phone: "089611223344",
-      serviceType: "Print Tugas Gambar & Desain",
+      serviceType: "Cetak Tugas Gambar & Desain",
       docTitle: "Tugas_Desain_Denah_Rumah.jpg (Ukuran A3)",
       fileType: "PRINT_WARNA",
       qty: 2,
@@ -1552,16 +1552,18 @@ function loadStoreData() {
         parsed.waQueue = JSON.parse(JSON.stringify(INITIAL_DATA.waQueue));
       }
 
-      // Sinkronisasi foto produk dengan aset foto terbaru
+      // Sinkronisasi foto, nama & badge produk terbaru
       if (parsed && Array.isArray(parsed.products)) {
-        const initialPhotos = {};
+        const initialMap = {};
         INITIAL_DATA.products.forEach(p => {
-          if (p.id && p.photo) initialPhotos[p.id] = p.photo;
+          if (p.id) initialMap[p.id] = p;
         });
 
         parsed.products.forEach(function (p) {
-          if (initialPhotos[p.id]) {
-            p.photo = initialPhotos[p.id];
+          if (initialMap[p.id]) {
+            p.name = initialMap[p.id].name;
+            p.badge = initialMap[p.id].badge;
+            p.photo = initialMap[p.id].photo;
           }
         });
       }
@@ -1586,7 +1588,9 @@ function loadStoreData() {
         parsed.storeInfo.waName = "Star Copy";
         parsed.storeInfo.instagram = "https://www.instagram.com/copystarkubu?obrf=YnByeXZsYnozb3dt";
         parsed.storeInfo.igHandle = "@copystarkubu";
+        parsed.storeInfo.tagline = "Fotokopi Digital, Percetakan Foto & ATK";
         parsed.storeInfo.receiptFooter = "Terima kasih atas kunjungan Anda!\nKirim Berkas WA: 0812-5345-3440 (Star Copy)\nOrder IG: @copystarkubu\nBarang yang sudah dibeli tidak dapat ditukar kecuali perjanjian.";
+        parsed.categories = JSON.parse(JSON.stringify(INITIAL_DATA.categories));
 
         // Migrasi akun kasir ke 3 orang: Niko, Owen Kevin, Thomas & Owner
         parsed.users = JSON.parse(JSON.stringify(INITIAL_DATA.users));

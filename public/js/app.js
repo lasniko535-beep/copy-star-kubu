@@ -1,5 +1,5 @@
 /**
- * COPY STAR KUBU - Digital Photocopy, Photo Printing & ATK
+ * COPY STAR KUBU - Fotokopi Digital, Percetakan Foto & ATK
  * Main Application Logic & POS State Machine
  */
 
@@ -318,7 +318,7 @@ function handleLogout() {
   if (currentUser && currentUser.role === "CUSTOMER") {
     currentUser = null;
     playBeep("scan");
-    showToast("Membuka form login Kasir & Owner...");
+    showToast("Membuka form masuk Kasir & Pemilik Toko... 🔐");
     showLoginOverlay();
     return;
   }
@@ -429,7 +429,7 @@ function switchMainView(view) {
   }
   if (currentUser && currentUser.role === "CUSTOMER") {
     showLoginOverlay();
-    showToast("Silakan login dengan akun Kasir atau Owner untuk mengakses halaman ini 🔒");
+    showToast("Silakan masuk dengan akun Kasir atau Pemilik Toko untuk mengakses halaman ini 🔒");
     return;
   }
   if (view === "owner") {
@@ -527,12 +527,12 @@ function actuallySwitchMainView(view) {
 
   const toastMessages = {
     pos: "Beralih ke Layar Kasir (POS) 🛒",
-    print: "Membuka Dasbor Kalkulator Print & Fotokopi 🖨️ (F3)",
+    print: "Membuka Dasbor Kalkulator Cetak & Fotokopi 🖨️ (F3)",
     price: "Membuka Dasbor Kelola & Ubah Harga Katalog 🏷️ (F7)",
     pasfoto: "Membuka Studio Pas Foto Kilat PRO 📸",
     banner: "Membuka Dasbor Kalkulator Spanduk & Undangan 📐",
-    owner: "Dashboard Owner Berhasil Dibuka (PIN Terverifikasi) 👑",
-    customer: "Portal Order Pelanggan Dibuka 🛍️"
+    owner: "Dasbor Pemilik Toko Berhasil Dibuka (PIN Terverifikasi) 👑",
+    customer: "Portal Pesanan Pelanggan Dibuka 🛍️"
   };
   showToast(toastMessages[activeView] || "Layar diperbarui");
 }
@@ -750,7 +750,7 @@ function renderCatalogProducts() {
       badgeLabel = `Kritis (${item.stock} ${item.unit})`;
     } else if (isDead) {
       badgeClass = "badge-deadstock";
-      badgeLabel = "Dead Stock (>60 Hari)";
+      badgeLabel = "Stok Mengendap (>60 Hari)";
     }
 
     const hasPhoto = Boolean(item.photo);
@@ -1325,7 +1325,7 @@ function shareReceiptWhatsApp() {
   }
 
   const message = `*STRUK DIGITAL COPY STAR KUBU*\n` +
-    `_Digital Photocopy, Photo Printing & ATK_\n` +
+    `_Fotokopi Digital, Percetakan Foto & ATK_\n` +
     `Jln. Soeparto 1 Kubu, Desa Kubu, Kec. Kubu, Kabupaten Kubu Raya\n` +
     `📲 Telp/WA: *+62 812-5345-3440 (Star Copy)*\n` +
     `📸 Instagram: *@copystarkubu* (https://www.instagram.com/copystarkubu?obrf=YnByeXZsYnozb3dt)\n\n` +
@@ -1335,7 +1335,7 @@ function shareReceiptWhatsApp() {
     (itemsText ? `📦 *Rincian Belanja:*\n${itemsText}\n` : '') +
     `💰 *TOTAL:* *${totalStr}*\n` +
     `💳 *Metode:* ${lastTrx ? lastTrx.paymentMethod : "Lunas"}\n\n` +
-    `_Kritik, saran, atau order cetak via WA: +62 812-5345-3440 / IG: @copystarkubu_\n` +
+    `_Kritik, saran, atau pesanan cetak via WA: +62 812-5345-3440 / IG: @copystarkubu_\n` +
     `Semoga harimu menyenangkan! 🙏✨`;
 
   window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, "_blank");
@@ -2358,8 +2358,8 @@ function runDummyStressTest(targetCount = 1500) {
   const dummyItemsCatalog = [
     { id: "PRD-001", name: "Fotokopi B/W", price: 250, costPrice: 85, defaultQty: 20 },
     { id: "PRD-002", name: "Fotokopi Bolak-Balik", price: 450, costPrice: 160, defaultQty: 15 },
-    { id: "PRD-003", name: "Print Dokumen Hitam Putih", price: 1000, costPrice: 280, defaultQty: 10 },
-    { id: "PRD-004", name: "Print Warna / Full Color", price: 2000, costPrice: 650, defaultQty: 8 },
+    { id: "PRD-003", name: "Cetak Dokumen Hitam Putih (B/W)", price: 1000, costPrice: 280, defaultQty: 10 },
+    { id: "PRD-004", name: "Cetak Warna / Full Color", price: 2000, costPrice: 650, defaultQty: 8 },
     { id: "PRD-005", name: "Jilid Lakban Mika", price: 3000, costPrice: 1100, defaultQty: 1 },
     { id: "PRD-007", name: "Jilid Spiral Kawat", price: 8000, costPrice: 3200, defaultQty: 1 },
     { id: "PRD-009", name: "Kertas HVS PaperOne A4 70gr", price: 45000, costPrice: 40000, defaultQty: 1 },
@@ -2557,7 +2557,7 @@ function renderInventoryTable() {
     } else if (isLow) {
       statusPill = `<span class="status-badge-pill warning">⚠️ Kritis (Batas Min: ${p.minStock})</span>`;
     } else if (isDead) {
-      statusPill = `<span class="status-badge-pill" style="background:var(--purple-light); color:var(--purple);">Dead Stock (>60 Hari)</span>`;
+      statusPill = `<span class="status-badge-pill" style="background:var(--purple-light); color:var(--purple);">Stok Mengendap (>60 Hari)</span>`;
     }
 
     return `
@@ -3606,7 +3606,7 @@ function printEmployeeAuditReport(empId) {
 
       <div class="header">
         <h2>COPY STAR KUBU</h2>
-        <p>Digital Photocopy, Photo Printing & ATK</p>
+        <p>Fotokopi Digital, Percetakan Foto & ATK</p>
         <p>Jln. Soeparto 1 Kubu, Kec. Kubu, Kab. Kubu Raya • WA: 0812-5345-3440</p>
         <h3 style="margin-top:12px; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;">BERITA ACARA & REKAPITULASI PENJUALAN PRODUK KASIR</h3>
       </div>
@@ -4892,7 +4892,7 @@ function sendKasbonWaReminder(debtId) {
     `📅 *Jatuh Tempo:* ${debt.dueDate}\n\n` +
     `Pembayaran bisa ditransfer via Bank/QRIS atau datang langsung ke toko ya Bpk/Ibu. Terima kasih banyak atas kerjasamanya! Semoga sehat & berkah selalu. 🙏✨\n\n` +
     `*- COPY STAR KUBU -*\n` +
-    `_Digital Photocopy, Photo Printing & ATK_`;
+    `_Fotokopi Digital, Percetakan Foto & ATK_`;
 
   const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
   window.open(waUrl, "_blank");
@@ -5269,7 +5269,7 @@ function enterCustomerOrderPortal(fromUrl = false) {
   initCustomerPortal();
   playBeep("success");
   if (!fromUrl) {
-    showToast("Selamat datang di Portal Order Mandiri COPY STAR KUBU! 🛍️");
+    showToast("Selamat datang di Portal Pesanan Mandiri COPY STAR KUBU! 🛍️");
   }
 }
 
@@ -5474,7 +5474,7 @@ function calculateCustomerOrderPrice() {
     else if (qty >= 10) unitBasePrice = 400;
     else unitBasePrice = 500;
   } else if (currentCustomerService === "print_dokumen") {
-    serviceTitle = "🖨️ Print Dokumen & Skripsi";
+    serviceTitle = "🖨️ Cetak Dokumen & Skripsi";
     unitBasePrice = 1000;
   } else if (currentCustomerService === "cetak_foto") {
     serviceTitle = "🖼️ Pas Foto & Cetak Foto Glossy";
@@ -5679,7 +5679,7 @@ function renderCustomerPublicQueue() {
           <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
         <h4 style="font-size:1.1rem; color:var(--text-main); margin-bottom:0.25rem;">Tidak Ada Antrean Menumpuk!</h4>
-        <p style="margin:0; font-size:0.88rem;">Mesin fotokopi & printer sedang santai. Order Anda akan langsung diproses tanpa menunggu lama!</p>
+        <p style="margin:0; font-size:0.88rem;">Mesin fotokopi & printer sedang santai. Pesanan Anda akan langsung diproses tanpa menunggu lama!</p>
       </div>
     `;
     return;
