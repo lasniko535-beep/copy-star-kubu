@@ -7,19 +7,19 @@
 
 :root {
   /* Brand Palette inspired by COPY STAR KUBU Logo */
-  --primary: #FFB800;
-  --primary-hover: #E5A600;
-  --primary-light: rgba(255, 184, 0, 0.15);
-  --primary-glow: rgba(255, 184, 0, 0.35);
-  --primary-text: #0B0F17;
+  --primary: #F59E0B;
+  --primary-hover: #D97706;
+  --primary-light: rgba(245, 158, 11, 0.16);
+  --primary-glow: rgba(245, 158, 11, 0.35);
+  --primary-text: #080C15;
 
-  /* Surfaces & Backgrounds (Dark Mode Slate) */
-  --bg-app: #0B0F17;
-  --bg-surface: #111827;
-  --bg-surface-elevated: #1F2937;
-  --bg-card: rgba(31, 41, 55, 0.7);
+  /* Surfaces & Backgrounds (Stitch Enterprise Dark Theme) */
+  --bg-app: #080C15;
+  --bg-surface: #0E1424;
+  --bg-surface-elevated: #131A2D;
+  --bg-card: #131A2D;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-color-focus: rgba(255, 184, 0, 0.5);
+  --border-color-focus: rgba(245, 158, 11, 0.55);
 
   /* Status Colors */
   --success: #10B981;
