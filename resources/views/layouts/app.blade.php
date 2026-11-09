@@ -24,7 +24,7 @@
                 <span class="logo-icon" style="font-size:1.5rem;">⭐</span>
                 <div class="brand-text">
                     <h1 style="font-size:1.15rem; font-weight:800; margin:0; color:#F59E0B;">{{ config('app.name', 'COPY STAR KUBU') }}</h1>
-                    <p class="tagline" style="font-size:0.72rem; margin:0; color:#9CA3AF;">Digital Photocopy, Photo Printing & ATK - Laravel 13</p>
+                    <p class="tagline" style="font-size:0.72rem; margin:0; color:#9CA3AF;">Fotokopi Digital, Percetakan Foto & ATK - Laravel 13</p>
                 </div>
             </a>
         </div>
