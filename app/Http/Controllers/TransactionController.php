@@ -15,24 +15,34 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Transaction::with('items')->orderBy('created_at', 'desc');
+        try {
+            $query = Transaction::with('items')->orderBy('created_at', 'desc');
 
-        // Filter tanggal spesifik
-        if ($request->filled('date')) {
-            $query->whereDate('created_at', $request->date);
+            // Filter tanggal spesifik
+            if ($request->filled('date')) {
+                $rawDate = trim($request->date);
+                if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $rawDate)) {
+                    $query->whereDate('created_at', $rawDate);
+                }
+            }
+
+            // Filter pencarian
+            if ($request->filled('search')) {
+                $search = trim($request->search);
+                $query->where(function($q) use ($search) {
+                    $q->where('invoice_no', 'like', "%{$search}%")
+                      ->orWhere('notes', 'like', "%{$search}%")
+                      ->orWhere('payment_method', 'like', "%{$search}%");
+                });
+            }
+
+            $transactions = $query->paginate(50)->withQueryString();
+        } catch (\Throwable $e) {
+            \Log::error('Error mengambil data riwayat transaksi Laravel: ' . $e->getMessage());
+            $transactions = new \Illuminate\Pagination\LengthAwarePaginator(
+                collect([]), 0, 50, 1, ['path' => $request->url(), 'query' => $request->query()]
+            );
         }
-
-        // Filter pencarian
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('invoice_no', 'like', "%{$search}%")
-                  ->orWhere('notes', 'like', "%{$search}%")
-                  ->orWhere('payment_method', 'like', "%{$search}%");
-            });
-        }
-
-        $transactions = $query->paginate(50);
 
         if ($request->wantsJson()) {
             return response()->json([
@@ -50,26 +60,53 @@ class TransactionController extends Controller
      */
     public function show($invoiceNo)
     {
-        $transaction = Transaction::with('items')->where('invoice_no', $invoiceNo)->firstOrFail();
+        try {
+            $transaction = Transaction::with('items')->where('invoice_no', $invoiceNo)->first();
 
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'invoice_no' => $transaction->invoice_no,
-                'location' => $transaction->location_place ?? 'COPY STAR KUBU - Meja Kasir 1',
-                'day' => Carbon::parse($transaction->created_at)->locale('id')->isoFormat('dddd'),
-                'date' => Carbon::parse($transaction->created_at)->format('d M Y'),
-                'time' => Carbon::parse($transaction->created_at)->format('H:i:s') . ' WIB',
-                'subtotal' => $transaction->subtotal_amount,
-                'discount' => $transaction->discount_amount,
-                'final_total' => $transaction->final_amount,
-                'payment_method' => $transaction->payment_method,
-                'cash_received' => $transaction->cash_received,
-                'cash_change' => $transaction->cash_change,
-                'notes' => $transaction->notes,
-                'items' => $transaction->items
-            ]
-        ]);
+            if (!$transaction) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Faktur transaksi ' . $invoiceNo . ' tidak ditemukan.'
+                ], 404);
+            }
+
+            $day = 'Hari ini';
+            $date = date('d M Y');
+            $time = '00:00:00 WIB';
+
+            if ($transaction->created_at) {
+                try {
+                    $c = Carbon::parse($transaction->created_at);
+                    $day = $c->locale('id')->isoFormat('dddd');
+                    $date = $c->format('d M Y');
+                    $time = $c->format('H:i:s') . ' WIB';
+                } catch (\Throwable $ex) {}
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'invoice_no' => $transaction->invoice_no,
+                    'location' => $transaction->location_place ?? 'COPY STAR KUBU - Meja Kasir 1',
+                    'day' => $day,
+                    'date' => $date,
+                    'time' => $time,
+                    'subtotal' => $transaction->subtotal_amount,
+                    'discount' => $transaction->discount_amount,
+                    'final_total' => $transaction->final_amount,
+                    'payment_method' => $transaction->payment_method,
+                    'cash_received' => $transaction->cash_received,
+                    'cash_change' => $transaction->cash_change,
+                    'notes' => $transaction->notes,
+                    'items' => $transaction->items
+                ]
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal memuat rincian transaksi: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

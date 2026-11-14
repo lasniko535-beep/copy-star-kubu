@@ -60,10 +60,18 @@ class ExportController extends Controller
             ]);
 
             foreach ($transactions as $t) {
-                $createdAt = Carbon::parse($t->created_at);
-                $dayName = $createdAt->locale('id')->isoFormat('dddd');
-                $dateStr = $createdAt->format('d/m/Y');
-                $timeStr = $createdAt->format('H:i:s') . ' WIB';
+                $dayName = 'Hari ini';
+                $dateStr = date('d/m/Y');
+                $timeStr = '00:00:00 WIB';
+
+                if ($t->created_at) {
+                    try {
+                        $createdAt = Carbon::parse($t->created_at);
+                        $dayName = $createdAt->locale('id')->isoFormat('dddd');
+                        $dateStr = $createdAt->format('d/m/Y');
+                        $timeStr = $createdAt->format('H:i:s') . ' WIB';
+                    } catch (\Throwable $e) {}
+                }
 
                 $itemsArr = [];
                 $totalQty = 0;

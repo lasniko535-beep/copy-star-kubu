@@ -55,20 +55,34 @@
                         <th style="padding:0.75rem;">Rincian Barang</th>
                         <th style="padding:0.75rem;">Metode</th>
                         <th style="padding:0.75rem; text-align:right;">Total Belanja</th>
+                        <th style="padding:0.75rem; text-align:center;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($transactions as $t)
+                    @php
+                        $dayName = 'Hari ini';
+                        $dateStr = '-';
+                        $timeStr = '00:00:00';
+                        if ($t->created_at) {
+                            try {
+                                $c = \Carbon\Carbon::parse($t->created_at);
+                                $dayName = $c->locale('id')->isoFormat('dddd');
+                                $dateStr = $c->format('d M Y');
+                                $timeStr = $c->format('H:i:s');
+                            } catch (\Throwable $e) {}
+                        }
+                    @endphp
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                         <td style="padding:0.75rem; font-family:monospace; font-weight:700; color:var(--primary);">
                             {{ $t->invoice_no }}
                         </td>
                         <td style="padding:0.75rem;">
-                            <strong>{{ \Carbon\Carbon::parse($t->created_at)->locale('id')->isoFormat('dddd') }}</strong><br>
-                            <small style="color:var(--text-muted);">{{ \Carbon\Carbon::parse($t->created_at)->format('d M Y') }}</small>
+                            <strong>{{ $dayName }}</strong><br>
+                            <small style="color:var(--text-muted);">{{ $dateStr }}</small>
                         </td>
                         <td style="padding:0.75rem; color:#F59E0B; font-weight:600;">
-                            <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> {{ \Carbon\Carbon::parse($t->created_at)->format('H:i:s') }} WIB
+                            <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> {{ $timeStr }} WIB
                         </td>
                         <td style="padding:0.75rem;">
                             <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> {{ $t->location_place ?? 'COPY STAR KUBU - Meja Kasir 1' }}</strong><br>
@@ -91,10 +105,15 @@
                         <td style="padding:0.75rem; text-align:right; font-weight:700; color:#10B981;">
                             Rp {{ number_format($t->final_amount, 0, ',', '.') }}
                         </td>
+                        <td style="padding:0.75rem; text-align:center;">
+                            <button type="button" class="btn-secondary-sm" onclick="showInvoiceDetail('{{ $t->invoice_no }}')" style="padding:0.25rem 0.6rem; font-size:0.75rem; border-radius:6px; background:rgba(59,130,246,0.15); color:#60A5FA; border:1px solid rgba(59,130,246,0.35); cursor:pointer; font-weight:600;">
+                                <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Detail
+                            </button>
+                        </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" style="text-align:center; padding:2rem; color:var(--text-muted);">
+                        <td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">
                             Tidak ada transaksi ditemukan pada filter yang dipilih.
                         </td>
                     </tr>
@@ -108,4 +127,92 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Detail Nota Transaksi Blade -->
+<div id="bladeInvoiceModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+    <div style="background:#1F2937; border:1px solid rgba(255,255,255,0.15); border-radius:12px; width:100%; max-width:520px; box-shadow:0 20px 25px -5px rgba(0,0,0,0.5); overflow:hidden;">
+        <div style="padding:1rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0; font-size:1.1rem; color:#FFF; display:flex; align-items:center; gap:0.5rem;">
+                <svg class="inline-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                Rincian Nota Transaksi
+            </h3>
+            <button type="button" onclick="closeInvoiceDetail()" style="background:none; border:none; color:var(--text-muted); font-size:1.4rem; cursor:pointer; line-height:1;">&times;</button>
+        </div>
+        <div id="bladeInvoiceContent" style="padding:1.25rem; max-height:70vh; overflow-y:auto; font-size:0.85rem; color:#E5E7EB;">
+            Memuat rincian nota...
+        </div>
+        <div style="padding:0.75rem 1.25rem; border-top:1px solid rgba(255,255,255,0.1); display:flex; justify-content:flex-end; gap:0.5rem; background:rgba(0,0,0,0.2);">
+            <button type="button" onclick="window.print()" class="btn-primary" style="background:#3B82F6; color:#FFF; border:none; padding:0.4rem 1rem; border-radius:6px; cursor:pointer; font-weight:600;">
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Cetak Struk
+            </button>
+            <button type="button" onclick="closeInvoiceDetail()" class="btn-secondary" style="background:rgba(255,255,255,0.1); color:#FFF; border:none; padding:0.4rem 1rem; border-radius:6px; cursor:pointer;">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function showInvoiceDetail(invoiceNo) {
+    const modal = document.getElementById('bladeInvoiceModal');
+    const content = document.getElementById('bladeInvoiceContent');
+    if (!modal || !content) return;
+    modal.style.display = 'flex';
+    content.innerHTML = '<div style="text-align:center; padding:1.5rem;">Memuat rincian transaksi...</div>';
+
+    fetch('/transaksi/' + encodeURIComponent(invoiceNo), {
+        headers: { 'Accept': 'application/json' }
+    })
+    .then(r => r.json())
+    .then(res => {
+        if (!res.success || !res.data) {
+            content.innerHTML = '<div style="color:var(--danger); padding:1rem;">Gagal mengambil data nota.</div>';
+            return;
+        }
+        const d = res.data;
+        let itemsHtml = (d.items || []).map(it => `
+            <div style="display:flex; justify-content:space-between; padding:0.35rem 0; border-bottom:1px dashed rgba(255,255,255,0.08);">
+                <div>
+                    <div><strong>${it.product_name}</strong></div>
+                    <small style="color:var(--text-muted);">${it.qty} x Rp ${Number(it.unit_sell_price).toLocaleString('id-ID')}</small>
+                </div>
+                <div style="font-weight:700;">Rp ${Number(it.subtotal).toLocaleString('id-ID')}</div>
+            </div>
+        `).join('');
+
+        content.innerHTML = `
+            <div style="margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
+                <div style="font-family:monospace; font-size:1.1rem; font-weight:800; color:#F59E0B;">${d.invoice_no}</div>
+                <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">${d.day}, ${d.date} • ${d.time}</div>
+                <div style="font-size:0.8rem; color:var(--text-muted);">${d.location}</div>
+            </div>
+            <div style="margin-bottom:1rem;">
+                <div style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:700; margin-bottom:0.5rem;">Daftar Item Belanja:</div>
+                ${itemsHtml}
+            </div>
+            <div style="background:rgba(0,0,0,0.3); padding:0.75rem; border-radius:8px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem;">
+                    <span>Subtotal</span><span>Rp ${Number(d.subtotal).toLocaleString('id-ID')}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.25rem; color:#EF4444;">
+                    <span>Diskon</span><span>- Rp ${Number(d.discount).toLocaleString('id-ID')}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:1.05rem; font-weight:800; color:#10B981; border-top:1px solid rgba(255,255,255,0.1); padding-top:0.35rem;">
+                    <span>Total Akhir</span><span>Rp ${Number(d.final_total).toLocaleString('id-ID')}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-top:0.35rem; color:var(--text-muted);">
+                    <span>Metode Bayar</span><span style="font-weight:700; color:#FFF;">${d.payment_method}</span>
+                </div>
+            </div>
+        `;
+    })
+    .catch(err => {
+        content.innerHTML = '<div style="color:var(--danger); padding:1rem;">Terjadi kesalahan: ' + err.message + '</div>';
+    });
+}
+function closeInvoiceDetail() {
+    const modal = document.getElementById('bladeInvoiceModal');
+    if (modal) modal.style.display = 'none';
+}
+</script>
 @endsection

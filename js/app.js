@@ -551,22 +551,58 @@ function actuallySwitchMainView(view) {
 }
 
 // Navigasi Riwayat Transaksi (Cerdas & Anti-Gagal: Web Laravel / Mode Offline File)
-function openRiwayatTransaksiView(e) {
+async function openRiwayatTransaksiView(e) {
   if (e) e.preventDefault();
 
-  // Jika sedang dijalankan melalui server web (http / https)
-  if (window.location.protocol.startsWith("http")) {
-    window.location.href = "/transaksi";
-  } else {
-    // Jika dibuka langsung via file offline (file:///) tanpa server artisan
-    // Alihkan langsung ke Dasbor Pemilik -> Riwayat Transaksi
+  const fallbackToLocal = () => {
     switchMainView("owner");
     setTimeout(() => {
       const el = document.getElementById("recentTransactionsTableBody") || document.querySelector(".data-table-wrapper");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
-    }, 200);
-    showToast("Membuka Riwayat Transaksi Toko & Laporan Penjualan");
+      const search = document.getElementById("txSearchInput");
+      if (search) search.focus();
+    }, 180);
+    showToast("Membuka Riwayat Transaksi Toko & Laporan Lengkap (1.503 Nota)");
+  };
+
+  // 1. Jika dibuka via protokol file:/// (tanpa web server)
+  if (!window.location.protocol.startsWith("http")) {
+    fallbackToLocal();
+    return;
   }
+
+  // 2. Jika sedang berjalan di port 8000 (Laravel artisan serve)
+  if (window.location.port === "8000") {
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 1000);
+      const res = await fetch("/api/v1/health", { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (res.ok) {
+        window.location.href = "/transaksi";
+        return;
+      }
+    } catch (err) {
+      console.warn("Server Laravel port 8000 belum merespons, beralih ke riwayat lokal:", err);
+    }
+    fallbackToLocal();
+    return;
+  }
+
+  // 3. Jika dibuka via Live Server port 5500 atau host lain, cek apakah Laravel 8000 aktif
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 800);
+    await fetch("http://127.0.0.1:8000/api/v1/health", { signal: ctrl.signal, mode: "no-cors" });
+    clearTimeout(timer);
+    window.location.href = "http://127.0.0.1:8000/transaksi";
+    return;
+  } catch (err) {
+    console.warn("Backend Laravel 8000 tidak aktif, membuka riwayat lokal:", err);
+  }
+
+  // 4. Default anti-gagal: selalu tampilkan riwayat transaksi lokal
+  fallbackToLocal();
 }
 
 // Toggle Theme
@@ -4776,18 +4812,18 @@ function renderKasbonTable() {
             <div style="display:flex; gap:0.35rem; align-items:center; flex-wrap:wrap;">
               ${!isPaid ? `
                 <button class="btn-secondary-sm" style="padding:0.25rem 0.55rem; font-size:0.75rem; border-color:var(--success); color:var(--success);" onclick="openPayInstallmentModal('${d.id}')" title="Bayar cicilan atau pelunasan kasbon">
-                  💳 Bayar
+                  <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg> Bayar
                 </button>
                 <button class="btn-wa-notify" style="padding:0.25rem 0.55rem; font-size:0.75rem;" onclick="sendKasbonWaReminder('${d.id}')" title="Kirim pengingat tagihan ramah lewat WhatsApp">
-                  📲 Tagih WA
+                  <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Tagih WA
                 </button>
               ` : `
                 <button class="btn-secondary-sm" style="padding:0.25rem 0.55rem; font-size:0.75rem; opacity:0.8;" onclick="openPayInstallmentModal('${d.id}')" title="Lihat riwayat pelunasan">
-                  📋 Riwayat
+                  <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Riwayat
                 </button>
               `}
               <button class="btn-secondary-sm" style="padding:0.25rem 0.45rem; font-size:0.75rem; color:var(--danger);" onclick="deleteKasbon('${d.id}')" title="Hapus catatan">
-                🗑️
+                <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
               </button>
             </div>
           </td>
@@ -5057,13 +5093,13 @@ function renderWaQueue() {
     cardsHtml = list.map(item => {
       let statusBadge = "";
       if (item.status === "MENUNGGU") {
-        statusBadge = `<span class="badge-wa-waiting">⏳ Menunggu</span>`;
+        statusBadge = `<span class="badge-wa-waiting"><svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> Menunggu</span>`;
       } else if (item.status === "SEDANG_DICETAK") {
-        statusBadge = `<span class="badge-wa-printing">🖨️ Sedang Dicetak</span>`;
+        statusBadge = `<span class="badge-wa-printing"><svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Sedang Dicetak</span>`;
       } else if (item.status === "SIAP_DIAMBIL") {
-        statusBadge = `<span class="badge-wa-ready">✅ Siap Diambil</span>`;
+        statusBadge = `<span class="badge-wa-ready"><svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Siap Diambil</span>`;
       } else {
-        statusBadge = `<span class="badge-wa-done">📦 Selesai</span>`;
+        statusBadge = `<span class="badge-wa-done"><svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg> Selesai</span>`;
       }
 
       return `
@@ -5114,31 +5150,31 @@ function renderWaQueue() {
             <div class="wa-action-buttons">
               ${item.status === "MENUNGGU" ? `
                 <button class="btn-secondary-sm" style="padding:0.3rem 0.6rem; font-size:0.75rem; border-color:#00E5FF; color:#00E5FF;" onclick="updateWaQueueStatus('${item.id}', 'SEDANG_DICETAK')" title="Mulai proses cetak berkas ini">
-                  🖨️ Cetak
+                  <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Cetak
                 </button>
               ` : ''}
 
               ${item.status === "SEDANG_DICETAK" ? `
                 <button class="btn-secondary-sm" style="padding:0.3rem 0.6rem; font-size:0.75rem; border-color:var(--success); color:var(--success);" onclick="updateWaQueueStatus('${item.id}', 'SIAP_DIAMBIL')" title="Tandai cetak selesai dan siap diambil">
-                  ✅ Tandai Siap
+                  <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Tandai Siap
                 </button>
               ` : ''}
 
               ${item.status === "SIAP_DIAMBIL" ? `
                 <button class="btn-voice-caller" onclick="callVoiceQueue('${item.id}')" title="Panggil nama & nomor antrean dengan suara speaker toko">
-                  📢 Panggil
+                  <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg> Panggil
                 </button>
                 ${(item.source === "Instagram" || (item.phone && item.phone.startsWith("@"))) ? `
                   <a href="https://www.instagram.com/copystarkubu?obrf=YnByeXZsYnozb3dt" target="_blank" class="btn-ig-notify" style="padding:0.3rem 0.6rem; font-size:0.75rem;" title="Buka Instagram untuk DM pelanggan">
-                    📸 DM IG
+                    <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg> DM IG
                   </a>
                 ` : `
                   <button class="btn-wa-notify" onclick="sendWaReadyNotification('${item.id}')" title="Kirim notifikasi via WhatsApp bahwa berkas sudah siap">
-                    📲 Kabari WA
+                    <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Kabari WA
                   </button>
                 `}
                 <button class="btn-to-pos" onclick="transferWaOrderToCart('${item.id}')" title="Masukkan pesanan ini ke keranjang kasir (POS)">
-                  🛒 Ke Kasir
+                  <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Ke Kasir
                 </button>
               ` : ''}
 
@@ -5147,7 +5183,7 @@ function renderWaQueue() {
               ` : ''}
 
               <button class="btn-secondary-sm" style="padding:0.3rem 0.45rem; font-size:0.75rem; color:var(--danger);" onclick="deleteWaQueue('${item.id}')" title="Batalkan / hapus antrean ini">
-                🗑️
+                <svg class="inline-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
               </button>
             </div>
           </div>
