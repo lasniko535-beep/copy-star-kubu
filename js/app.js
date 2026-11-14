@@ -300,7 +300,7 @@ function submitLoginForm() {
     }
 
     playBeep("success");
-    showToast(`Selamat datang, ${currentUser.name}! 👋`);
+    showToast(`Selamat datang, ${currentUser.name}!`);
   } else {
     playBeep("warning");
     if (errorAlert) {
@@ -331,7 +331,7 @@ function handleLogout() {
   if (currentUser && currentUser.role === "CUSTOMER") {
     currentUser = null;
     playBeep("scan");
-    showToast("Membuka form masuk Kasir & Pemilik Toko... 🔐");
+    showToast("Membuka form masuk Kasir & Pemilik Toko...");
     showLoginOverlay();
     return;
   }
@@ -442,7 +442,7 @@ function switchMainView(view) {
   }
   if (currentUser && currentUser.role === "CUSTOMER") {
     showLoginOverlay();
-    showToast("Silakan masuk dengan akun Kasir atau Pemilik Toko untuk mengakses halaman ini 🔒");
+    showToast("Silakan masuk dengan akun Kasir atau Pemilik Toko untuk mengakses halaman ini");
     return;
   }
   if (view === "owner") {
@@ -539,13 +539,13 @@ function actuallySwitchMainView(view) {
   }
 
   const toastMessages = {
-    pos: "Beralih ke Layar Kasir (POS) 🛒",
-    print: "Membuka Dasbor Kalkulator Cetak & Fotokopi 🖨️ (F3)",
-    price: "Membuka Dasbor Kelola & Ubah Harga Katalog 🏷️ (F7)",
-    pasfoto: "Membuka Studio Pas Foto Kilat PRO 📸",
-    banner: "Membuka Dasbor Kalkulator Spanduk & Undangan 📐",
-    owner: "Dasbor Pemilik Toko Berhasil Dibuka (PIN Terverifikasi) 👑",
-    customer: "Portal Pesanan Pelanggan Dibuka 🛍️"
+    pos: "Beralih ke Layar Kasir (POS)",
+    print: "Membuka Dasbor Kalkulator Cetak & Fotokopi (F3)",
+    price: "Membuka Dasbor Kelola & Ubah Harga Katalog (F7)",
+    pasfoto: "Membuka Studio Pas Foto Kilat PRO",
+    banner: "Membuka Dasbor Kalkulator Spanduk & Undangan",
+    owner: "Dasbor Pemilik Toko Berhasil Dibuka (PIN Terverifikasi)",
+    customer: "Portal Pesanan Pelanggan Dibuka"
   };
   showToast(toastMessages[activeView] || "Layar diperbarui");
 }
@@ -565,7 +565,7 @@ function openRiwayatTransaksiView(e) {
       const el = document.getElementById("recentTransactionsTableBody") || document.querySelector(".data-table-wrapper");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 200);
-    showToast("Membuka Riwayat Transaksi Toko & Laporan Penjualan 📋");
+    showToast("Membuka Riwayat Transaksi Toko & Laporan Penjualan");
   }
 }
 
@@ -626,11 +626,11 @@ function toggleAudio() {
     icon.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
     document.getElementById("btnAudioToggle").title = "Suara Efek Kasir (Aktif)";
     playBeep("scan");
-    showToast("Efek Suara Diaktifkan 🔊");
+    showToast("Efek Suara Diaktifkan");
   } else {
     icon.innerHTML = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>`;
     document.getElementById("btnAudioToggle").title = "Suara Efek Kasir (Mati)";
-    showToast("Efek Suara Dimatikan 🔇");
+    showToast("Efek Suara Dimatikan");
   }
 }
 
@@ -1586,7 +1586,7 @@ function changeShiftCashier(newName) {
   const metaCashier = document.getElementById("rcptMetaCashier");
   if (metaCashier) metaCashier.textContent = `Kasir: ${newName}`;
   saveStoreData(storeData);
-  showToast(`Kasir aktif berganti ke: ${newName} 👤`);
+  showToast(`Kasir aktif berganti ke: ${newName}`);
 }
 
 function checkShiftVariance() {
@@ -6926,7 +6926,7 @@ Silakan konfirmasi pesanan via balasan pesan ini. Terima kasih! 🙏✨`;
 
   navigator.clipboard.writeText(quote).then(() => {
     playBeep("beep");
-    showToast("📋 Rincian penawaran spanduk berhasil disalin ke clipboard!");
+    showToast("Rincian penawaran spanduk berhasil disalin ke clipboard!");
   }).catch(() => {
     prompt("Salin rincian penawaran WhatsApp di bawah:", quote);
   });
@@ -7030,7 +7030,7 @@ Silakan konfirmasi pesanan via balasan pesan ini. Terima kasih! 🙏💌`;
 
   navigator.clipboard.writeText(quote).then(() => {
     playBeep("beep");
-    showToast("📋 Rincian penawaran undangan berhasil disalin ke clipboard!");
+    showToast("Rincian penawaran undangan berhasil disalin ke clipboard!");
   }).catch(() => {
     prompt("Salin rincian penawaran WhatsApp di bawah:", quote);
   });
@@ -7084,26 +7084,26 @@ function applyQuickBundle(bundleType) {
     addProductToActiveCart('PRD-003', 60);
     addProductToActiveCart('PRD-021', 1);
     addProductToActiveCart('PRD-014', 1);
-    showToast("🎓 Paket Skripsi Komplit berhasil dimasukkan ke keranjang!");
+    showToast("Paket Skripsi Komplit berhasil dimasukkan ke keranjang!");
     playBeep("success");
   } else if (bundleType === 'makalah') {
     // 25 lbr Print B/W + 2 lbr Print Warna Cover + Jilid Lakban Mika
     addProductToActiveCart('PRD-003', 25);
     addProductToActiveCart('PRD-004', 2);
     addProductToActiveCart('PRD-006', 1);
-    showToast("📄 Paket Makalah Mahasiswa berhasil dimasukkan ke keranjang!");
+    showToast("Paket Makalah Mahasiswa berhasil dimasukkan ke keranjang!");
     playBeep("success");
   } else if (bundleType === 'pasfoto') {
     // 4 lbr Cetak Foto Glossy 4R Pasfoto Set (3x4 & 4x6)
     addProductToActiveCart('PRD-005', 4);
-    showToast("📸 Paket Pasfoto Kilat (Set 3x4 + 4x6) berhasil dimasukkan!");
+    showToast("Paket Pasfoto Kilat (Set 3x4 + 4x6) berhasil dimasukkan!");
     playBeep("success");
   } else if (bundleType === 'kantor') {
     // 250 lbr Fotokopi B/W + 2 rim Kertas F4 Folio + 10 Map Snelhechter
     addProductToActiveCart('PRD-001', 250);
     addProductToActiveCart('PRD-010', 2);
     addProductToActiveCart('PRD-015', 10);
-    showToast("🏢 Paket Rapat Kantor Desa berhasil dimasukkan ke keranjang!");
+    showToast("Paket Rapat Kantor Desa berhasil dimasukkan ke keranjang!");
     playBeep("success");
   }
 

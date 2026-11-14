@@ -5104,7 +5104,8 @@
         _origProcessCheckout();
       };
 
-      document.getElementById('pmQris').addEventListener('click', showQrisPhoto);
+      var pmQrisBtn = document.getElementById('pmQris');
+      if (pmQrisBtn) pmQrisBtn.addEventListener('click', showQrisPhoto);
     </script>
 
 </body>
