@@ -132,7 +132,7 @@
 
       <!-- Quick Login Shortcuts -->
       <div class="login-quick-section">
-        <p class="login-quick-label">⚡ Akses Cepat</p>
+        <p class="login-quick-label"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Akses Cepat</p>
         <div class="login-quick-btns">
           <button type="button" class="login-quick-btn kasir-btn" onclick="quickLoginAs('niko')"
             title="Login sebagai Kasir Niko">
@@ -177,12 +177,12 @@
       <div class="login-customer-portal-box">
         <div class="portal-box-divider"><span>ATAU KHUSUS PELANGGAN</span></div>
         <button type="button" class="btn-customer-portal-entry" onclick="enterCustomerOrderPortal()">
-          <span class="portal-btn-icon">🛍️</span>
+          <span class="portal-btn-icon"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></span>
           <div class="portal-btn-text">
             <strong>Masuk Portal Pesanan Pelanggan</strong>
             <small>Kirim Berkas Cetak, Fotokopi & ATK Mandiri (Tanpa Password)</small>
           </div>
-          <span class="portal-btn-arrow">➔</span>
+          <span class="portal-btn-arrow"><svg class="inline-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
         </button>
       </div>
 
@@ -328,12 +328,12 @@
       <!-- Quick Utility Tools Cluster -->
       <div class="header-tools-cluster">
         <button type="button" class="btn-help-guide" id="btnHelpGuide" onclick="openGuideHelpModal('kasir')" title="Petunjuk & Cara Pakai Aplikasi Toko">
-          <span>❓</span>
+          <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
           <span>Panduan</span>
         </button>
 
         <button type="button" class="btn-theme-pill" id="btnThemeToggle" onclick="toggleTheme()" title="Beralih ke Mode Terang / Gelap">
-          <span id="themeToggleIcon">☀️</span>
+          <span id="themeToggleIcon"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
           <span id="themeToggleText">Terang</span>
         </button>
 
@@ -404,10 +404,10 @@
         <div class="pos-mobile-nav" id="posMobileNav">
           <button type="button" class="pos-mobile-tab-btn active" id="btnPosMobileCatalog"
             onclick="switchPosMobileTab('catalog')">
-            <span>🛍️ Katalog Produk</span>
+            <span><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Katalog Produk</span>
           </button>
           <button type="button" class="pos-mobile-tab-btn" id="btnPosMobileCart" onclick="switchPosMobileTab('cart')">
-            <span>🛒 Keranjang</span>
+            <span><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Keranjang</span>
             <span class="tab-badge-count" id="mobileCartTabBadge">0</span>
           </button>
         </div>
@@ -430,45 +430,45 @@
 
             <!-- 2. QUICK ACCESS TOOLBAR TO DEDICATED SERVICE DASHBOARDS -->
             <div class="pos-quick-services-bar">
-              <span class="qs-label">⚡ Akses Cepat Dasbor:</span>
+              <span class="qs-label"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Akses Cepat:</span>
               <button type="button" class="btn-qs-item qs-print" onclick="switchMainView('print')"
                 title="Buka Dasbor Kalkulator Cetak & Fotokopi (F3)">
-                <span>🖨️ Kalkulator Cetak (F3)</span>
+                <span><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Kalkulator Cetak (F3)</span>
               </button>
               <button type="button" class="btn-qs-item qs-price" onclick="switchMainView('price')"
                 title="Buka Dasbor Kelola & Ubah Harga (F7)">
-                <span>🏷️ Ubah Harga (F7)</span>
+                <span><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Ubah Harga (F7)</span>
               </button>
               <button type="button" class="btn-qs-item qs-pasfoto" onclick="switchMainView('pasfoto')"
                 title="Buka Studio Pas Foto Kilat Resmi">
-                <span>📸 Pas Foto (PRO)</span>
+                <span><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg> Pas Foto (PRO)</span>
               </button>
               <button type="button" class="btn-qs-item qs-banner" onclick="switchMainView('banner')"
                 title="Buka Dasbor Spanduk & Undangan">
-                <span>📐 Banner & Undangan</span>
+                <span><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> Banner & Undangan</span>
               </button>
               <button type="button" class="btn-qs-item qs-owner" onclick="switchMainView('owner')"
                 title="Buka Dasbor Analisis & Laporan Pemilik Toko">
-                <span>📊 Dasbor Pemilik</span>
+                <span><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Dasbor Pemilik</span>
               </button>
             </div>
 
                         <!-- 2.5 BAR PAKET BUNDLING KILAT (1-CLICK BUNDLE) -->
             <div class="pos-quick-bundles-bar" style="display:flex; gap:0.45rem; overflow-x:auto; padding:0.4rem 0.2rem; margin-bottom:0.5rem; border-bottom:1px dashed rgba(255,255,255,0.08); align-items:center;">
               <span style="font-size:0.72rem; font-weight:700; color:var(--text-muted); display:inline-flex; align-items:center; gap:0.3rem; white-space:nowrap;">
-                ⚡ Paket Kilat 1-Klik:
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Paket Kilat 1-Klik:
               </span>
               <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('skripsi')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(37,99,235,0.18); border:1px solid rgba(59,130,246,0.4); color:#93C5FD; cursor:pointer;" title="Cetak Hitam Putih 60 lbr + Jilid Hardcover Emboss Emas + Map Clear Holder">
-                🎓 Paket Skripsi (Rp 65rb)
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg> Paket Skripsi (Rp 65rb)
               </button>
               <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('makalah')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(16,185,129,0.18); border:1px solid rgba(16,185,129,0.4); color:#6EE7B7; cursor:pointer;" title="Cetak Hitam Putih 25 lbr + Cetak Warna Sampul 2 lbr + Jilid Lakban Mika">
-                📄 Paket Makalah (Rp 25rb)
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Paket Makalah (Rp 25rb)
               </button>
               <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('pasfoto')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(245,158,11,0.18); border:1px solid rgba(245,158,11,0.4); color:#FCD34D; cursor:pointer;" title="Cetak Foto Glossy 4R Pasfoto 3x4 & 4x6 (4 lembar)">
-                📸 Paket Pasfoto (Rp 20rb)
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg> Paket Pasfoto (Rp 20rb)
               </button>
               <button type="button" class="btn-bundle-pill" onclick="applyQuickBundle('kantor')" style="white-space:nowrap; padding:0.25rem 0.65rem; font-size:0.74rem; border-radius:20px; background:rgba(168,85,247,0.18); border:1px solid rgba(168,85,247,0.4); color:#D8B4FE; cursor:pointer;" title="Fotokopi B/W 250 lbr + Kertas F4 2 rim + Map Snelhechter 10 pcs">
-                🏢 Paket Rapat Desa (Rp 180rb)
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg> Paket Rapat Desa (Rp 180rb)
               </button>
             </div>
             <!-- 3. KATEGORI FILTER PRODUK & ATK -->
@@ -730,7 +730,7 @@
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
                   <label
                     style="margin:0; font-size:0.84rem; font-weight:700; color:var(--primary); display:flex; align-items:center; gap:6px;">
-                    📄 Hitung Halaman PDF Otomatis Pelanggan
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Hitung Halaman PDF Otomatis Pelanggan
                   </label>
                   <span id="dbPosPdfPageBadge"
                     style="display:none; font-size:0.75rem; padding:3px 10px; border-radius:12px; background:var(--primary); color:#000; font-weight:700;">0
@@ -740,7 +740,7 @@
                   onclick="document.getElementById('dbPosPdfFileInput').click()">
                   <input type="file" id="dbPosPdfFileInput" accept=".pdf" style="display:none;"
                     onchange="handleDashboardPdfSelected(this.files)">
-                  <span style="font-size:1.8rem;">📥</span>
+                  <span style="display:inline-flex; align-items:center; justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></span>
                   <div style="flex:1; text-align:left;">
                     <div id="dbPosPdfFilenameText" style="font-size:0.88rem; font-weight:600; color:var(--text-main);">
                       Pilih / Tarik berkas PDF pelanggan ke sini untuk hitung lembar otomatis...</div>
@@ -873,7 +873,7 @@
             </div>
             <div style="margin-left:auto; display:flex; gap:10px;">
               <button type="button" class="btn-highlight-action" onclick="saveAllPriceDashboardChanges()">
-                <span>💾 Simpan Semua Perubahan</span>
+                <span><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Simpan Semua Perubahan</span>
               </button>
             </div>
           </div>
@@ -943,7 +943,7 @@
               <div class="pasfoto-upload-bar" onclick="document.getElementById('pasFotoFileInput').click()">
                 <input type="file" id="pasFotoFileInput" accept="image/*" style="display:none;"
                   onchange="handlePasFotoFile(this.files)">
-                <span style="font-size:1.6rem;">📷</span>
+                <span style="display:inline-flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></span>
                 <div>
                   <div style="font-weight:700; font-size:0.92rem; color:var(--text-main);">Pilih / Tarik Foto Pelanggan
                     (JPG/PNG)</div>
@@ -965,7 +965,7 @@
                     KEPALA & PUNDAK</span>
                 </div>
                 <div class="pasfoto-empty-placeholder" id="pasFotoEmptyPlaceholder">
-                  <div style="font-size:2.8rem; margin-bottom:0.5rem; opacity:0.6;">📸</div>
+                  <div style="margin-bottom:0.5rem; opacity:0.6; display:flex; justify-content:center;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></div>
                   <div style="font-weight:700; font-size:1rem; color:var(--text-main);">Belum ada foto yang dimuat</div>
                   <div style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Klik 'Pilih Berkas' di atas
                     untuk memuat foto</div>
@@ -1056,11 +1056,11 @@
                   <label class="setting-label" style="margin-bottom:0;">3. Paket Lembar Cetak 4R (10x15 cm):</label>
                   <select class="form-control" id="pasFotoPackageSelect" onchange="updatePasFotoSheetPreview()"
                     style="width:auto; padding:0.25rem 0.6rem; font-size:0.78rem;">
-                    <option value="campur">🎁 Paket Campur 4R (4 lbr 3x4 + 2 lbr 4x6 + 2 lbr 2x3) — Rp 10.000</option>
-                    <option value="full3x4">📄 Paket 3x4 Penuh (8 lembar 3x4) — Rp 10.000</option>
-                    <option value="full4x6">📄 Paket 4x6 Penuh (4 lembar 4x6) — Rp 10.000</option>
-                    <option value="full2x3">📄 Paket 2x3 Penuh (10 lembar 2x3) — Rp 10.000</option>
-                    <option value="digital">📁 File Digital JPG Berkualitas Tinggi Saja — Rp 5.000</option>
+                    <option value="campur">Paket Campur 4R (4 lbr 3x4 + 2 lbr 4x6 + 2 lbr 2x3) — Rp 10.000</option>
+                    <option value="full3x4">Paket 3x4 Penuh (8 lembar 3x4) — Rp 10.000</option>
+                    <option value="full4x6">Paket 4x6 Penuh (4 lembar 4x6) — Rp 10.000</option>
+                    <option value="full2x3">Paket 2x3 Penuh (10 lembar 2x3) — Rp 10.000</option>
+                    <option value="digital">File Digital JPG Berkualitas Tinggi Saja — Rp 5.000</option>
                   </select>
                 </div>
                 <div class="sheet-preview-container">
@@ -1073,11 +1073,11 @@
                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
                   <button type="button" class="btn-secondary-sm" onclick="downloadPasFotoSingle()"
                     style="justify-content:center; padding:0.65rem;">
-                    💾 Unduh Pas Foto
+                    <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh Pas Foto
                   </button>
                   <button type="button" class="btn-secondary-sm" onclick="printPasFotoSheet()"
                     style="justify-content:center; padding:0.65rem;">
-                    🖨️ Cetak Lembar 4R
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Cetak Lembar 4R
                   </button>
                 </div>
                 <button type="button" class="btn-highlight-action" onclick="addPasFotoToCart()"
@@ -1128,10 +1128,10 @@
         <!-- TABS NAV -->
         <div class="bu-tabs-nav">
           <button type="button" class="bu-tab-btn active" id="tabBtnBanner" onclick="switchBuTab('banner')">
-            🚩 Cetak Spanduk / Banner / Baliho
+            <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg> Cetak Spanduk / Banner / Baliho
           </button>
           <button type="button" class="bu-tab-btn" id="tabBtnUndangan" onclick="switchBuTab('undangan')">
-            💌 Undangan Pernikahan / Khitanan
+            <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> Undangan Pernikahan / Khitanan
           </button>
         </div>
 
@@ -1242,7 +1242,7 @@
                   </button>
                   <button type="button" class="btn-secondary-sm" onclick="copyBannerQuoteToWa()"
                     style="justify-content:center; padding:0.65rem;">
-                    📋 Salin Rincian Penawaran WhatsApp
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Salin Rincian Penawaran WhatsApp
                   </button>
                 </div>
               </div>
@@ -1293,7 +1293,7 @@
 
                 <div
                   style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:10px; padding:0.75rem 1rem; margin-top:0.5rem;">
-                  <strong style="color:var(--success); font-size:0.82rem; display:block; margin-bottom:2px;">🎁 Bonus
+                  <strong style="color:var(--success); font-size:0.82rem; display:block; margin-bottom:2px;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg> Bonus
                     Gratis Spesial Setiap Pesanan:</strong>
                   <span style="font-size:0.75rem; color:var(--text-secondary);">Sudah termasuk plastik OPP pembungkus,
                     label nama tamu cetak, dan kartu ucapan terima kasih suvenir!</span>
@@ -1330,7 +1330,7 @@
                   </button>
                   <button type="button" class="btn-secondary-sm" onclick="copyUndanganQuoteToWa()"
                     style="justify-content:center; padding:0.65rem;">
-                    📋 Salin Rincian Undangan untuk WhatsApp
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Salin Rincian Undangan untuk WhatsApp
                   </button>
                 </div>
               </div>
@@ -1567,7 +1567,7 @@
                 style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; padding:0.5rem 0;">
                 <div
                   style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; border-left:4px solid #10B981;">
-                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">💵
+                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     Uang Tunai (Cash)</div>
                   <div id="payCashTotal" style="font-size:1.25rem; font-weight:700; color:#10B981; margin:0.35rem 0;">Rp
                     850.000</div>
@@ -1576,7 +1576,7 @@
                 </div>
                 <div
                   style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; border-left:4px solid #3B82F6;">
-                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">📱
+                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                     Scan QRIS</div>
                   <div id="payQrisTotal" style="font-size:1.25rem; font-weight:700; color:#3B82F6; margin:0.35rem 0;">Rp
                     450.000</div>
@@ -1585,7 +1585,7 @@
                 </div>
                 <div
                   style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; border-left:4px solid #8B5CF6;">
-                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">🏦
+                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="2" y1="22" x2="22" y2="22"></line><line x1="2" y1="9" x2="22" y2="9"></line><line x1="12" y1="2" x2="22" y2="9"></line><line x1="6" y1="9" x2="6" y2="22"></line><line x1="10" y1="9" x2="10" y2="22"></line><line x1="14" y1="9" x2="14" y2="22"></line><line x1="18" y1="9" x2="18" y2="22"></line></svg>
                     Transfer Bank</div>
                   <div id="payTransferTotal"
                     style="font-size:1.25rem; font-weight:700; color:#8B5CF6; margin:0.35rem 0;">Rp 200.000</div>
@@ -1594,7 +1594,7 @@
                 </div>
                 <div
                   style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; border-left:4px solid #F59E0B;">
-                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">📖
+                  <div style="font-size:0.75rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                     Kasbon / Tempo</div>
                   <div id="payKasbonTotal" style="font-size:1.25rem; font-weight:700; color:#F59E0B; margin:0.35rem 0;">
                     Rp 100.000</div>
@@ -1628,16 +1628,16 @@
                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                   <button type="button" class="btn-highlight-action" onclick="runDummyStressTest(1500)"
                     style="background:#F59E0B; color:#000; font-weight:700; padding:0.5rem 1rem;">
-                    ⚡ Uji 1.500 Data Transaksi
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Uji 1.500 Data Transaksi
                   </button>
                   <button type="button" class="btn-secondary-sm" onclick="downloadDummySqlFile()"
                     style="padding:0.5rem 0.85rem;"
                     title="Unduh skema dan data dump SQL untuk impor ke MySQL / Laravel">
-                    💾 Unduh Dump SQL (Laravel/MySQL)
+                    <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh Dump SQL (Laravel/MySQL)
                   </button>
                   <button type="button" class="btn-secondary-sm" onclick="resetDummyDataToDefault()"
                     style="padding:0.5rem 0.85rem;">
-                    🔄 Reset Data Awal
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg> Reset Data Awal
                   </button>
                 </div>
               </div>
@@ -1702,7 +1702,7 @@
                 <!-- Filter Controls: Tanggal, Tombol Cepat, Pencarian & Ekspor Excel -->
                 <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
                   <div style="display:flex; align-items:center; gap:0.35rem;">
-                    <label for="txFilterDate" style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">📅
+                    <label for="txFilterDate" style="font-size:0.75rem; color:var(--text-muted); font-weight:600;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                       Tanggal:</label>
                     <input type="date" id="txFilterDate" onchange="filterTxByDate(this.value)" class="form-control"
                       style="width:145px; padding:0.3rem 0.5rem; font-size:0.75rem; background:rgba(255,255,255,0.08); color:#FFF; border:1px solid rgba(255,255,255,0.2); border-radius:6px;">
@@ -1719,7 +1719,7 @@
                   <button type="button" class="btn-secondary-sm" onclick="exportTransactionsCSV('filtered')"
                     style="padding:0.3rem 0.7rem; font-size:0.75rem; background:rgba(16,185,129,0.15); color:#10B981; border:1px solid rgba(16,185,129,0.4); font-weight:600;"
                     title="Unduh riwayat transaksi sesuai tanggal atau pencarian ke Excel (.csv)">
-                    📊 Unduh Excel (.csv)
+                    <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh Excel (.csv)
                   </button>
                 </div>
               </div>
@@ -1727,11 +1727,11 @@
               <!-- Bar Ringkasan Tanggal yang Dipilih -->
               <div id="txFilterSummaryBar"
                 style="padding:0.5rem 0.85rem; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.25); border-left:4px solid #3B82F6; border-radius:8px; margin:0.75rem 0 0.5rem 0; font-size:0.8rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; align-items:center;">
-                <div>📅 Periode: <strong id="txFilterPeriodLabel" style="color:#FFF;">Semua Tanggal Transaksi</strong>
+                <div><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Periode: <strong id="txFilterPeriodLabel" style="color:#FFF;">Semua Tanggal Transaksi</strong>
                 </div>
-                <div>💰 Omzet Periode: <strong id="txFilterOmzetLabel" style="color:#10B981;">Rp 0</strong></div>
-                <div>🏷️ Keuntungan: <strong id="txFilterProfitLabel" style="color:#3B82F6;">Rp 0</strong></div>
-                <div>📦 Jumlah Transaksi: <strong id="txFilterCountLabel" style="color:var(--primary);">0 Nota</strong>
+                <div><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg> Omzet Periode: <strong id="txFilterOmzetLabel" style="color:#10B981;">Rp 0</strong></div>
+                <div><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Keuntungan: <strong id="txFilterProfitLabel" style="color:#3B82F6;">Rp 0</strong></div>
+                <div><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Jumlah Transaksi: <strong id="txFilterCountLabel" style="color:var(--primary);">0 Nota</strong>
                 </div>
               </div>
 
@@ -1945,7 +1945,7 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:0.5rem; min-width:260px;">
                   <input type="text" class="form-control" id="kasbonSearchInput"
-                    placeholder="🔍 Cari nama warga / no. HP..." oninput="handleKasbonSearch(this.value)"
+                    placeholder="Cari nama warga / no. HP..." oninput="handleKasbonSearch(this.value)"
                     style="font-size:0.85rem; padding:0.4rem 0.75rem;">
                 </div>
               </div>
@@ -2027,7 +2027,7 @@
                   </div>
                   <a href="https://wa.me/6281253453440" target="_blank" class="btn-wa-notify"
                     style="text-decoration:none; padding:0.4rem 0.85rem; font-size:0.78rem; box-shadow:0 4px 14px rgba(37,211,102,0.35);">
-                    📲 Chat WA Toko
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Chat WA Toko
                   </a>
                 </div>
 
@@ -2054,7 +2054,7 @@
                   </div>
                   <a href="https://www.instagram.com/copystarkubu?obrf=YnByeXZsYnozb3dt" target="_blank"
                     class="btn-ig-notify" style="padding:0.4rem 0.85rem; font-size:0.78rem;">
-                    📸 Buka IG Order
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path></svg> Buka IG Order
                   </a>
                 </div>
               </div>
@@ -2068,16 +2068,16 @@
                   <button class="btn-filter-pill" id="btnFilterWaWaiting" onclick="filterWaStatus('MENUNGGU')">⏳
                     Menunggu (<span id="waCountWaiting">0</span>)</button>
                   <button class="btn-filter-pill" id="btnFilterWaPrinting"
-                    onclick="filterWaStatus('SEDANG_DICETAK')">🖨️ Sedang Dicetak (<span
+                    onclick="filterWaStatus('SEDANG_DICETAK')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Sedang Dicetak (<span
                       id="waCountPrinting">0</span>)</button>
-                  <button class="btn-filter-pill" id="btnFilterWaReady" onclick="filterWaStatus('SIAP_DIAMBIL')">✅ Siap
+                  <button class="btn-filter-pill" id="btnFilterWaReady" onclick="filterWaStatus('SIAP_DIAMBIL')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Siap
                     Diambil (<span id="waCountReady">0</span>)</button>
-                  <button class="btn-filter-pill" id="btnFilterWaDone" onclick="filterWaStatus('SELESAI')">📦
+                  <button class="btn-filter-pill" id="btnFilterWaDone" onclick="filterWaStatus('SELESAI')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                     Selesai</button>
                 </div>
                 <div style="display:flex; align-items:center; gap:0.5rem; min-width:240px;">
                   <input type="text" class="form-control" id="waSearchInput"
-                    placeholder="🔍 Cari nama / judul berkas..." oninput="handleWaSearch(this.value)"
+                    placeholder="Cari nama / judul berkas..." oninput="handleWaSearch(this.value)"
                     style="font-size:0.85rem; padding:0.4rem 0.75rem;">
                 </div>
               </div>
@@ -2111,7 +2111,7 @@
                 <div style="display:flex; gap:0.5rem;">
                   <button class="btn-highlight-action" onclick="downloadDatabaseBackup()"
                     style="display:inline-flex; align-items:center; gap:0.4rem;">
-                    📥 Unduh Backup Sekarang
+                    <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh Backup Sekarang
                   </button>
                 </div>
               </div>
@@ -2190,7 +2190,7 @@
                   </p>
                   <button class="btn-highlight-action" onclick="downloadDatabaseBackup()"
                     style="width:100%; justify-content:center; padding:0.6rem;">
-                    📥 Unduh Berkas Cadangan (.json)
+                    <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Unduh Berkas Cadangan (.json)
                   </button>
                 </div>
 
@@ -2220,7 +2220,7 @@
                     onchange="handleRestoreFileSelected(event)">
                   <button class="btn-secondary-sm" onclick="document.getElementById('restoreFileInput').click()"
                     style="width:100%; justify-content:center; padding:0.6rem; border:1px solid rgba(245, 158, 11, 0.4); color:#F59E0B;">
-                    📤 Pilih &amp; Pulihkan Berkas Cadangan (.json)
+                    <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Pilih &amp; Pulihkan Berkas Cadangan (.json)
                   </button>
                 </div>
 
@@ -2249,7 +2249,7 @@
                   </div>
                   <button class="btn-secondary-sm" onclick="saveNewSupervisorPin()"
                     style="width:100%; justify-content:center; padding:0.55rem; background:rgba(16, 185, 129, 0.15); color:#10B981; border:1px solid rgba(16, 185, 129, 0.3);">
-                    🔒 Simpan PIN Baru
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Simpan PIN Baru
                   </button>
                 </div>
 
@@ -2278,11 +2278,11 @@
                   </p>
                   <div style="display:flex; flex-direction:column; gap:0.4rem;">
                     <button class="btn-secondary-sm" onclick="exportTransactionsCsv()"
-                      style="font-size:0.78rem; justify-content:center;">📊 Ekspor Transaksi (.csv)</button>
+                      style="font-size:0.78rem; justify-content:center;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Ekspor Transaksi (.csv)</button>
                     <button class="btn-secondary-sm" onclick="exportKasbonCsv()"
-                      style="font-size:0.78rem; justify-content:center;">📒 Ekspor Buku Kasbon (.csv)</button>
+                      style="font-size:0.78rem; justify-content:center;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> Ekspor Buku Kasbon (.csv)</button>
                     <button class="btn-secondary-sm" onclick="exportInventoryCsv()"
-                      style="font-size:0.78rem; justify-content:center;">📦 Ekspor Stok ATK (.csv)</button>
+                      style="font-size:0.78rem; justify-content:center;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Ekspor Stok ATK (.csv)</button>
                   </div>
                 </div>
 
@@ -2293,7 +2293,7 @@
                 style="background:rgba(255, 255, 255, 0.03); border:1px solid rgba(255, 255, 255, 0.08); border-radius:12px; padding:1rem 1.25rem;">
                 <h5
                   style="margin:0 0 0.5rem 0; display:flex; align-items:center; gap:0.5rem; font-size:0.88rem; color:#0284C7;">
-                  🛡️ SOP Standar Keamanan Data COPY STAR KUBU
+                  <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> SOP Standar Keamanan Data COPY STAR KUBU
                 </h5>
                 <ul style="font-size:0.8rem; color:var(--text-muted); line-height:1.6; margin:0; padding-left:1.2rem;">
                   <li><strong>Sebelum Tutup Toko:</strong> Pemilik / Kasir menekan tombol <em>"Unduh Backup
@@ -2331,11 +2331,11 @@
               </div>
               <div style="display:flex; gap:8px; align-items:center;">
                 <button type="button" class="btn-theme-pill" onclick="toggleTheme()" title="Beralih Mode Gelap/Terang">
-                  <span id="custThemeIcon">☀️</span>
+                  <span id="custThemeIcon"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
                   <span id="custThemeText">Mode Terang</span>
                 </button>
                 <button type="button" class="btn-help-guide" onclick="openGuideHelpModal('pelanggan')" title="Lihat Petunjuk Cara Pesan">
-                  <span>❓</span>
+                  <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                   <span>Cara Pesan</span>
                 </button>
               </div>
@@ -2391,7 +2391,7 @@
             <div class="stat-info">
               <span class="stat-label">Antrean Berkas Saat Ini</span>
               <div class="stat-number"><span id="custLiveQueueCount">0</span> <small>Berkas</small></div>
-              <span class="stat-hint">⚡ Estimasi tunggu ~5-15 menit</span>
+              <span class="stat-hint"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> Estimasi tunggu ~5-15 menit</span>
             </div>
           </div>
         </div>
@@ -2444,7 +2444,7 @@
               <!-- Service 1: Fotokopi B/W -->
               <div class="cust-service-card active" onclick="selectCustService('fotokopi_bw')"
                 data-service="fotokopi_bw">
-                <div class="service-icon-box">📄</div>
+                <div class="service-icon-box"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
                 <div class="service-details">
                   <div class="service-badge">Paling Populer</div>
                   <h4 class="service-name">Fotokopi B/W</h4>
@@ -2455,7 +2455,7 @@
 
               <!-- Service 2: Print Dokumen Warna / B/W -->
               <div class="cust-service-card" onclick="selectCustService('print_dokumen')" data-service="print_dokumen">
-                <div class="service-icon-box">🖨️</div>
+                <div class="service-icon-box"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg></div>
                 <div class="service-details">
                   <div class="service-badge">File PDF / Word</div>
                   <h4 class="service-name">Cetak Dokumen & Skripsi</h4>
@@ -2466,7 +2466,7 @@
 
               <!-- Service 3: Pas Foto & Cetak Foto -->
               <div class="cust-service-card" onclick="selectCustService('cetak_foto')" data-service="cetak_foto">
-                <div class="service-icon-box">🖼️</div>
+                <div class="service-icon-box"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg></div>
                 <div class="service-details">
                   <div class="service-badge">Glossy Photo 230g</div>
                   <h4 class="service-name">Pas Foto & Cetak Foto</h4>
@@ -2477,7 +2477,7 @@
 
               <!-- Service 4: Jilid & Finishing -->
               <div class="cust-service-card" onclick="selectCustService('jilid_buku')" data-service="jilid_buku">
-                <div class="service-icon-box">📚</div>
+                <div class="service-icon-box"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></div>
                 <div class="service-details">
                   <div class="service-badge">Rapi & Kuat</div>
                   <h4 class="service-name">Jilid & Laminating</h4>
@@ -2489,7 +2489,7 @@
               <!-- Service 5: Cetak Sertifikat & Undangan -->
               <div class="cust-service-card" onclick="selectCustService('sertifikat_undangan')"
                 data-service="sertifikat_undangan">
-                <div class="service-icon-box">🎖️</div>
+                <div class="service-icon-box"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
                 <div class="service-details">
                   <div class="service-badge">Kertas Premium</div>
                   <h4 class="service-name">Sertifikat & Undangan</h4>
@@ -2500,7 +2500,7 @@
 
               <!-- Service 6: Belanja Kertas Rim & ATK -->
               <div class="cust-service-card" onclick="selectCustService('atk_kertas')" data-service="atk_kertas">
-                <div class="service-icon-box">📦</div>
+                <div class="service-icon-box"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
                 <div class="service-details">
                   <div class="service-badge">Produk Toko</div>
                   <h4 class="service-name">Beli Kertas Rim & ATK</h4>
@@ -2531,7 +2531,7 @@
                   <!-- Nama Pemesan -->
                   <div class="cust-input-group">
                     <label for="custOrderName">
-                      👤 Nama Lengkap Anda <span class="required">*</span>
+                      <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Nama Lengkap Anda <span class="required">*</span>
                     </label>
                     <input type="text" id="custOrderName" class="cust-input"
                       placeholder="Contoh: Budi Santoso / Bu Guru Rina" required>
@@ -2540,7 +2540,7 @@
                   <!-- Nomor WhatsApp -->
                   <div class="cust-input-group">
                     <label for="custOrderPhone">
-                      📱 Nomor WhatsApp Aktif <span class="required">*</span>
+                      <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> Nomor WhatsApp Aktif <span class="required">*</span>
                     </label>
                     <input type="tel" id="custOrderPhone" class="cust-input" placeholder="Contoh: 081234567890"
                       required>
@@ -2553,17 +2553,17 @@
                       style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
                       <label
                         style="margin:0; font-size:0.85rem; font-weight:600; color:var(--text-main); display:flex; align-items:center; gap:6px;">
-                        📁 Unggah Berkas / Deteksi Lembar Otomatis
+                        <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> Unggah Berkas / Deteksi Lembar Otomatis
                       </label>
                       <span class="badge-feature-pill"
-                        style="font-size:0.7rem; background:rgba(0,229,255,0.12); color:#00E5FF; padding:2px 8px; border-radius:12px; font-weight:600; border:1px solid rgba(0,229,255,0.3);">⚡
+                        style="font-size:0.7rem; background:rgba(0,229,255,0.12); color:#00E5FF; padding:2px 8px; border-radius:12px; font-weight:600; border:1px solid rgba(0,229,255,0.3);"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                         Auto-Counter PDF</span>
                     </div>
                     <div class="cust-file-dropzone" id="custPdfDropzone"
                       onclick="document.getElementById('custPdfInput').click()">
                       <input type="file" id="custPdfInput" accept=".pdf,image/*,.doc,.docx" style="display:none;"
                         onchange="handleCustPdfSelected(this.files)">
-                      <div class="dropzone-icon" style="font-size:1.8rem; margin-bottom:0.25rem;">📄</div>
+                      <div class="dropzone-icon" style="margin-bottom:0.25rem; display:flex; justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
                       <div class="dropzone-text" style="font-size:0.85rem; line-height:1.4;">
                         <strong style="color:var(--text-main); display:block;">Tarik & Lepas Berkas PDF / Gambar ke
                           sini</strong>
@@ -2579,7 +2579,7 @@
                   <!-- Judul Berkas / Nama File / Pesanan -->
                   <div class="cust-input-group full-width">
                     <label for="custOrderDocTitle">
-                      📄 Judul Berkas / Nama File / Catatan Pesanan <span class="required">*</span>
+                      <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Judul Berkas / Nama File / Catatan Pesanan <span class="required">*</span>
                     </label>
                     <input type="text" id="custOrderDocTitle" class="cust-input"
                       placeholder="Contoh: Makalah_Kelompok_4.pdf atau Pas Foto 3x4 Warna Merah 6 lbr" required>
@@ -2588,7 +2588,7 @@
                   <!-- Jumlah Halaman / Lembar / Qty -->
                   <div class="cust-input-group">
                     <label for="custOrderQty">
-                      🔢 Jumlah Halaman / Lembar / Pcs <span class="required">*</span>
+                      <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="3" x2="8" y2="21"></line><line x1="16" y1="3" x2="14" y2="21"></line></svg> Jumlah Halaman / Lembar / Pcs <span class="required">*</span>
                     </label>
                     <div class="cust-qty-control">
                       <button type="button" class="btn-qty-cust" onclick="changeCustQty(-1)">-</button>
@@ -2600,7 +2600,7 @@
 
                   <!-- Pilihan Kertas -->
                   <div class="cust-input-group">
-                    <label for="custOrderPaper">📑 Pilihan Kertas</label>
+                    <label for="custOrderPaper"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Pilihan Kertas</label>
                     <select id="custOrderPaper" class="cust-select" onchange="calculateCustomerOrderPrice()">
                       <option value="HVS A4 70gr" data-price="0">HVS A4 70gr (Standar)</option>
                       <option value="HVS A4 80gr" data-price="100">HVS A4 80gr (Tebal PaperOne)</option>
@@ -2615,7 +2615,7 @@
 
                   <!-- Opsi Bolak-Balik (Duplex) -->
                   <div class="cust-input-group">
-                    <label for="custOrderDuplex">🔄 Model Cetak</label>
+                    <label for="custOrderDuplex"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg> Model Cetak</label>
                     <select id="custOrderDuplex" class="cust-select" onchange="calculateCustomerOrderPrice()">
                       <option value="1_sisi">1 Sisi (Satu Muka)</option>
                       <option value="bolak_balik">Bolak-Balik (Duplex 2 Sisi - Lebih Hemat)</option>
@@ -2624,7 +2624,7 @@
 
                   <!-- Jilid & Finishing Tambahan -->
                   <div class="cust-input-group">
-                    <label for="custOrderFinishing">📚 Jilid & Finishing Tambahan</label>
+                    <label for="custOrderFinishing"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> Jilid & Finishing Tambahan</label>
                     <select id="custOrderFinishing" class="cust-select" onchange="calculateCustomerOrderPrice()">
                       <option value="none" data-cost="0">Tanpa Jilid (Hanya Cetak / Staples)</option>
                       <option value="lakban_mika" data-cost="4000">Jilid Mika Bening + Lakban Hitam (+ Rp 4.000)
@@ -2638,7 +2638,7 @@
 
                   <!-- Catatan / Permintaan Khusus -->
                   <div class="cust-input-group full-width">
-                    <label for="custOrderNotes">📝 Catatan Khusus untuk Operator Kasir</label>
+                    <label for="custOrderNotes"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Catatan Khusus untuk Operator Kasir</label>
                     <textarea id="custOrderNotes" class="cust-textarea" rows="2"
                       placeholder="Contoh: Halaman judul tolong warna, sisanya hitam putih. Mau diambil jam 14.00 ya kak."
                       oninput="calculateCustomerOrderPrice()"></textarea>
@@ -2650,7 +2650,7 @@
                       <input type="checkbox" id="custOrderUrgent" onchange="calculateCustomerOrderPrice()">
                       <span class="cust-checkbox-indicator"></span>
                       <span class="cust-checkbox-text">
-                        ⚡ <strong>Pesanan Mendesak / Urgent</strong> (Prioritaskan proses cetak bila antrean sedang
+                        <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg> <strong>Pesanan Mendesak / Urgent</strong> (Prioritaskan proses cetak bila antrean sedang
                         ramai)
                       </span>
                     </label>
@@ -2669,7 +2669,7 @@
                 </div>
 
                 <div class="estimate-service-info" id="custEstimateServiceTitle">
-                  📄 Fotokopi B/W (Hitam Putih)
+                  <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Fotokopi B/W (Hitam Putih)
                 </div>
 
                 <div class="estimate-breakdown-list">
@@ -2740,7 +2740,7 @@
           <div class="cust-section-card">
             <div class="cust-section-header" style="justify-content:space-between; flex-wrap:wrap; gap:1rem;">
               <div>
-                <h3 class="cust-section-title">🛍️ Katalog Barang, Kertas & ATK Toko</h3>
+                <h3 class="cust-section-title"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Katalog Barang, Kertas & ATK Toko</h3>
                 <p class="cust-section-subtitle">Pilih barang kebutuhan Anda, cek stok dan harga real-time, lalu klik "+
                   Pesan" untuk order via WhatsApp:</p>
               </div>
@@ -2774,7 +2774,7 @@
           <div class="cust-section-card">
             <div class="cust-section-header" style="justify-content:space-between; flex-wrap:wrap; gap:1rem;">
               <div>
-                <h3 class="cust-section-title">📊 Papan Pantau Antrean Toko Real-Time</h3>
+                <h3 class="cust-section-title"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Papan Pantau Antrean Toko Real-Time</h3>
                 <p class="cust-section-subtitle">Pantau posisi antrean dan status pengerjaan pesanan Anda secara
                   langsung:</p>
               </div>
@@ -2833,13 +2833,13 @@
 
             <div class="ticket-footer-actions">
               <a href="#" id="ticketWaLink" target="_blank" class="btn-ticket-wa">
-                📲 Buka Chat WhatsApp Toko
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Buka Chat WhatsApp Toko
               </a>
               <button type="button" class="btn-ticket-track" onclick="closeCustTicketModal(); switchCustTab('queue');">
-                📋 Lihat Papan Antrean
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Lihat Papan Antrean
               </button>
               <button type="button" class="btn-ticket-new" onclick="closeCustTicketModal(); resetCustomerOrderForm();">
-                ➕ Buat Pesanan Baru
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Buat Pesanan Baru
               </button>
             </div>
           </div>
@@ -2883,9 +2883,9 @@
     <!-- Quick Prompt Pills -->
     <div style="padding: 0 0.85rem; background: var(--bg-surface-elevated);">
       <div class="quick-prompts-row">
-        <button class="btn-quick-prompt" onclick="askStarBot('Barang apa yang paling untung minggu ini?')">💰 Barang
+        <button class="btn-quick-prompt" onclick="askStarBot('Barang apa yang paling untung minggu ini?')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg> Barang
           Paling Untung</button>
-        <button class="btn-quick-prompt" onclick="askStarBot('Berapa omzet dan estimasi laba hari ini?')">📊 Omzet &
+        <button class="btn-quick-prompt" onclick="askStarBot('Berapa omzet dan estimasi laba hari ini?')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Omzet &
           Laba Hari Ini</button>
         <button class="btn-quick-prompt" onclick="askStarBot('Ada rekomendasi restock darurat?')">âš ï¸ Rekomendasi
           Restock</button>
@@ -2963,7 +2963,7 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
               <label
                 style="margin:0; font-size:0.8rem; font-weight:700; color:var(--primary); display:flex; align-items:center; gap:6px;">
-                📄 Hitung Halaman PDF Otomatis
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Hitung Halaman PDF Otomatis
               </label>
               <span id="posPdfPageBadge"
                 style="display:none; font-size:0.75rem; padding:2px 8px; border-radius:10px; background:var(--primary); color:#000; font-weight:700;">0
@@ -2974,7 +2974,7 @@
               style="cursor:pointer; display:flex; align-items:center; gap:10px;">
               <input type="file" id="posPdfFileInput" accept=".pdf" style="display:none;"
                 onchange="handlePosPdfSelected(this.files)">
-              <span style="font-size:1.3rem;">📥</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></span>
               <div style="flex:1;">
                 <span id="posPdfFilenameText"
                   style="font-size:0.8rem; color:var(--text-secondary); display:block; line-height:1.3;">Pilih / Tarik
@@ -3149,7 +3149,7 @@
               style="margin-top:0.75rem; padding-top:0.5rem; border-top:1px dashed #DDD; font-size:0.75rem; color:#4B5563; display:flex; align-items:center; justify-content:center; gap:0.4rem;">
               <input type="checkbox" id="chkAutoExportExcel" onchange="toggleAutoExportExcel(this.checked)"
                 style="cursor:pointer;">
-              <label for="chkAutoExportExcel" style="cursor:pointer; font-weight:600; color:#374151;">💾 Otomatis simpan
+              <label for="chkAutoExportExcel" style="cursor:pointer; font-weight:600; color:#374151;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Otomatis simpan
                 & unduh file Excel setiap transaksi selesai</label>
             </div>
           </div>
@@ -3160,7 +3160,7 @@
           <div style="display:flex; align-items:center; gap:0.5rem;">
             <input type="tel" id="rcptCustomerPhone" placeholder="Nomor WhatsApp Pelanggan (0812...)" style="flex:1; padding:0.35rem 0.6rem; font-size:0.76rem; border-radius:4px; border:1px solid var(--border-color); background:var(--bg-surface); color:var(--text-main);">
             <button class="btn-secondary-sm" onclick="shareReceiptWhatsApp()" style="color:#25D366; border:1px solid rgba(37,211,102,0.4); background:rgba(37,211,102,0.1); font-weight:600; padding:0.35rem 0.7rem; font-size:0.76rem; white-space:nowrap;">
-              📲 Kirim Struk WA
+              <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Kirim Struk WA
             </button>
           </div>
           <div id="rcptDenominationHelper" style="font-size:0.72rem; color:#10B981; margin-top:4px; font-weight:600;"></div>
@@ -3234,13 +3234,13 @@
               </div>
               <div id="dtlStatusBadge"
                 style="padding:0.25rem 0.65rem; border-radius:4px; font-size:0.75rem; font-weight:700; background:rgba(16,185,129,0.15); color:#10B981; border:1px solid rgba(16,185,129,0.3);">
-                ✓ LUNAS
+                <span style="display:inline-flex; align-items:center; gap:3px;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> LUNAS</span>
               </div>
             </div>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; font-size:0.8rem;">
               <div>
-                <span style="color:var(--text-muted); display:block; font-size:0.7rem;">📍 TEMPAT / LOKASI:</span>
+                <span style="color:var(--text-muted); display:block; font-size:0.7rem;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> TEMPAT / LOKASI:</span>
                 <strong id="dtlStorePlace" style="color:#FFF;">COPY STAR KUBU</strong>
                 <div id="dtlStoreAddress" style="font-size:0.7rem; color:var(--text-muted);">Jln. Soeparto 1 Kubu, Kubu
                   Raya</div>
@@ -3251,11 +3251,11 @@
                 <div id="dtlExactTime" style="font-size:0.75rem; color:#F59E0B; font-weight:600;">-</div>
               </div>
               <div>
-                <span style="color:var(--text-muted); display:block; font-size:0.7rem;">👤 KASIR BERTUGAS:</span>
+                <span style="color:var(--text-muted); display:block; font-size:0.7rem;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> KASIR BERTUGAS:</span>
                 <strong id="dtlCashier" style="color:#FFF;">-</strong>
               </div>
               <div>
-                <span style="color:var(--text-muted); display:block; font-size:0.7rem;">👥 PELANGGAN:</span>
+                <span style="color:var(--text-muted); display:block; font-size:0.7rem;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> PELANGGAN:</span>
                 <strong id="dtlCustomer" style="color:#FFF;">-</strong>
               </div>
             </div>
@@ -3264,7 +3264,7 @@
           <!-- Tabel Rincian Item Belanja -->
           <div
             style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.35rem;">
-            📦 Rincian Barang & Layanan yang Dibeli:
+            <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Rincian Barang & Layanan yang Dibeli:
           </div>
           <div
             style="max-height:220px; overflow-y:auto; border:1px solid rgba(255,255,255,0.08); border-radius:8px; margin-bottom:1rem;">
@@ -3630,7 +3630,7 @@
                 style="font-family:monospace; font-size:0.75rem; color:var(--primary); font-weight:700;">SKU: -</span>
             </label>
             <input type="text" class="form-control" id="priceEditQuickSearch"
-              placeholder="🔍 Ketik nama barang untuk mencari cepat..." oninput="filterPriceEditProducts()"
+              placeholder="Ketik nama barang untuk mencari cepat..." oninput="filterPriceEditProducts()"
               style="margin-bottom:0.45rem; font-size:0.85rem;">
             <select class="form-control" id="priceEditProductSelect" onchange="onPriceEditProductSelectChange()">
               <!-- Populated via JS -->
@@ -3771,7 +3771,7 @@
 
           <div
             style="background:var(--bg-surface-elevated); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:0.65rem; font-size:0.75rem; color:var(--text-muted);">
-            💡 <strong>Nomor Akun Demo:</strong><br>
+            <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> <strong>Nomor Akun Demo:</strong><br>
             • Kasir: <code>0812-4433-2211</code> (user: <code>niko</code> / <code>owen</code> / <code>thomas</code> /
             <code>kasir</code>, pass: <code>password123</code>)<br>
             • Owner: <code>0812-5345-3440</code> (user: <code>owner</code>, PIN/password: <code>0000</code>)
@@ -3792,7 +3792,7 @@
                 Kirim Ulang
               </button>
             </div>
-            <span style="font-size:0.72rem; color:var(--success);" id="otpSentNote">✓ Kode OTP simulasi dikirim:
+            <span style="font-size:0.72rem; color:var(--success);" id="otpSentNote"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Kode OTP simulasi dikirim:
               <strong>5792</strong></span>
           </div>
 
@@ -4019,7 +4019,7 @@
             </div>
             <div style="display:flex; align-items:center; gap:0.5rem; min-width:240px;">
               <input type="text" class="form-control" id="modalKasbonSearchInput"
-                placeholder="🔍 Cari warga / no. HP..." oninput="handleModalKasbonSearch(this.value)"
+                placeholder="Cari warga / no. HP..." oninput="handleModalKasbonSearch(this.value)"
                 style="font-size:0.85rem; padding:0.4rem 0.75rem;">
             </div>
           </div>
@@ -4118,7 +4118,7 @@
           <button class="btn-secondary-sm" onclick="closeModal('payKasbonInstallmentModal')">Batal</button>
           <button class="btn-highlight-action" onclick="submitInstallmentPayment()"
             style="background:var(--success); color:#0A0D1A;">
-            ✓ Simpan Pembayaran
+            <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Simpan Pembayaran
           </button>
         </div>
       </div>
@@ -4174,7 +4174,7 @@
               </div>
               <a href="https://wa.me/6281253453440" target="_blank" class="btn-wa-notify"
                 style="text-decoration:none; padding:0.4rem 0.85rem; font-size:0.78rem; box-shadow:0 4px 14px rgba(37,211,102,0.35);">
-                📲 Chat WA Toko
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Chat WA Toko
               </a>
             </div>
 
@@ -4200,7 +4200,7 @@
               </div>
               <a href="https://www.instagram.com/copystarkubu?obrf=YnByeXZsYnozb3dt" target="_blank"
                 class="btn-ig-notify" style="padding:0.4rem 0.85rem; font-size:0.78rem;">
-                📸 Buka IG Order
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path></svg> Buka IG Order
               </a>
             </div>
           </div>
@@ -4214,15 +4214,15 @@
               <button class="btn-filter-pill" id="modalFilterWaWaiting" onclick="filterModalWaStatus('MENUNGGU')">⏳
                 Menunggu (<span id="modalWaCountWaiting">0</span>)</button>
               <button class="btn-filter-pill" id="modalFilterWaPrinting"
-                onclick="filterModalWaStatus('SEDANG_DICETAK')">🖨️ Dicetak (<span
+                onclick="filterModalWaStatus('SEDANG_DICETAK')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Dicetak (<span
                   id="modalWaCountPrinting">0</span>)</button>
-              <button class="btn-filter-pill" id="modalFilterWaReady" onclick="filterModalWaStatus('SIAP_DIAMBIL')">✅
+              <button class="btn-filter-pill" id="modalFilterWaReady" onclick="filterModalWaStatus('SIAP_DIAMBIL')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 Siap Diambil (<span id="modalWaCountReady">0</span>)</button>
-              <button class="btn-filter-pill" id="modalFilterWaDone" onclick="filterModalWaStatus('SELESAI')">📦
+              <button class="btn-filter-pill" id="modalFilterWaDone" onclick="filterModalWaStatus('SELESAI')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                 Selesai</button>
             </div>
             <div style="display:flex; align-items:center; gap:0.5rem; min-width:240px;">
-              <input type="text" class="form-control" id="modalWaSearchInput" placeholder="🔍 Cari nama / judul file..."
+              <input type="text" class="form-control" id="modalWaSearchInput" placeholder="Cari nama / judul file..."
                 oninput="handleModalWaSearch(this.value)" style="font-size:0.85rem; padding:0.4rem 0.75rem;">
             </div>
           </div>
@@ -4324,7 +4324,7 @@
           <div class="form-group">
             <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
               <input type="checkbox" id="newWaUrgent">
-              <span style="font-weight:600; color:var(--danger); font-size:0.85rem;">⚠️ Tandai sebagai Pesanan Darurat /
+              <span style="font-weight:600; color:var(--danger); font-size:0.85rem;"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Tandai sebagai Pesanan Darurat /
                 Penting (Urgent)</span>
             </label>
           </div>
@@ -4455,7 +4455,7 @@
               <div class="sign-col" style="text-align:center;">
                 <div
                   style="font-size:0.75rem; color:#64748B; margin-top:20px; border:1px dashed #CBD5E1; padding:8px; border-radius:4px;">
-                  ✓ Dicetak dari Sistem Digital<br>
+                  <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Dicetak dari Sistem Digital<br>
                   <strong>COPY STAR KUBU POS</strong>
                 </div>
               </div>
@@ -4504,7 +4504,7 @@
           <div class="modal-header">
             <div>
               <h3 class="modal-title" style="display:flex; align-items:center; gap:8px;">
-                💾 Cadangkan & Pulihkan Data Toko
+                <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Cadangkan & Pulihkan Data Toko
               </h3>
               <p class="modal-subtitle" style="margin:0.2rem 0 0; font-size:0.82rem; color:var(--text-secondary);">
                 Simpan seluruh riwayat transaksi, buku kasbon, antrean WhatsApp, dan stok ke file lokal yang aman.
@@ -4518,7 +4518,7 @@
             <!-- SECTION 1: BACKUP -->
             <div class="backup-section-card">
               <div style="display:flex; align-items:center; gap:10px; margin-bottom:0.5rem;">
-                <span style="font-size:1.5rem;">📥</span>
+                <span style="display:inline-flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg></span>
                 <div>
                   <h4 style="margin:0; font-size:0.95rem; font-weight:700; color:var(--text-main);">Cadangkan Database
                     Sekarang</h4>
@@ -4529,10 +4529,10 @@
               </div>
               <div class="backup-stats-pill"
                 style="display:flex; gap:8px; margin-bottom:0.75rem; font-size:0.72rem; color:var(--text-secondary); background:var(--bg-card); padding:0.4rem 0.6rem; border-radius:6px;">
-                <span id="bkpStatTx">📦 Transaksi: -</span>
-                <span id="bkpStatDebt">📒 Kasbon: -</span>
+                <span id="bkpStatTx"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg> Transaksi: -</span>
+                <span id="bkpStatDebt"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> Kasbon: -</span>
                 <span id="bkpStatQueue">⏳ Antrean: -</span>
-                <span id="bkpStatProd">🏷️ Produk: -</span>
+                <span id="bkpStatProd"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Produk: -</span>
               </div>
               <button type="button" class="btn-primary"
                 style="width:100%; display:flex; justify-content:center; align-items:center; gap:8px;"
@@ -4549,7 +4549,7 @@
             <!-- SECTION 2: RESTORE -->
             <div class="backup-section-card" style="margin-top:1rem;">
               <div style="display:flex; align-items:center; gap:10px; margin-bottom:0.5rem;">
-                <span style="font-size:1.5rem;">📤</span>
+                <span style="display:inline-flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg></span>
                 <div>
                   <h4 style="margin:0; font-size:0.95rem; font-weight:700; color:var(--text-main);">Pulihkan Data dari
                     File Cadangan</h4>
@@ -4563,7 +4563,7 @@
                 onclick="document.getElementById('restoreFileInput').click()">
                 <input type="file" id="restoreFileInput" accept=".json" style="display:none;"
                   onchange="handleRestoreFileUpload(this.files)">
-                <span style="font-size:1.2rem;">📂</span>
+                <span style="display:inline-flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg></span>
                 <span id="restoreFileNameDisplay" style="font-size:0.8rem; color:var(--text-secondary);">Klik untuk
                   pilih file cadangan (.json)...</span>
               </div>
@@ -4574,10 +4574,10 @@
                 <div id="restoreDetailsText" style="color:var(--text-secondary); line-height:1.4;"></div>
                 <div style="margin-top:0.6rem; display:flex; gap:8px;">
                   <button type="button" class="btn-primary" style="flex:1;" onclick="applyRestoreData('merge')">
-                    🔄 Gabungkan Data (Merge)
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg> Gabungkan Data (Merge)
                   </button>
                   <button type="button" class="btn-danger" style="flex:1;" onclick="applyRestoreData('replace')">
-                    ⚠️ Timpa Total (Replace)
+                    <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Timpa Total (Replace)
                   </button>
                 </div>
               </div>
@@ -4589,7 +4589,7 @@
               <button type="button" class="btn-secondary-sm"
                 style="color:var(--danger); border-color:rgba(239,68,68,0.3); font-size:0.75rem;"
                 onclick="resetDemoDataPrompt()">
-                🧹 Reset Data Toko ke Format Awal (Simulasi Demo)
+                <svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Reset Data Toko ke Format Awal (Simulasi Demo)
               </button>
             </div>
 
@@ -4610,7 +4610,7 @@
         <div class="modal-header" style="background: linear-gradient(135deg, rgba(2,132,199,0.18), rgba(15,23,42,0.95)); border-bottom: 1px solid rgba(56,189,248,0.25);">
           <div style="display:flex; align-items:center; gap:0.75rem;">
             <div style="width:40px; height:40px; border-radius:12px; background:rgba(2,132,199,0.2); color:#38BDF8; display:flex; align-items:center; justify-content:center; font-size:1.3rem;">
-              📖
+              <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             </div>
             <div>
               <h3 style="margin:0; font-size:1.15rem; color:#F8FAFC;">Buku Panduan & Petunjuk Singkat Toko</h3>
@@ -4623,11 +4623,11 @@
         <div class="modal-body" style="padding:1.25rem;">
           <!-- Guide Tab Navigation -->
           <div class="guide-nav-tabs" style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.25rem; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem;">
-            <button type="button" class="guide-tab-btn active" id="btnGuideTab_kasir" onclick="switchGuideTab('kasir')">🛒 Kasir Toko (POS)</button>
-            <button type="button" class="guide-tab-btn" id="btnGuideTab_print" onclick="switchGuideTab('print')">🖨️ Hitung Fotokopi/Cetak</button>
-            <button type="button" class="guide-tab-btn" id="btnGuideTab_kasbon" onclick="switchGuideTab('kasbon')">📖 Buku Kasbon Warga</button>
-            <button type="button" class="guide-tab-btn" id="btnGuideTab_antrean" onclick="switchGuideTab('antrean')">💬 Antrean WA & IG</button>
-            <button type="button" class="guide-tab-btn" id="btnGuideTab_pelanggan" onclick="switchGuideTab('pelanggan')">🛍️ Portal Pesan Mandiri</button>
+            <button type="button" class="guide-tab-btn active" id="btnGuideTab_kasir" onclick="switchGuideTab('kasir')"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg> Kasir Toko (POS)</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_print" onclick="switchGuideTab('print')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Hitung Fotokopi/Cetak</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_kasbon" onclick="switchGuideTab('kasbon')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg> Buku Kasbon Warga</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_antrean" onclick="switchGuideTab('antrean')"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Antrean WA & IG</button>
+            <button type="button" class="guide-tab-btn" id="btnGuideTab_pelanggan" onclick="switchGuideTab('pelanggan')"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Portal Pesan Mandiri</button>
           </div>
 
     <!-- TAB 1: KASIR POS -->
@@ -4654,7 +4654,7 @@
               </div>
             </div>
             <div class="guide-pro-tip">
-              <span>💡</span>
+              <span><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
               <div><strong>Tips Cepat Kasir:</strong> Gunakan tab multi-transaksi di bagian atas keranjang jika ada pelanggan baru yang ingin dilayani sementara pelanggan sebelumnya masih memilih barang!</div>
             </div>
           </div>
@@ -4665,7 +4665,7 @@
               <div class="guide-step-num">1</div>
               <div class="guide-step-body">
                 <h4>Buka Dasbor Kalkulator Cetak (F3)</h4>
-                <p>Klik tombol <strong>🖨️ Kalkulator Cetak (F3)</strong> pada bilah alat atas kasir untuk membuka layar khusus perhitungan tarif fotokopi dan cetak dokumen.</p>
+                <p>Klik tombol <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Kalkulator Cetak (F3)</strong> pada bilah alat atas kasir untuk membuka layar khusus perhitungan tarif fotokopi dan cetak dokumen.</p>
               </div>
             </div>
             <div class="guide-step-card">
@@ -4697,14 +4697,14 @@
               <div class="guide-step-num">2</div>
               <div class="guide-step-body">
                 <h4>Mencatat Cicilan & Pelunasan</h4>
-                <p>Ketika warga datang menyicil atau melunasi, cari nama warga di daftar kasbon lalu klik <strong>💳 Bayar</strong>. Masukkan nominal uang yang diserahkan, sisa utang akan otomatis berkurang secara presisi.</p>
+                <p>Ketika warga datang menyicil atau melunasi, cari nama warga di daftar kasbon lalu klik <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg> Bayar</strong>. Masukkan nominal uang yang diserahkan, sisa utang akan otomatis berkurang secara presisi.</p>
               </div>
             </div>
             <div class="guide-step-card">
               <div class="guide-step-num">3</div>
               <div class="guide-step-body">
                 <h4>Kirim Pengingat Santun via WhatsApp</h4>
-                <p>Klik tombol hijau <strong>📲 Tagih WA</strong> pada baris kasbon warga. Sistem otomatis menyiapkan draf pesan WhatsApp yang sangat ramah, santun, dan sopan lengkap dengan rincian nota untuk dikirim ke nomor warga bersangkutan.</p>
+                <p>Klik tombol hijau <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Tagih WA</strong> pada baris kasbon warga. Sistem otomatis menyiapkan draf pesan WhatsApp yang sangat ramah, santun, dan sopan lengkap dengan rincian nota untuk dikirim ke nomor warga bersangkutan.</p>
               </div>
             </div>
           </div>
@@ -4722,14 +4722,14 @@
               <div class="guide-step-num">2</div>
               <div class="guide-step-body">
                 <h4>Perbarui Status Pengerjaan</h4>
-                <p>Ubah status berkas dari <em>Menunggu</em> ➔ klik <strong>🖨️ Cetak</strong> saat mesin cetak mulai bekerja ➔ klik <strong>✅ Tandai Siap</strong> saat berkas sudah selesai dicetak dan dirapikan.</p>
+                <p>Ubah status berkas dari <em>Menunggu</em> &rarr; klik <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Cetak</strong> saat mesin cetak mulai bekerja &rarr; klik <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tandai Siap</strong> saat berkas sudah selesai dicetak dan dirapikan.</p>
               </div>
             </div>
             <div class="guide-step-card">
               <div class="guide-step-num">3</div>
               <div class="guide-step-body">
                 <h4>Panggil Pelanggan & Beri Kabar via WhatsApp</h4>
-                <p>Klik <strong>📢 Panggil</strong> untuk menyuarakan panggilan antrean lewat pengeras suara toko, atau klik <strong>📲 Kabari WA</strong> agar pelanggan menerima pesan otomatis bahwa pesanannya sudah siap diambil di meja kasir.</p>
+                <p>Klik <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-5v12L3 13v-2z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg> Panggil</strong> untuk menyuarakan panggilan antrean lewat pengeras suara toko, atau klik <strong><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Kabari WA</strong> agar pelanggan menerima pesan otomatis bahwa pesanannya sudah siap diambil di meja kasir.</p>
               </div>
             </div>
           </div>
@@ -4761,7 +4761,7 @@
         </div>
 
         <div class="modal-footer" style="background:var(--bg-surface-elevated); border-top:1px solid var(--border-color); padding:0.9rem 1.25rem; display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:0.8rem; color:var(--text-muted);">📞 Butuh bantuan? WA Admin: <strong>0812-5345-3440</strong> (Star Copy)</span>
+          <span style="font-size:0.8rem; color:var(--text-muted);"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> Butuh bantuan? WA Admin: <strong>0812-5345-3440</strong> (Star Copy)</span>
           <button type="button" class="btn-highlight-action" onclick="closeModal('guideHelpModal')" style="padding:0.45rem 1.4rem;">Paham &amp; Tutup</button>
         </div>
       </div>
@@ -4775,8 +4775,8 @@
       <div class="modal-card" style="max-width: 940px; width: 95%; max-height: 92vh;">
         <div class="modal-header" style="background: linear-gradient(135deg, rgba(37,99,235,0.18), rgba(15,23,42,0.95)); border-bottom: 1px solid rgba(59,130,246,0.3);">
           <div style="display:flex; align-items:center; gap:0.75rem;">
-            <div style="width:42px; height:42px; border-radius:10px; background:rgba(37,99,235,0.25); color:#60A5FA; display:flex; align-items:center; justify-content:center; font-size:1.35rem;">
-              👤
+            <div style="width:42px; height:42px; border-radius:10px; background:rgba(37,99,235,0.25); color:#60A5FA; display:flex; align-items:center; justify-content:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </div>
             <div>
               <h3 id="empDetailModalTitle" style="margin:0; font-size:1.15rem; color:#F8FAFC; display:flex; align-items:center; gap:0.5rem;">
@@ -4800,7 +4800,7 @@
           </span>
           <div style="display:flex; gap:0.5rem;">
             <button type="button" class="btn-secondary-sm" onclick="printEmployeeAuditReport()" style="padding:0.45rem 0.9rem; font-size:0.8rem; display:flex; align-items:center; gap:0.4rem;">
-              🖨️ Cetak Rekap Karyawan
+              <svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Cetak Rekap Karyawan
             </button>
             <button type="button" class="btn-highlight-action" onclick="closeModal('employeeDetailModal')" style="padding:0.45rem 1.2rem; font-size:0.8rem;">
               Tutup
@@ -4818,8 +4818,8 @@
       <div class="modal-card" style="max-width: 620px;">
         <div class="modal-header" style="background: linear-gradient(135deg, rgba(239,68,68,0.18), rgba(15,23,42,0.95)); border-bottom: 1px solid rgba(239,68,68,0.3);">
           <div style="display:flex; align-items:center; gap:0.6rem;">
-            <div style="width:38px; height:38px; border-radius:8px; background:rgba(239,68,68,0.2); color:#EF4444; display:flex; align-items:center; justify-content:center; font-size:1.25rem;">
-              🗑️
+            <div style="width:38px; height:38px; border-radius:8px; background:rgba(239,68,68,0.2); color:#EF4444; display:flex; align-items:center; justify-content:center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
             </div>
             <div>
               <h3 style="margin:0; font-size:1.05rem; color:#F8FAFC;">Catat Kertas Rusak & Macet (Paper Jam)</h3>
@@ -4957,28 +4957,28 @@
             <div class="drawer-group-title">Layanan & Studio Kreatif</div>
             <div class="drawer-grid-menu">
               <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('pasfoto')">
-                <span class="menu-icon">📸</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></span>
                 <div class="menu-text">
                   <strong>Studio Pas Foto</strong>
                   <small>Paket Kilat 2x3, 3x4, 4x6</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('banner')">
-                <span class="menu-icon">📐</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg></span>
                 <div class="menu-text">
                   <strong>Spanduk & Banner</strong>
                   <small>Undangan & Finishing</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="openWaQueueModal(); closeMobileDrawer();">
-                <span class="menu-icon">💬</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
                 <div class="menu-text">
                   <strong>Antrean Berkas WA</strong>
                   <small>Pesanan WhatsApp & IG</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="openKasbonBookModal(); closeMobileDrawer();">
-                <span class="menu-icon">📖</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
                 <div class="menu-text">
                   <strong>Buku Kasbon</strong>
                   <small>Utang Piutang Warga</small>
@@ -4992,7 +4992,7 @@
             <div class="drawer-group-title">Manajemen Toko & Kasir</div>
             <div class="drawer-grid-menu">
               <a href="/transaksi" class="drawer-menu-btn" onclick="openRiwayatTransaksiView(event); closeMobileDrawer();" style="text-decoration:none; color:inherit;">
-                <span class="menu-icon">📋</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></span>
                 <div class="menu-text">
                   <strong>Riwayat Laravel (Blade)</strong>
                   <small>Laporan & Ekspor Excel</small>
@@ -5001,42 +5001,42 @@
             </div>
             <div class="drawer-grid-menu">
               <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('owner')">
-                <span class="menu-icon">📊</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
                 <div class="menu-text">
                   <strong>Dasbor Pemilik</strong>
                   <small>Omzet & Analitik Toko</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="mobileNavigateTo('price')">
-                <span class="menu-icon">🏷️</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></span>
                 <div class="menu-text">
                   <strong>Ubah Harga & ATK</strong>
                   <small>Katalog Produk Lengkap</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="openBackupRestoreModal(); closeMobileDrawer();">
-                <span class="menu-icon">💾</span>
+                <span class="menu-icon"><svg class="inline-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></span>
                 <div class="menu-text">
                   <strong>Cadangan Database</strong>
                   <small>Cadangkan Data Toko</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="openGuideHelpModal('kasir'); closeMobileDrawer();">
-                <span class="menu-icon">❓</span>
+                <span class="menu-icon"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>
                 <div class="menu-text">
                   <strong>Bantuan & Panduan</strong>
                   <small>Petunjuk Cara Pakai Aplikasi</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="toggleTheme()">
-                <span class="menu-icon" id="drawerThemeIcon">☀️</span>
+                <span class="menu-icon" id="drawerThemeIcon"><svg class="inline-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></span>
                 <div class="menu-text">
                   <strong id="drawerThemeText">Ubah Mode Terang / Gelap</strong>
                   <small>Kenyamanan Tampilan Layar</small>
                 </div>
               </button>
               <button type="button" class="drawer-menu-btn" onclick="toggleAudio()">
-                <span class="menu-icon">🔊</span>
+                <span class="menu-icon"><svg class="inline-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></span>
                 <div class="menu-text">
                   <strong>Efek Suara</strong>
                   <small>Suara Kasir & Klik</small>
@@ -5044,7 +5044,7 @@
               </button>
               <button type="button" class="drawer-menu-btn" onclick="closeMobileDrawer(); handleLogout();"
                 style="border-color: rgba(239, 68, 68, 0.3);">
-                <span class="menu-icon">🚪</span>
+                <span class="menu-icon"><svg class="inline-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span>
                 <div class="menu-text">
                   <strong style="color: #EF4444;">Ganti Akun / Keluar</strong>
                   <small>Keluar ke Layar Masuk</small>

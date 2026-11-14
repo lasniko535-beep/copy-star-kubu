@@ -5468,3 +5468,17 @@ body.light-theme .product-card.skeleton-card,
   width: 28px;
   border-radius: 6px;
 }
+
+/* --------------------------------------------------------
+   INLINE VECTOR ICONS STANDARD
+-------------------------------------------------------- */
+.inline-icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  stroke: currentColor;
+  fill: none;
+  pointer-events: none;
+}
+.inline-icon path, .inline-icon polygon, .inline-icon rect, .inline-icon circle, .inline-icon line, .inline-icon polyline {
+  stroke: currentColor;
+}
